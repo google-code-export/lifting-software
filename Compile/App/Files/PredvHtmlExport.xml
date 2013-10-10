@@ -1,0 +1,35 @@
+<main>
+  <reportfilename ru="xls\FinalExcel_ru.xls" eng="xls\FinalExcel_eng.xls"/>
+  <info name=""/>
+  <sql>
+select
+  ac.name as rusAgeClass,
+  ac.engname as engAgeClass,
+  t.name TeamName,
+  wc.Name as WC,
+  l.sex as sex,
+  TransLiter(CutFio2(l.name)) as EngFIO,
+  CutFio2(l.name) as RusFIO,
+  TransLiter(l.TOWN) as EngTOWN,
+  l.TOWN as RusTOWN
+
+from
+  lifter l inner join
+  Lifter_on_Competition loc
+    on l.id_lifter=loc.id_lifter inner join
+  Age_Class Ac
+    on Ac.id_agecl=loc.id_agecl inner join
+  WEIGTH_CATEGORY WC
+    on Loc.Id_category =Wc.Id_category inner 
+join
+  TEAM T
+    on t.id_team = loc.id_team
+where
+  id_compet=%IDC%
+  %CONDITION%
+order by
+  l.sex,
+  wc.we,
+  ac.from_age
+  </sql>
+</main>

@@ -1,0 +1,22 @@
+<main>
+  <reportfilename ru="frf\absolute_ru.frf" eng="frf\absolute_eng.frf"/>
+  <info name=""/>
+  <sql>
+select ab.cat,
+  cast(Cutfio2(ab.fio) as varchar(50)) as rusfio,
+  cast(Transliter(Cutfio2(ab.fio)) as varchar(50)) as Engfio,
+  ab.totall, 
+  ab.gloss, 
+  ab.sex, 
+  ab.agename, 
+  ab.agenum, 
+  ac.name as rusagedetname,
+  ac.engname as engagedetname
+from
+ absolute(%IDC%) ab left join
+ lifter_on_competition loc
+   on loc.id_lifter_compet= ab.loc inner join
+ age_class ac on ac.id_agecl=loc.id_agecl
+order by sex, agenum, gloss desc
+  </sql>
+</main>

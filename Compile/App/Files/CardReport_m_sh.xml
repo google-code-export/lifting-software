@@ -1,0 +1,19 @@
+<main>
+  <reportfilename ru="frf\CardReport_ru.frf" eng="frf\CardReport_eng.frf"/>
+  <info name=""/>
+  <sql>
+SELECT cast(Transliter(fr.fio) as varchar(50)) as EngFio
+  , cast(Transliter(fr.town) as varchar(103))as engTown
+  , cast(Transliter(fr.Coach) as varchar(50))as engCoach
+  , (c.date_begin - fr.bithdate)/365 as age
+  , fr.*
+  , r.sname as rname
+  , loc.zr
+  , loc.createtime
+FROM finalreport( %IDC% ) fr left join
+  Lifter_on_competition loc  on loc.id_lifter_compet = fr.loc left join
+  Competit C on c.id_compet = loc.id_compet left join
+  range r on r.id_range = c.id_range
+WHERE loc.id_lifter = %IDL%
+  </sql>
+</main>

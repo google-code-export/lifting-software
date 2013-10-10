@@ -1,0 +1,18 @@
+<main>
+  <reportfilename ru="xls\FinalExcel_ru.xls" eng="xls\FinalExcel_eng.xls"/>
+  <info name=""/>
+  <sql>
+select
+  cast(Transliter(fr.fio) as varchar(50)) as EngFio,
+  cast(Transliter(fr.town) as varchar(103))as engTown,
+  cast(Transliter(fr.Coach) as varchar(50))as engCoach,
+  fr.*,
+  c.*
+from finalreport(%IDC%) fr
+left join
+  Lifter_on_competition loc
+    on loc.id_lifter_compet=fr.loc left join
+  Competit C
+    on c.id_compet=loc.id_compet
+  </sql>
+</main>

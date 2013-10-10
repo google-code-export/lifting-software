@@ -1,0 +1,35 @@
+<main>
+  <reportfilename ru="frf\Gram_ru.frf" eng="frf\Gram_eng.frf"/>
+  <info name=""/>
+  <sql>
+select 
+  fr.place, 
+  cast(Transliter(CutFio2(fr.fio)) as varchar(60)) as engfio,
+  cast(CutFio2(fr.fio) as varchar(60)) as rusfio,
+  ac.name as acname,
+  (select squat from bestsquatbyloc(fr.loc)) as squat,
+  (select bench from bestbenchbyloc(fr.loc)) as bench,
+  (select DL from bestdlbyloc1(fr.loc)) as deadlift,
+  (select sname from range r join competit c on r.id_range=c.id_range where c.id_compet= %IDC% ) as divis,
+  fr.totall,
+  fr.gloss,
+  fr.categname,
+  w.self_weight
+from
+  COMPETITIONWINNERS(%IDC%) fr left join
+  Age_class ac on
+    ac.id_agecl= fr.ageclass left join
+  Lifter_on_competition loc on
+    fr.loc=loc.id_lifter_compet left join
+  Wilks W on
+    w.id_wilks = loc.id_wilks
+where
+  fr.totall > 0
+%CONDITION%  
+order by 
+  fr.sex, 
+  idcateg desc, 
+  ac.from_age, 
+  place desc
+  </sql>
+</main>
