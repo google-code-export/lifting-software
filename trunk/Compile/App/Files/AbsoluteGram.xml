@@ -1,0 +1,14 @@
+<main>
+  <reportfilename ru="frf\AbsGram_ru.frf" eng="frf\AbsGram_eng.frf"/>
+  <info name=""/>
+  <sql>select fr.*
+  , loc.*
+  , r.sname sdivis
+  , r.name fdivis
+  , r.kind
+from  absolute_gram(%IDC%) fr
+  inner join Lifter_on_competition loc on fr.loc=loc.id_lifter_compet 
+  inner join Competit c on c.id_compet = loc.id_compet
+  inner join Range r on r.id_range=c.id_range
+</sql>
+</main>

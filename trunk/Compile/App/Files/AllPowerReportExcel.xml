@@ -1,0 +1,81 @@
+<main>
+  <reportfilename ru="xls\blank.xlsx" eng="xls\blank.xlsx"/>
+  <info name=""/>
+  <sql>
+
+select r.id_range||':'||c.id_compet as id
+, c.description
+, r.name as rangeName
+, case c.id_range
+    when 0 then 'type-b,division-e'
+    when 1 then 'type-p,division-e'
+    when 2 then 'type-b,division-e'
+    when 3 then 'type-p,division-e'
+    when 4 then 'type-b,division-u'
+    when 5 then 'type-p,division-u'
+    when 6 then 'type-b,division-u'
+    when 7 then 'type-p,division-u'
+    when 8 then 'type-b, division-e'
+    when 9 then 'type-p,division-e'
+    when 10 then 'type-b,division-e'
+    when 11 then 'type-p, division-e'
+    when 12 then 'type-dl, division-e'
+    when 13 then 'type-dl, division-u'
+    when 14 then 'type-dl, division-e'
+    when 15 then 'type-dl, division-e'
+    when 16 then 'type-dl, division-u'
+    when 17 then 'type-dl, division-e'
+  else
+    ''
+  end as rangeType
+
+, cast(cutfio2(l.name) as varchar(70)) as fio
+, case l.sex when 1 then 'm' else 'f' end as sex
+, l.dat_bith
+, l.town
+, ac.engname as agecl
+, wc.name as wc
+, w.self_weight
+
+, le.squat1
+, le.squat2
+, le.squat3
+, le.squat4
+, le.bench1
+, le.bench2
+, le.bench3
+, le.bench4
+, le.dl1
+, le.dl2
+, le.dl3
+, le.dl4
+
+, le.oc1
+, le.oc2
+, le.oc3
+, le.oc10 as oc4
+, le.oc4  as oc5
+, le.oc5  as oc6
+, le.oc6  as oc7
+, le.oc11 as oc8
+, le.oc7  as oc9
+, le.oc8  as oc10
+, le.oc9  as oc11
+, le.oc12 as oc12
+
+
+, le.summaall as total
+
+from lifter_on_competition loc inner join
+  competit c on c.id_compet = loc.id_compet inner join
+  range r on r.id_range = c.id_range inner join
+  lifter l on loc.id_lifter = l.id_lifter inner join
+  age_class ac on loc.id_agecl = ac.id_agecl inner join
+  weigth_category wc on loc.id_category = wc.id_category inner join
+  wilks w on loc.id_wilks = w.id_wilks inner join
+  lifter_exersis le on loc.id_lifter_compet = le.id_lifter_compet
+
+where c.grp in (select grp from competit where id_compet=%IDC%)
+order by c.id_range, l.sex, wc.we, ac.to_age, le.summaall desc
+  </sql>
+</main>
