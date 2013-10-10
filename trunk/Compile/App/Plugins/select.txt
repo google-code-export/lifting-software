@@ -1,0 +1,196 @@
+SELECT
+
+`submissions`.`submitted` as cid,
+
+CONCAT(
+
+(SELECT `data` FROM `d7_webform_submitted_data` `submitted_data` WHERE `submitted_data`.`sid` = `submissions`.`sid` AND
+
+`submitted_data`.`cid` = 3), ' ',
+
+(SELECT `data` FROM `d7_webform_submitted_data` `submitted_data` WHERE `submitted_data`.`sid` = `submissions`.`sid` AND
+
+`submitted_data`.`cid` = 4), ' ',
+
+(SELECT `data` FROM `d7_webform_submitted_data` `submitted_data` WHERE `submitted_data`.`sid` = `submissions`.`sid` AND
+
+`submitted_data`.`cid` = 5)
+
+)
+
+AS `fullname`,
+
+ 
+
+(SELECT DATE_FORMAT(`data`,'%d.%m.%Y') FROM `d7_webform_submitted_data` `submitted_data` WHERE `submitted_data`.`sid` = `submissions`.`sid` AND
+
+`submitted_data`.`cid` = 22)
+
+AS `birthday`,
+
+ 
+
+(SELECT `data` FROM `d7_webform_submitted_data` `submitted_data` WHERE `submitted_data`.`sid` = `submissions`.`sid` AND
+
+`submitted_data`.`cid` = 11)
+
+AS `phone`,
+
+ 
+
+(SELECT 
+
+case data
+when '140plus' then 141
+when '90pluswoman' then 91
+
+else data
+
+end
+
+ FROM `d7_webform_submitted_data` `submitted_data` WHERE `submitted_data`.`sid` = `submissions`.`sid` AND
+
+`submitted_data`.`cid` = 15 limit 1)
+
+AS `weight_category`,
+
+ 
+
+(SELECT 
+
+case data
+when 'open2429' then -2
+when 'junior2023' then 1
+when 'teenage1617' then 15
+when 'teenage1315' then 14
+when 'teenage1819' then 2
+when 'masters4044' then 3
+when 'masters4549' then 4
+when 'masters5054' then 6
+when 'masters5559' then 8
+when 'masters6064' then 9
+when 'masters6569' then 10
+when 'masters7074' then 11
+when 'masters7579' then 12
+
+else data
+
+end
+
+
+ FROM `d7_webform_submitted_data` `submitted_data` WHERE `submitted_data`.`sid` = `submissions`.`sid` AND
+
+`submitted_data`.`cid` = 16 limit 1)
+
+AS `age_category`,
+
+
+(SELECT `data` FROM `d7_webform_submitted_data` `submitted_data` WHERE `submitted_data`.`sid` = `submissions`.`sid` AND
+
+`submitted_data`.`cid` = 2 limit 1)
+
+AS `email`,
+
+ 
+
+(SELECT `data` FROM `d7_webform_submitted_data` `submitted_data` WHERE `submitted_data`.`sid` = `submissions`.`sid` AND
+
+`submitted_data`.`cid` = 1 limit 1)
+
+AS `theme`,
+
+ 
+
+
+(SELECT case data when 'male' THEN  1 else 0 end 
+FROM `d7_webform_submitted_data` `submitted_data` 
+WHERE `submitted_data`.`sid` = `submissions`.`sid` AND
+`submitted_data`.`cid` = 6)
+
+AS `sex`,
+
+ 
+
+(SELECT `data` FROM `d7_webform_submitted_data` `submitted_data` WHERE `submitted_data`.`sid` = `submissions`.`sid` AND
+
+`submitted_data`.`cid` = 7)
+
+AS `country`,
+
+ 
+
+(SELECT `data` FROM `d7_webform_submitted_data` `submitted_data` WHERE `submitted_data`.`sid` = `submissions`.`sid` AND
+
+`submitted_data`.`cid` = 8)
+
+AS `region`,
+
+ 
+
+(SELECT `data` FROM `d7_webform_submitted_data` `submitted_data` WHERE `submitted_data`.`sid` = `submissions`.`sid` AND
+
+`submitted_data`.`cid` = 9)
+
+AS `city`,
+
+ 
+CONCAT(
+division.data
+, ' ',
+
+(SELECT `data` FROM `d7_webform_submitted_data` `submitted_data` WHERE `submitted_data`.`sid` = `submissions`.`sid` AND
+
+`submitted_data`.`cid` = 13)
+
+, ' ',
+
+(SELECT `data` FROM `d7_webform_submitted_data` `submitted_data` WHERE `submitted_data`.`sid` = `submissions`.`sid` AND
+
+`submitted_data`.`cid` = 14)
+
+) as `_RANGE_`,
+
+ 
+
+(SELECT `data` FROM `d7_webform_submitted_data` `submitted_data` WHERE `submitted_data`.`sid` = `submissions`.`sid` AND
+
+`submitted_data`.`cid` = 17)
+
+AS `best_result`,
+
+ 
+
+(SELECT `data` FROM `d7_webform_submitted_data` `submitted_data` WHERE `submitted_data`.`sid` = `submissions`.`sid` AND
+
+`submitted_data`.`cid` = 18)
+
+AS `sport_titles`,
+
+ 
+
+(SELECT `data` FROM `d7_webform_submitted_data` `submitted_data` WHERE `submitted_data`.`sid` = `submissions`.`sid` AND
+
+`submitted_data`.`cid` = 19)
+
+AS `coach`,
+
+ 
+
+(SELECT `data` FROM `d7_webform_submitted_data` `submitted_data` WHERE `submitted_data`.`sid` = `submissions`.`sid` AND
+
+`submitted_data`.`cid` = 23)
+
+AS `additional_information` ,
+`submissions`.*
+
+FROM `d7_webform_submissions` `submissions`
+JOIN `d7_webform_submitted_data` `division`
+  on `submissions`.`sid` = `division`.`sid` 
+
+LEFT JOIN `d7_webform_submissions_sent` `submissions_sent` ON `submissions`.`submitted` = `submissions_sent`.`sid`
+
+WHERE 1=1 
+  and `division`.`cid` = 12
+  and `submissions`.`nid` = '19'
+
+ -- AND `submissions_sent`.`sid` IS NULL
