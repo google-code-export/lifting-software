@@ -7898,7 +7898,126 @@ END
 SET TERM ; ^</script>
 	</version>
 
+	<version number="2.32">
+		<script>SET TERM ^ ;
+CREATE OR ALTER procedure SELECT_RECORDS (
+    LOC numeric(12,0),
+    EXERSCISE integer)
+returns (
+    ID_LIFTER numeric(12,0),
+    ID_AGECL numeric(12,0),
+    WEGHT double precision,
+    SOREVN_NAME varchar(200),
+    "LEVEL" integer)
+as
+declare variable TODAY date;
+declare variable ID_CATEGORY numeric(12,0);
+declare variable ID_COMPET numeric(12,0);
+declare variable ID_RANGE numeric(12,0);
+declare variable LIFTER_SEX integer;
+declare variable LIFTER_DATEBITH date;
+declare variable LEVLOW integer;
+declare variable LEVHIGH integer;
+declare variable FIX integer;
+declare variable LVL numeric(12,0);
+BEGIN
+    TODAY = CAST('NOW' AS DATE);
+
+  SELECT
+    LOC.ID_COMPET,
+    LOC.ID_CATEGORY,
+    C.ID_RANGE,
+    L.SEX,
+    c."LEVEL",
+    T.FIXRECORD
+  FROM
+    LIFTER_ON_COMPETITION LOC JOIN
+    COMPETIT C ON C.ID_COMPET= LOC.ID_COMPET JOIN
+    LIFTER L ON LOC.ID_LIFTER= L.ID_LIFTER JOIN
+    TEAM T on T.ID_TEAM = LOC.ID_TEAM
+  WHERE
+    LOC.ID_LIFTER_COMPET = :LOC
+  INTO
+    :ID_COMPET,
+    :ID_CATEGORY,
+    :ID_RANGE,
+    :LIFTER_SEX,
+    :LevHigh,
+    :LEVLOW;
+
+FOR SELECT "LEVEL" as lvl FROM PLEVEL where "LEVEL" between :LEVLOW and :LEVHIGH order by 1 desc INTO :LVL do
+    begin
+    for SELECT
+    r.ID_LIFTER,
+    r.ID_AGECL,
+    WEGHT,
+    SOREVN_NAME,
+    "LEVEL"
+  FROM
+    (
+    select ID_RECORD, id_lifter, ID_CATEGORY, ID_RANGE, id_agecl,"LEVEL" ,ID_EXER, WEGHT, SOREVN_NAME  from RECORDS
+    union all
+    select ID_RECORD, id_lifter, ID_CATEGORY, ID_RANGE, id_agecl,"LEVEL" ,ID_EXER, WEGHT, SOREVN_NAME  from pRecord(:EXERSCISE, :ID_CATEGORY, :ID_RANGE)
+    )
+    R JOIN
+    LIFTER L ON L.ID_LIFTER = R.ID_LIFTER JOIN
+    AGE_CLASS AC ON ac.id_agecl=r.id_agecl
+  WHERE
+    ID_CATEGORY = :ID_CATEGORY AND
+    ID_RANGE = :ID_RANGE AND
+    ID_EXER = :EXERSCISE AND
+    L.SEX = :LIFTER_SEX AND
+    R."LEVEL" = :lvl AND
+    r.ID_AGECL IN
+      (
+          SELECT ID_AGECL
+          FROM
+            AGE_CLASS
+          WHERE
+            (
+             SELECT
+                (:TODAY - L.DAT_BITH) / 365
+              FROM
+                LIFTER_ON_COMPETITION LOC INNER JOIN
+                LIFTER L on loc.id_lifter = l.id_lifter
+              WHERE
+                LOC.ID_LIFTER_COMPET = :LOC
+            ) BETWEEN FROM_AGE AND TO_AGE
+          OR ID_AGECL = -2
+      ) AND
+    R.ID_RECORD in (SELECT ID_RECORD FROM MAX_RECORDS(:id_range, :id_category, :lifter_sex, :exerscise))
+  ORDER BY
+     ac.from_age, "LEVEL"
+  INTO
+    :ID_LIFTER,
+    :ID_AGECL,
+    :WEGHT,
+    :SOREVN_NAME,
+    :"LEVEL"
+   do SUSPEND;
+  end
+
+  TODAY = NULL;
+  ID_CATEGORY = NULL;
+  ID_COMPET = NULL;
+  ID_RANGE = NULL;
+  LIFTER_SEX = NULL;
+  LIFTER_DATEBITH = NULL;
+  LEVLOW = NULL;
+  LEVHIGH = NULL;
+  FIX = NULL;
+  LVL = NULL;
+END^
+SET TERM ; ^</script>
+	</version>
+
 <!--
+	<version number="2.30">
+      <script>CREATE INDEX LIFTER_ON_COMPETITION_IDX2 ON LIFTER_ON_COMPETITION (CREATETIME);</script>
+      <script>CREATE INDEX LIFTER_ON_COMPETITION_IDX1 ON LIFTER_ON_COMPETITION (EDITTIME);</script>
+	</version>
+
+
 	<version number="2.29">
 		<script>SET TERM ^ ;
 CREATE OR ALTER PROCEDURE DO_UP 
