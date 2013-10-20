@@ -1,5 +1,5 @@
 <main>
-  <reportfilename ru="frf\StreamReport_ru.frf" eng="frf\BpStreamReport_eng.frf"/>
+  <reportfilename ru="frf\StreamReport_ru.frf" eng="frf\StreamReport_eng.frf"/>
   <info name=""/>
   <sql>
 select

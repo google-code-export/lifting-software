@@ -8011,7 +8011,87 @@ END^
 SET TERM ; ^</script>
 	</version>
 
+	<version number="2.33">
+		<script>SET TERM ^ ;
+CREATE OR ALTER procedure COMPETSTAT (
+    IDC numeric(12,0))
+returns (
+    NAME varchar(150),
+    "VALUE" varchar(250))
+as
+begin
+  NAME = 'Кол-во спортсменов общее';
+  SELECT COUNT(ID_LIFTER_COMPET)
+  FROM LIFTER_ON_COMPETITION
+  WHERE ID_COMPET = :"IDC"
+  INTO :"VALUE";
+  suspend;
+
+  NAME = 'Кол-во спортсменов уник.';
+  SELECT COUNT(distinct ID_LIFTER)
+  FROM LIFTER_ON_COMPETITION
+  WHERE ID_COMPET = :IDC
+  INTO :"VALUE";
+  suspend;
+
+  NAME = 'Кол-во команд участниц';
+  SELECT COUNT(distinct ID_TEAM)
+  FROM LIFTER_ON_COMPETITION
+  WHERE ID_COMPET = :IDC
+  INTO :"VALUE";
+  suspend;
+
+  NAME = 'Кол-во городов спортсменов';
+  select count(distinct(l.town))
+  from lifter_on_competition loc join
+    Lifter L on l.id_lifter = loc.id_lifter
+  where loc.id_compet = :IDC
+  into :"VALUE";
+  suspend;
+  
+  NAME = 'Кол-во рекордов национальных';
+  select NUM from RECORDSINCOMPET(:IDC, 1) into :"VALUE";
+  suspend;
+
+  NAME = 'Кол-во рекордов европейских';
+  select NUM from RECORDSINCOMPET(:IDC, 2) into :"VALUE";
+  suspend;
+
+  NAME = 'Кол-во рекордов мировых';
+  select NUM from RECORDSINCOMPET(:IDC, 3) into :"VALUE";
+  suspend;
+
+  NAME = 'Спортсмены - самый пожилой';
+  select TRIM(l.name)||'('||
+    ((cast('now' as date) - l.dat_bith)/365)||
+    ') '||', '||TRIM(l.town)
+  from lifter_on_competition loc join
+    Lifter L on l.id_lifter = loc.id_lifter
+  where loc.id_compet = :IDC
+  order by l.dat_bith asc
+  rows 1 
+  into :"VALUE";
+  suspend;
+
+  NAME = 'Спортсмены - самый молодой';
+  select  TRIM(l.name)||'('||
+    ((cast('now' as date) - l.dat_bith)/365)||
+    ') '||', '||TRIM(l.town)
+  from lifter_on_competition loc join
+    Lifter L on l.id_lifter = loc.id_lifter
+  where loc.id_compet = :IDC
+  order by  l.dat_bith desc
+  rows 1 
+  into :"VALUE";
+  suspend;
+
+end
+
+^SET TERM ; ^</script>
+	</version>
 <!--
+
+
 	<version number="2.30">
       <script>CREATE INDEX LIFTER_ON_COMPETITION_IDX2 ON LIFTER_ON_COMPETITION (CREATETIME);</script>
       <script>CREATE INDEX LIFTER_ON_COMPETITION_IDX1 ON LIFTER_ON_COMPETITION (EDITTIME);</script>

@@ -10,6 +10,7 @@ SELECT cast(Transliter(fr.fio) as varchar(50)) as EngFio
   , r.sname as rname
   , loc.zr
   , loc.createtime
+  , loc.id_stream
 FROM finalreport( %IDC% ) fr left join
   Lifter_on_competition loc  on loc.id_lifter_compet = fr.loc left join
   Competit C on c.id_compet = loc.id_compet left join
