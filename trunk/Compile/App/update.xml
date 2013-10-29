@@ -1,4 +1,4 @@
-<versions>
+﻿<versions>
 	<version number="1.0" encoding="UTF-8">
 		<script>SET TERM ^ ;
 
@@ -318,16 +318,25 @@ CREATE TABLE INFO (
 CREATE INDEX INFO_EDITTIME ON INFO (EDITTIME)^
 CREATE INDEX INFO_PLATFORM ON INFO (PLATFORM)^
 CREATE INDEX INFO_KIND ON INFO (KIND)^
--->
-	<version number="1.12">
-		<script>SET TERM ^ ;
 
+-->
+<!--
+	<version number="1.12">
+
+		<script>SET TERM ^ ;
 DELETE FROM INFO^
 COMMIT^
-
+SET TERM ; ^</script>
+		<script>SET TERM ^ ;
 CREATE INDEX INFO_EDITT ON INFO (EDITTIME)^
 alter table INFO add constraint PK_INFO primary key (ID)^
+SET TERM ; ^</script>
+-->
 
+	<version number="1.12">
+
+
+		<script>SET TERM ^ ;
 CREATE OR ALTER PROCEDURE ADD_CMD (
     platform smallint,
     cmd varchar(512),
@@ -4354,6 +4363,16 @@ SET TERM ; ^</script>
 	<version number="2.17">
 		<script>ALTER TABLE LIFTER2RAZR ADD LOC_ID NUMERIC(12);</script>
 		<script>ALTER TABLE LIFTER2RAZR ALTER ID_NORMAT position 3;</script>
+		<script>SET TERM ^ ;
+CREATE OR ALTER PROCEDURE DO_UP 
+as
+begin
+UPDATE LIFTER2RAZR set LOC_ID = (select max(ID_LIFTER_COMPET) from LIFTER_ON_COMPETITION loc where loc.ID_LIFTER = LIFTER2RAZR.ID_LIFTER)
+end
+^
+SET TERM ; ^</script>
+		<script>EXECUTE PROCEDURE DO_UP;</script>
+
 		<script>SET TERM ^ ;
 CREATE OR ALTER PROCEDURE APPLY_NEWRAZR (
     idc numeric(12,0),
