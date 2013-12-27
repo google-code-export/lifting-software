@@ -15,6 +15,6 @@ FROM finalreport( %IDC% ) fr left join
   Lifter_on_competition loc  on loc.id_lifter_compet = fr.loc left join
   Competit C on c.id_compet = loc.id_compet left join
   range r on r.id_range = c.id_range
-WHERE loc.id_lifter = %IDL%
+WHERE loc.id_lifter = %IDL% AND loc.ID_AGECL = %IDAC%
   </sql>
 </main>
