@@ -1,0 +1,22 @@
+<main>
+  <reportfilename ru="frf\finalReport_ru.frf" eng="frf\finalReport_eng.frf"/>
+  <info name=""/>
+  <sql>
+select
+  cast(Transliter(fr.fio) as varchar(60)) as EngFio,
+  cast(Transliter(fr.town) as varchar(160))as engTown,
+  cast(Transliter(fr.Coach) as varchar(60))as engCoach,
+  fr.*,
+  c.*,
+  r.sname as divis
+from finalreport2(%IDC%) fr
+left join
+  Lifter_on_competition loc
+    on loc.id_lifter_compet=fr.loc left join
+  Competit C
+    on c.id_compet=loc.id_compet join
+  Range r
+    on r.id_range = c.id_range
+%WHERE%
+  </sql>
+</main>
