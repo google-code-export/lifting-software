@@ -1,4 +1,4 @@
-﻿<versions>
+<versions>
 	<version number="1.0" encoding="UTF-8">
 		<script>SET TERM ^ ;
 
@@ -8108,6 +8108,162 @@ end
 
 ^SET TERM ; ^</script>
 	</version>
+	
+	<version number="2.34">
+		<script>SET TERM ^ ;
+CREATE OR ALTER procedure LIFTERFROMPLACE (
+    IDC numeric(12),
+    IDA numeric(12),
+    PL integer,
+    IDCAT numeric(12),
+    SEX integer)
+returns (
+    PLACE integer,
+    FIO varchar(150),
+    TOTALL double precision,
+    GLOSS double precision,
+    AGECLASS numeric(12),
+    LOC numeric(12))
+as
+declare variable COEF double precision;
+begin
+
+for
+
+select
+:"PL" as place,
+l.name as fio,
+le. summaall as totall,
+cast(le. summaall * w.coef as numeric(6,4)) as Gloss,
+:"IDA",
+loc.id_lifter_compet,
+coalesce((
+select agecoef from agecorrection where age = (
+select (cast('now' as date) - dat_bith)/365 from lifter where id_lifter = loc.id_lifter)
+), 1) as coef
+from
+  Lifter_On_Competition Loc inner join
+  Lifter_Exersis Le
+    on le.id_lifter_compet=loc.id_lifter_compet inner join
+  Lifter L
+    on l.id_lifter=loc.id_lifter inner join
+  Wilks W
+    on loc.id_wilks = w.id_wilks
+where
+  loc.INZACH = -1 and
+  loc.id_compet=:"IDC" and
+  loc.id_agecl =:"IDA" and
+  loc.id_category=:"IDCAT" and
+  L.Sex = :"SEX"
+order by
+  summaall desc,
+  w.SELF_WEIGHT asc
+rows :"PL" to :"PL"
+
+into
+  :"PLACE", :"FIO", :"TOTALL", :"GLOSS", :"AGECLASS", :"LOC", :COEF
+do
+begin
+  if (:"AGECLASS" &lt;&gt; -2) then
+    GLOSS = :"GLOSS" * coalesce(:COEF, 1);
+  suspend;
+end
+
+end
+^SET TERM ; ^</script>
+		<script>SET TERM ^ ;
+CREATE OR ALTER procedure LIFTERSFROMPLACE (
+    IDC numeric(12),
+    IDA numeric(12),
+    IDCAT numeric(12))
+returns (
+    PLACE integer,
+    FIO varchar(150),
+    TOTALL double precision,
+    GLOSS double precision,
+    AGECLASS numeric(12),
+    SEX integer,
+    LOC numeric(12))
+as
+begin
+for
+select lf.place, lf.fio, lf.totall, lf.gloss, lf.ageclass, lf.loc,  0
+  from lifterfromplace(:"IDC", :"IDA", 1, :"IDCAT", 0) lf union all
+select lf.place, lf.fio, lf.totall, lf.gloss, lf.ageclass, lf.loc,  0
+  from lifterfromplace(:"IDC", :"IDA", 2, :"IDCAT", 0) lf union all
+select lf.place, lf.fio, lf.totall, lf.gloss, lf.ageclass, lf.loc,  0
+  from lifterfromplace(:"IDC", :"IDA", 3, :"IDCAT", 0) lf
+into :"PLACE", :"FIO", :"TOTALL", :"GLOSS", :"AGECLASS", :"LOC", :"SEX"
+do suspend;
+
+for
+select lf.place, lf.fio, lf.totall, lf.gloss, lf.ageclass, lf.loc,  1
+  from lifterfromplace(:"IDC", :"IDA", 1, :"IDCAT", 1) lf union all
+select lf.place, lf.fio, lf.totall, lf.gloss, lf.ageclass, lf.loc,  1
+  from lifterfromplace(:"IDC", :"IDA", 2, :"IDCAT", 1) lf union all
+select lf.place, lf.fio, lf.totall, lf.gloss, lf.ageclass, lf.loc,  1
+  from lifterfromplace(:"IDC", :"IDA", 3, :"IDCAT", 1) lf
+into :"PLACE", :"FIO", :"TOTALL", :"GLOSS", :"AGECLASS", :"LOC", :"SEX"
+do suspend;
+
+end
+^SET TERM ; ^</script>
+		<script>SET TERM ^ ;
+CREATE OR ALTER procedure CATEGORYWINNERS (
+    IDC numeric(12),
+    IDCAT numeric(12))
+returns (
+    PLACE integer,				FIO varchar(150),
+    TOTALL double precision,    GLOSS double precision,
+    AGECLASS numeric(12),       SEX integer,
+    LOC numeric(12))
+as
+	declare variable IDA numeric(12);
+begin
+for
+select
+ distinct loc.id_agecl
+from
+  Lifter_On_Competition Loc
+where
+  loc.id_compet=:"IDC" and
+  loc.id_category=:"IDCAT"
+into :IDA
+do
+begin
+ for select place, fio, totall, gloss, ageclass, sex, loc from liftersfromplace( :"IDC", :ida, :"IDCAT") into
+   :"PLACE", :"FIO", :"TOTALL", :"GLOSS", :"AGECLASS", :"SEX", :"LOC"
+ do suspend;
+end
+ida = null;
+end
+^SET TERM ; ^</script>
+		<script>SET TERM ^ ;
+CREATE OR ALTER procedure COMPETITIONWINNERS (
+    IDC numeric(12))
+returns (
+    PLACE integer,				FIO varchar(150),
+    TOTALL double precision,    GLOSS double precision,
+    AGECLASS numeric(12),       SEX integer,
+    LOC numeric(12),            IDCATEG numeric(12),
+    CATEGNAME varchar(10))
+as
+begin
+  for
+    select ID_CATEGORY, NAME
+    from WEIGTH_CATEGORY
+    order by WE
+    into :"IDCATEG", :"CATEGNAME"
+  do
+    for
+      select Place, Fio, Totall, Gloss, AgeClass, Sex, Loc
+      from CategoryWinners(:"IDC", :"IDCATEG")
+      into :"PLACE", :"FIO", :"TOTALL", :"GLOSS",  :"AGECLASS", :"SEX", :"LOC"
+    do suspend;
+end
+^SET TERM ; ^</script>
+	</version>
+	
 <!--
 
 
