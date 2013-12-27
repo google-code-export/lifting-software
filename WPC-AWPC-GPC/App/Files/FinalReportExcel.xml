@@ -14,5 +14,7 @@ left join
     on loc.id_lifter_compet=fr.loc left join
   Competit C
     on c.id_compet=loc.id_compet
+WHERE
+  loc.id_stream > 0
   </sql>
 </main>
