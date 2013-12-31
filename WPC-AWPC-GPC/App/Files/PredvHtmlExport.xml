@@ -3,29 +3,44 @@
   <info name=""/>
   <sql>
 select
+  TransLiter(CutFio2(l.name)) as EngFIO,
+  CutFio2(l.name) as RusFIO,
   ac.name as rusAgeClass,
   ac.engname as engAgeClass,
   t.name TeamName,
   wc.Name as WC,
   l.sex as sex,
-  TransLiter(CutFio2(l.name)) as EngFIO,
-  CutFio2(l.name) as RusFIO,
   TransLiter(l.TOWN) as EngTOWN,
-  l.TOWN as RusTOWN
+  l.TOWN as RusTOWN,
+  (select max(table1.t1) from
+    (select coalesce(le1.summaall, 0) as t1
+       from  Lifter_on_Competition loc1 inner join  lifter_exersis le1 on loc1.id_lifter_compet = le1.id_lifter_compet inner join competit c1 on c1.id_compet = loc1.id_compet
+       where loc1.id_lifter = loc.id_lifter
+         and c1.id_range = c.id_range
+       union all
+       select coalesce(le1.squat1, 0)+ coalesce(le1.bench1, 0)+ coalesce(le1.dl1, 0)
+       from  Lifter_on_Competition loc1 inner join  lifter_exersis le1 on loc1.id_lifter_compet = le1.id_lifter_compet inner join competit c1 on c1.id_compet = loc1.id_compet
+       where loc1.id_lifter = loc.id_lifter
+         and c1.id_range = c.id_range
+    ) table1
+  ) as pbest
 
 from
   lifter l inner join
   Lifter_on_Competition loc
-    on l.id_lifter=loc.id_lifter inner join
+    on l.id_lifter = loc.id_lifter inner join
+  lifter_exersis le
+    on loc.id_lifter_compet = le.id_lifter_compet inner join
+  competit c
+    on c.id_compet = loc.id_compet inner join
   Age_Class Ac
-    on Ac.id_agecl=loc.id_agecl inner join
+    on Ac.id_agecl = loc.id_agecl inner join
   WEIGTH_CATEGORY WC
-    on Loc.Id_category =Wc.Id_category inner 
-join
+    on Loc.Id_category = Wc.Id_category inner join
   TEAM T
     on t.id_team = loc.id_team
 where
-  id_compet=%IDC%
+  c.id_compet=%IDC%
   %CONDITION%
 order by
   l.sex,
