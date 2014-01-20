@@ -3,12 +3,19 @@
   <info name=""/>
   <sql>select fr.*
   , loc.*
+  , (select squat from bestsquatbyloc(fr.loc)) as best_squat
+  , (select bench from bestbenchbyloc(fr.loc)) as best_bench
+  , (select DL from bestdlbyloc1(fr.loc)) as best_deadlift
   , r.sname sdivis
   , r.name fdivis
   , r.kind
+  , le.bench1
+  , le.bench2
+  , le.summaall as totall
 from  absolute_gram(%IDC%) fr
   inner join Lifter_on_competition loc on fr.loc=loc.id_lifter_compet 
   inner join Competit c on c.id_compet = loc.id_compet
   inner join Range r on r.id_range=c.id_range
+  left join lifter_exersis le on loc.id_lifter_compet = le.id_lifter_compet
 </sql>
 </main>
