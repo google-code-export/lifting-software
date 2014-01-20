@@ -8264,8 +8264,189 @@ end
 ^SET TERM ; ^</script>
 	</version>
 	
+
+	<version number="2.35">
+		<script>SET TERM ^ ;
+create or alter procedure COPY_LIFTER_COMPET (
+    loc numeric(12),
+    idc numeric(12),
+    ids numeric(12),
+    idac numeric(12),
+    move integer)
+returns (
+    id numeric(12),
+    ts timestamp
+    )
+AS BEGIN
+  ts = current_timestamp;
+
+  if (coalesce(move, 0) = 1) then
+  begin
+    id = :loc;
+    update lifter_on_competition set  id_compet = :idc
+	    ,id_stream = :ids
+	    ,id_agecl = :idac
+	where 
+      id_lifter_compet = :loc;
+  end else
+  begin
+	  merge into lifter_on_competition dest_loc
+	  using (select id_category,
+	          id_lifter,         id_compet,
+	          id_wilks,          id_stream,
+	          club,              trener,
+	          id_team,           zr,
+	          InZach,            id_agecl,
+	          newRazr,           wasRazr,
+	          edittime,          createtime
+	    from lifter_on_competition
+	    where id_lifter_compet = :loc) as source_loc
+	  on dest_loc.id_compet = :idc
+	    and dest_loc.id_stream = :ids
+	    and dest_loc.id_agecl = :idac
+	    and dest_loc.id_lifter = source_loc.id_lifter
+	    and dest_loc.id_category = source_loc.id_category
+	  when matched then update set
+	        id_stream = :ids,                   id_category = source_loc.id_category,
+	        id_wilks = source_loc.id_wilks,     id_team = source_loc.id_team,
+	        trener = source_loc.trener,         zr = source_loc.zr,
+	        newRazr = source_loc.newRazr,       wasRazr = source_loc.wasRazr,
+	        inZach = source_loc.inZach,         club = source_loc.club,
+	        createtime = source_loc.createtime, edittime = :ts
+	  when not matched then insert
+	        ( id_lifter_compet,  id_category,
+	          id_lifter,         id_compet,
+	          id_wilks,          id_stream,
+	          club,              trener,
+	          id_team,           zr,
+	          inzach,            id_agecl,
+	          edittime,          createtime)
+	      values
+	        ( gen_id(loc, 1),               source_loc.id_category,
+	          source_loc.id_lifter,         :idc,
+	          source_loc.id_wilks,          :ids,
+	          source_loc.club,              source_loc.trener,
+	          source_loc.id_team,           source_loc.zr,
+	          source_loc.inzach,            :idac,
+	          :ts,                          :ts);
+
+	  select loc2.id_lifter_compet
+	  from lifter_on_competition loc1, lifter_on_competition loc2
+	  where loc1.id_lifter_compet = :loc
+	    and loc1.id_lifter=loc2.id_lifter
+	    and loc2.id_compet = :idc
+	    and loc2.id_stream = :ids
+	    and loc2.id_agecl = :idac
+	    and loc1.id_category=loc2.id_category
+	  rows 1
+	  into :id;
+
+	  merge into lifter_exersis dest_le
+	  using (select id_lifter_compet,
+	        SQUAT1,    OC1,
+	        SQUAT2,    OC2,
+	        SQUAT3,    OC3,
+	        SQUAT4,    OC10,
+	        BENCH1,    OC4,
+	        BENCH2,    OC5,
+	        BENCH3,    OC6,
+	        BENCH4,    OC11,
+	        DL1,       OC7,
+	        DL2,       OC8,
+	        DL3,       OC9,
+	        DL4,       OC12,
+	        SUMMAALL,  PLACE,
+	        POINTS,    STOY,
+	        EDITTIME
+	      from lifter_exersis
+	    where id_lifter_compet = :loc) as source_le
+	  on source_le.id_lifter_compet = :id
+	  when matched then update set
+	        SQUAT1 = source_le.SQUAT1,      OC1 = source_le.oc1,
+	        SQUAT2 = source_le.SQUAT2,      OC2 = source_le.oc2,
+	        SQUAT3 = source_le.SQUAT3,      OC3 = source_le.oc3,
+	        SQUAT4 = source_le.SQUAT4,      OC10 = source_le.oc10,
+	        BENCH1 = source_le.BENCH1,      OC4 = source_le.oc4,
+	        BENCH2 = source_le.BENCH2,      OC5 = source_le.oc5,
+	        BENCH3 = source_le.BENCH3,      OC6 = source_le.oc6,
+	        BENCH4 = source_le.BENCH4,      OC11 = source_le.oc11,
+	        DL1 = source_le.DL1,            OC7 = source_le.oc7,
+	        DL2 = source_le.DL2,            OC8 = source_le.oc8,
+	        DL3 = source_le.DL3,            OC9 = source_le.oc9,
+	        DL4 = source_le.DL4,            OC12 = source_le.oc12,
+	        SUMMAALL = source_le.SUMMAALL,  PLACE = source_le.place,
+	        POINTS = source_le.POINTS,      STOY = source_le.stoy,
+	        EDITTIME = :ts
+	   when not matched then insert
+	       (SQUAT1,    OC1,
+	        SQUAT2,    OC2,
+	        SQUAT3,    OC3,
+	        SQUAT4,    OC10,
+	        BENCH1,    OC4,
+	        BENCH2,    OC5,
+	        BENCH3,    OC6,
+	        BENCH4,    OC11,
+	        DL1,       OC7,
+	        DL2,       OC8,
+	        DL3,       OC9,
+	        DL4,       OC12,
+	        SUMMAALL,  PLACE,
+	        POINTS,    STOY,
+	        EDITTIME,  id_lifter_compet) values
+	       (source_le.SQUAT1,    source_le.OC1,
+	        source_le.SQUAT2,    source_le.OC2,
+	        source_le.SQUAT3,    source_le.OC3,
+	        source_le.SQUAT4,    source_le.OC10,
+	        source_le.BENCH1,    source_le.OC4,
+	        source_le.BENCH2,    source_le.OC5,
+	        source_le.BENCH3,    source_le.OC6,
+	        source_le.BENCH4,    source_le.OC11,
+	        source_le.DL1,       source_le.OC7,
+	        source_le.DL2,       source_le.OC8,
+	        source_le.DL3,       source_le.OC9,
+	        source_le.DL4,       source_le.OC12,
+	        source_le.SUMMAALL,  source_le.PLACE,
+	        source_le.POINTS,    source_le.STOY,
+	        :ts,                 :id);
+  end
+
+/*
+  if ((coalesce(move, 0) = 1) and (:loc &lt;&gt; :id)) then
+  begin
+    delete from lifter_exersis where id_lifter_compet = :loc;
+    delete from lifter_on_competition where id_lifter_compet = :loc;
+    insert into deleted (id, "TABLE", EDITTIME, "VALUE")
+      VALUES (GEN_ID(DELETED, 1), 'LIFTER_ON_COMPETITION', :ts, :loc);
+
+    POST_EVENT 'LOC_DELETE';
+  end
+*/
+
+  POST_EVENT 'LOC_EDIT';
+END
+^SET TERM ; ^</script>
+	</version>
+
+	<version number="2.36">
+      <script>ALTER TABLE COMPETIT ADD MIN_RAZR_ID ID DEFAULT 0;</script>
+      <script>ALTER TABLE COMPETIT ADD CONSTRAINT FK_COMPETIT_RAZR FOREIGN KEY (MIN_RAZR_ID) REFERENCES RAZR (ID_RAZR);</script>
+		<script>SET TERM ^ ;
+CREATE OR ALTER PROCEDURE DO_UP 
+as
+begin
+	update COMPETIT set MIN_RAZR_ID = 0 where MIN_RAZR_ID is null;
+	insert into stream (id_stream, name, edittime) values (gen_id(stream, 1), 'Комбинированный', current_timestamp);
+end
+^
+SET TERM ; ^</script>
+		<script>EXECUTE PROCEDURE DO_UP;</script>
+		<script>ALTER TABLE COMPETIT ADD CONSTRAINT FK_COMPETIT_PARENT_ID FOREIGN KEY (GRP) REFERENCES COMPETIT(ID_COMPET);</script>
+	</version>
+
 <!--
 
+ALTER TABLE COMPETIT ADD MIN_NORMAT_ID ID;
+ALTER TABLE COMPETIT ADD CONSTRAINT FK_COMPETIT_1 FOREIGN KEY (MIN_NORMAT_ID) REFERENCES NORMAT(ID_NORMAT);
 
 	<version number="2.30">
       <script>CREATE INDEX LIFTER_ON_COMPETITION_IDX2 ON LIFTER_ON_COMPETITION (CREATETIME);</script>
