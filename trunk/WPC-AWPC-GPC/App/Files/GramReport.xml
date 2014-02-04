@@ -14,13 +14,17 @@ select
   fr.totall,
   fr.gloss,
   fr.categname,
-  w.self_weight
+  w.self_weight,
+  loc.trener as coach,
+  loc.club as club,
+  loc.wasrazr as wasrank,
+  loc.newrazr as newrank
 from
-  COMPETITIONWINNERS(%IDC%) fr left join
+  COMPETITIONWINNERS(%IDC%) fr inner join
   Age_class ac on
-    ac.id_agecl= fr.ageclass left join
+    ac.id_agecl= fr.ageclass inner join
   Lifter_on_competition loc on
-    fr.loc=loc.id_lifter_compet left join
+    fr.loc=loc.id_lifter_compet inner join
   Wilks W on
     w.id_wilks = loc.id_wilks
 where
