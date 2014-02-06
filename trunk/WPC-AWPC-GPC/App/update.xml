@@ -8435,11 +8435,26 @@ CREATE OR ALTER PROCEDURE DO_UP
 as
 begin
 	update COMPETIT set MIN_RAZR_ID = 0 where MIN_RAZR_ID is null;
+
 	insert into stream (id_stream, name, edittime) values (gen_id(stream, 1), 'Комбинированный', current_timestamp);
+
+	update competit set grp=id_compet where id_compet in (
+	select t1.id_compet
+	from (select  grp, id_compet  from competit) t1 left join
+	  competit c on c.id_compet =t1.grp
+	where c.id_compet is null);	
+
+	update RDB$FIELDS set
+	RDB$CHARACTER_SET_ID = 52,
+	RDB$COLLATION_ID = 0,
+	RDB$FIELD_TYPE = 37
+	where
+	RDB$FIELD_TYPE in ( 37, 14) and  RDB$CHARACTER_LENGTH is not null;	
 end
 ^
 SET TERM ; ^</script>
 		<script>EXECUTE PROCEDURE DO_UP;</script>
+
 		<script>ALTER TABLE COMPETIT ADD CONSTRAINT FK_COMPETIT_PARENT_ID FOREIGN KEY (GRP) REFERENCES COMPETIT(ID_COMPET);</script>
 	</version>
 
