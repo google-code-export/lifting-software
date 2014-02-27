@@ -4,7 +4,7 @@
   <sql>
 select
   cast(Transliter(fr.fio) as varchar(50)) as EngFio,
-  cast(Transliter(fr.town) as varchar(130))as engTown,
+  cast(Transliter(fr.town) as varchar(103))as engTown,
   cast(Transliter(fr.Coach) as varchar(50))as engCoach,
   fr.*,
   c.*
@@ -14,5 +14,7 @@ left join
     on loc.id_lifter_compet=fr.loc left join
   Competit C
     on c.id_compet=loc.id_compet
+WHERE
+  loc.id_stream > 0
   </sql>
 </main>
