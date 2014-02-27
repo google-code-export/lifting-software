@@ -4614,34 +4614,59 @@ END
 ^SET TERM ; ^</script>
 	</version>
 
-	<version number="0.20">
-      <script>ALTER TABLE COMPETIT ADD MIN_RAZR_ID ID DEFAULT 0;</script>
-      <script>ALTER TABLE COMPETIT ADD CONSTRAINT FK_COMPETIT_RAZR FOREIGN KEY (MIN_RAZR_ID) REFERENCES RAZR (ID_RAZR);</script>
-		<script>SET TERM ^ ;
-CREATE OR ALTER PROCEDURE DO_UP 
-as
-begin
-	update COMPETIT set MIN_RAZR_ID = 0 where MIN_RAZR_ID is null;
-	insert into stream (id_stream, name, edittime) values (gen_id(stream, 1), 'Комбинированный', current_timestamp);
-	
+	<version number="0.26">
+	  <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DO_UP as
+begin 
 	update competit set grp = id_compet where id_compet in (
 	select t1.id_compet
 	from (select  grp, id_compet  from competit) t1 left join
 	  competit c on c.id_compet =t1.grp
 	where c.id_compet is null);		
+
+	merge into stream dest using (select 'Комбинированный' as name from tmp) as src
+	on upper(dest.name) like upper(src.name) when not matched then insert 
+	(id_stream, name, edittime) values (gen_id(stream, 1), src.name, current_timestamp);
 	
-	update RDB$FIELDS set
+end^ 
+SET TERM ; ^</script>
+	<script>EXECUTE PROCEDURE DO_UP;</script>
+  </version>
+
+	<version number="0.27">
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DO_UP as
+begin 
+/**/ 
+end^ 
+SET TERM ; ^</script>
+
+	<script optional ="1">ALTER TABLE COMPETIT DROP CONSTRAINT FK_COMPETIT_RAZR;</script>
+    <script optional ="1">ALTER TABLE COMPETIT DROP CONSTRAINT FK_COMPETIT_PARENT_ID;</script>
+    <script optional ="1">ALTER TABLE COMPETIT DROP MIN_RAZR_ID;</script>
+
+	<script>ALTER TABLE COMPETIT ADD MIN_RAZR_ID ID DEFAULT 0;</script>
+		<script>SET TERM ^ ;
+CREATE OR ALTER PROCEDURE DO_UP 
+as
+begin
+  update competit c set c.min_razr_id = 0  where c.min_razr_id is null;
+
+  update RDB$FIELDS set
 	RDB$CHARACTER_SET_ID = 52,
 	RDB$COLLATION_ID = 0,
 	RDB$FIELD_TYPE = 37
-	where
+  where
 	RDB$FIELD_TYPE in ( 37, 14) and  RDB$CHARACTER_LENGTH is not null;	
 end
 ^
 SET TERM ; ^</script>
 		<script>EXECUTE PROCEDURE DO_UP;</script>
-		<script>ALTER TABLE COMPETIT ADD CONSTRAINT FK_COMPETIT_PARENT_ID FOREIGN KEY (GRP) REFERENCES COMPETIT(ID_COMPET);</script>
-	</version>	
+
+      <script>ALTER TABLE COMPETIT ADD CONSTRAINT FK_COMPETIT_RAZR FOREIGN KEY (MIN_RAZR_ID) REFERENCES RAZR (ID_RAZR);</script>
+   	  <script>ALTER TABLE COMPETIT ADD CONSTRAINT FK_COMPETIT_PARENT_ID FOREIGN KEY (GRP) REFERENCES COMPETIT(ID_COMPET);</script>
+	</version>
+
 <!--
 	<version number="0.18">
 		<script>SET TERM ^ ;
