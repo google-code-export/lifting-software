@@ -1,4 +1,4 @@
-<versions>
+﻿<versions>
 
 	<version number="0.01">
 		<script>alter table LIFTER_ON_COMPETITION add CREATETIME TIMESTAMP</script>
@@ -4266,7 +4266,7 @@ returns (
     ID_LIFTER numeric(12,0),
     ID_AGECL numeric(12,0),
     WEGHT double precision,
-    SOREVN_NAME varchar(200),
+    SOREVN_NAME varchar(200) character set WIN1251,
     "LEVEL" integer)
 as
 declare variable TODAY date;
@@ -4275,8 +4275,8 @@ declare variable ID_COMPET numeric(12,0);
 declare variable ID_RANGE numeric(12,0);
 declare variable LIFTER_SEX integer;
 declare variable LIFTER_DATEBITH date;
-declare variable LEVLOW integer;
-declare variable LEVHIGH integer;
+declare variable LEVLOW bigint;
+declare variable LEVHIGH bigint;
 declare variable FIX integer;
 declare variable LVL numeric(12,0);
 BEGIN
@@ -4304,7 +4304,7 @@ BEGIN
     :LevHigh,
     :LEVLOW;
 
-FOR SELECT "LEVEL" as lvl FROM PLEVEL where "LEVEL" between :LEVLOW and :LEVHIGH order by 1 desc INTO :LVL do
+FOR SELECT "LEVEL" as lvl FROM PLEVEL where  "LEVEL" between :LEVLOW and :LEVHIGH order by 1 desc INTO :LVL do
     begin
     for SELECT
     r.ID_LIFTER,
@@ -4341,7 +4341,16 @@ FOR SELECT "LEVEL" as lvl FROM PLEVEL where "LEVEL" between :LEVLOW and :LEVHIGH
                 LIFTER L on loc.id_lifter = l.id_lifter
               WHERE
                 LOC.ID_LIFTER_COMPET = :LOC
-            ) BETWEEN FROM_AGE AND TO_AGE
+            ) &gt;= cast(FROM_AGE as int)  and
+            (
+             SELECT
+                (:TODAY - L.DAT_BITH) / 365
+              FROM
+                LIFTER_ON_COMPETITION LOC INNER JOIN
+                LIFTER L on loc.id_lifter = l.id_lifter
+              WHERE
+                LOC.ID_LIFTER_COMPET = :LOC
+            ) &lt;= cast(TO_AGE as int)
           OR ID_AGECL = -2
       ) AND
     R.ID_RECORD in (SELECT ID_RECORD FROM MAX_RECORDS(:id_range, :id_category, :lifter_sex, :exerscise))
