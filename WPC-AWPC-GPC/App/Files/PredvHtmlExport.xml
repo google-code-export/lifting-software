@@ -45,7 +45,7 @@ select
        where loc1.id_lifter = loc.id_lifter
          and c1.id_range = c.id_range
     ) table1
-  ), '0') as numeric(4,1))as pbest1
+  ), '0') as numeric(6,1))as pbest1
 from
   lifter l inner join
   Lifter_on_Competition loc
