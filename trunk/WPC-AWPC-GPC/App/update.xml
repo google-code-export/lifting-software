@@ -8,7 +8,7 @@ returns (
     "VERSION" float)
 as
 begin
-  VERSION = 1.0;
+  VERSION = 1.0/* ; compile error to avoid make changes in Folk BP*/
   suspend;
 end
 ^
@@ -23,7 +23,7 @@ CREATE OR ALTER PROCEDURE EDIT_LE (
 returns (
     ts timestamp)
 as
-declare variable tot float/*; compile error to avoid make changes in Folk BP*/
+declare variable tot float;
 begin
   TS = CURRENT_TIMESTAMP;
   
@@ -1064,10 +1064,9 @@ end
 ^
 SET TERM ; ^</script>
 	</version>
+
 	<version number="1.16">
 		<script>SET TERM ^ ;
-
-
 CREATE OR ALTER PROCEDURE INSERT_RECORD (
     idloc double precision,
     idagecl double precision,
@@ -1183,9 +1182,6 @@ begin
      suspend;
 end
 ^
-
-
-
 
 CREATE OR ALTER PROCEDURE PRECORD (
     exer numeric(12,0),
@@ -1317,7 +1313,7 @@ FOR SELECT "LEVEL" as lvl FROM PLEVEL where "LEVEL" between :LEVLOW and :LEVHIGH
                 LIFTER L on loc.id_lifter = l.id_lifter
               WHERE
                 LOC.ID_LIFTER_COMPET = :LOC
-            ) BETWEEN FROM_AGE AND TO_AGE
+            ) &lt; FROM_AGE--BETWEEN FROM_AGE AND TO_AGE
           OR ID_AGECL = -2
       ) AND
     R.ID_RECORD in (SELECT ID_RECORD FROM MAX_RECORDS(:id_range, :id_category, :lifter_sex, :exerscise))
@@ -1410,7 +1406,6 @@ do suspend;
 END
 ^
 
-
 CREATE OR ALTER PROCEDURE VER 
 returns (VERSION numeric(3,3))
 as
@@ -1421,24 +1416,30 @@ end
 ^
 SET TERM ; ^</script>
 	</version>
+	
 	<version number="1.17">
 		<script>SET TERM ^ ;
+CREATE OR ALTER PROCEDURE DO_UP 
+as
+begin
+suspend;
+end^
+SET TERM ; ^</script>
+
+	<script>SET TERM ^ ;
 
 ALTER TABLE EXES ADD RECORDER SMALLINT^
 CREATE INDEX EXES_RO ON EXES (RECORDER)^
 
-
 CREATE OR ALTER PROCEDURE DO_UP 
 as
 begin
-UPDATE EXES SET RECORDER=ID_EXES WHERE ID_EXES > -1;
-UPDATE EXES SET RECORDER=4 WHERE ID_EXES&lt;0;
-end
-^
+  UPDATE EXES SET RECORDER=ID_EXES WHERE ID_EXES > -1;
+  UPDATE EXES SET RECORDER=4 WHERE ID_EXES&lt;0;
+end^
 SET TERM ; ^</script>
 		<script>EXECUTE PROCEDURE DO_UP;</script>
 		<script>SET TERM ^ ;
-DROP PROCEDURE DO_UP^
 CREATE OR ALTER PROCEDURE VER 
 returns (VERSION numeric(3,3))
 as
@@ -4350,7 +4351,7 @@ SET TERM ; ^</script>
 		<script>EXECUTE PROCEDURE DO_UP;</script>
 
 		<script>SET TERM ^ ;
-CREATE OR ALTER PROCEDURE VER 
+CREATE OR ALTER PROCEDURE 'VER 
 returns (VERSION numeric(3,3))
 as              
 begin
@@ -4362,13 +4363,14 @@ SET TERM ; ^</script>
 	</version>
 
 	<version number="2.17">
+		<script optional ="1" >ALTER TABLE LIFTER2RAZR DROP LOC_ID;</script>
 		<script>ALTER TABLE LIFTER2RAZR ADD LOC_ID NUMERIC(12);</script>
 		<script>ALTER TABLE LIFTER2RAZR ALTER ID_NORMAT position 3;</script>
 		<script>SET TERM ^ ;
 CREATE OR ALTER PROCEDURE DO_UP 
 as
 begin
-UPDATE LIFTER2RAZR set LOC_ID = (select max(ID_LIFTER_COMPET) from LIFTER_ON_COMPETITION loc where loc.ID_LIFTER = LIFTER2RAZR.ID_LIFTER)
+UPDATE LIFTER2RAZR set LOC_ID = (select max(ID_LIFTER_COMPET) from LIFTER_ON_COMPETITION loc where loc.ID_LIFTER = LIFTER2RAZR.ID_LIFTER);
 end
 ^
 SET TERM ; ^</script>
@@ -4463,11 +4465,14 @@ end
 SET TERM ; ^</script>
 		<script>EXECUTE PROCEDURE DO_UP;</script>
 
+		<script optional="1">ALTER TABLE LIFTER2RAZR DROP CONSTRAINT FK_LIFTER2RAZR_1;</script>
 		<script>
 ALTER TABLE LIFTER2RAZR ADD CONSTRAINT FK_LIFTER2RAZR_1 FOREIGN KEY (LOC_ID) REFERENCES LIFTER_ON_COMPETITION (ID_LIFTER_COMPET) ON DELETE CASCADE;
 </script>
+
+		<script optional="1">ALTER TABLE LIFTER2RAZR DROP CONSTRAINT FK_LIFTER2RAZR_2;</script>
 		<script>
-alter table LIFTER2RAZR add constraint FK_LIFTER2RAZR_2 foreign key (ID_LIFTER) references LIFTER(ID_LIFTER)on delete CASCADE
+alter table LIFTER2RAZR add constraint FK_LIFTER2RAZR_2 foreign key (ID_LIFTER) references LIFTER(ID_LIFTER)on delete CASCADE;
 </script>
 
 		<script>SET TERM ^ ;
@@ -7300,6 +7305,8 @@ SET TERM ; ^</script>
 		<script>EXECUTE PROCEDURE DO_UP;</script>
 	</version>
 	<version number="2.25">
+		<script optional="1">ALTER TABLE LIFTER2RAZR DROP CONSTRAINT FK_LIFTER2RAZR_NORMAT;</script>
+
 		<script>ALTER TABLE LIFTER2RAZR ADD CONSTRAINT FK_LIFTER2RAZR_NORMAT FOREIGN KEY (ID_NORMAT) REFERENCES NORMAT(ID_NORMAT);</script>
 	</version>
 
@@ -8002,7 +8009,7 @@ FOR SELECT "LEVEL" as lvl FROM PLEVEL where "LEVEL" between :LEVLOW and :LEVHIGH
                 LIFTER L on loc.id_lifter = l.id_lifter
               WHERE
                 LOC.ID_LIFTER_COMPET = :LOC
-            ) BETWEEN FROM_AGE AND TO_AGE
+            )  > FROM_AGE --BETWEEN FROM_AGE AND TO_AGE
           OR ID_AGECL = -2
       ) AND
     R.ID_RECORD in (SELECT ID_RECORD FROM MAX_RECORDS(:id_range, :id_category, :lifter_sex, :exerscise))
@@ -8129,10 +8136,7 @@ as
 declare variable COEF double precision;
 begin
 
-for
-
-select
-:"PL" as place,
+for select :"PL" as place,
 l.name as fio,
 le. summaall as totall,
 cast(le. summaall * w.coef as numeric(6,4)) as Gloss,
