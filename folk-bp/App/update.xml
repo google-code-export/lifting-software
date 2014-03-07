@@ -4676,6 +4676,52 @@ SET TERM ; ^</script>
    	  <script>ALTER TABLE COMPETIT ADD CONSTRAINT FK_COMPETIT_PARENT_ID FOREIGN KEY (GRP) REFERENCES COMPETIT(ID_COMPET);</script>
 	</version>
 
+	<version number="0.28">
+	<script optional ="1">DROP TABLE TRANSLATE_RUS_ENG;</script>
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DO_UP as
+begin 
+/**/ 
+end^ 
+SET TERM ; ^</script>
+
+	<script>
+	CREATE TABLE TRANSLATE_RUS_ENG (
+		ID       CHAR(50) CHARACTER SET ASCII NOT NULL,
+		VAL      VARCHAR(254) CHARACTER SET WIN1251
+);</script>
+	<script>ALTER TABLE TRANSLATE_RUS_ENG ADD CONSTRAINT PK_TRANSLATE_RUS_ENG PRIMARY KEY (ID);</script>
+	</version>
+
+	<version number="0.29">
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DO_UP as
+begin 
+	delete from lifter_exersis where id_lifter_compet in
+	(
+	SELECT id_lifter_compet FROM LIFTER_ON_COMPETITION loc Inner join competit c on loc.id_compet = c.id_compet
+	WHERE c.ID_RANGE in (17, 14)
+	);
+
+	delete from  LIFTER_ON_COMPETITION where id_lifter_compet in
+	(
+	SELECT id_lifter_compet FROM LIFTER_ON_COMPETITION loc Inner join competit c on loc.id_compet = c.id_compet
+	WHERE c.ID_RANGE in (17, 14)
+	);
+	delete from competit where ID_RANGE in (17, 14);
+    DELETE FROM RANGE WHERE ID_RANGE in (17, 14); /* 'WPC 1 слойная становая тяга', 'AWPC 1 слойная становая тяга'*/
+
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_2', 'Folk benchpress single body weight') MATCHING (ID);
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_4', 'Folk benchpress half of  body weight') MATCHING (ID);
+end^ 
+SET TERM ; ^</script>
+
+		<script>EXECUTE PROCEDURE DO_UP;</script>
+	</version>
+	
+	
 <!--
 	<version number="0.18">
 		<script>SET TERM ^ ;
