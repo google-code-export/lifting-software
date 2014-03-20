@@ -8684,9 +8684,389 @@ SET TERM ; ^</script>
 
 		<script>EXECUTE PROCEDURE DO_UP;</script>
 	</version>
+
+
+
+	<version number="2.40">
+	<script optional ="1">DROP PROCEDURE CHECK_ENTRY;</script>
+	<script optional ="1">DROP TABLE COMPET_ENTRY_LIMIT;</script>
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DO_UP as
+begin 
+/**/ 
+end^ 
+SET TERM ; ^</script>
+
+    <script>SET TERM ^ ; 
+CREATE TABLE COMPET_ENTRY_LIMIT (
+    ID_COMPET    ID not null,
+    ID_CATEGORY  ID not null,
+    ID_RAZR      ID not null,
+    ID_AGECL     ID not null,
+	SEX			 INT not null
+)^
+SET TERM ; ^</script>
+
+    <script>SET TERM ^ ; 
+ALTER TABLE COMPET_ENTRY_LIMIT ADD CONSTRAINT PK_COMPET_ENTRY_LIMIT PRIMARY KEY (ID_COMPET, ID_CATEGORY, ID_RAZR, ID_AGECL, SEX)^	
+ALTER TABLE COMPET_ENTRY_LIMIT ADD CONSTRAINT FK_COMPET_ENTRY_LIMIT_COMPET FOREIGN KEY (ID_COMPET) REFERENCES COMPETIT (ID_COMPET)^
+ALTER TABLE COMPET_ENTRY_LIMIT ADD CONSTRAINT FK_COMPET_ENTRY_LIMIT_WC FOREIGN KEY (ID_CATEGORY) REFERENCES WEIGTH_CATEGORY (ID_CATEGORY)^
+ALTER TABLE COMPET_ENTRY_LIMIT ADD CONSTRAINT FK_COMPET_ENTRY_LIMIT_RAZR FOREIGN KEY (ID_RAZR) REFERENCES RAZR (ID_RAZR)^
+ALTER TABLE COMPET_ENTRY_LIMIT ADD CONSTRAINT FK_COMPET_ENTRY_LIMIT_AGECL FOREIGN KEY (ID_AGECL) REFERENCES AGE_CLASS (ID_AGECL)^
+SET TERM ; ^</script>
+</version>	
+
+
+	<version number="2.41">
+    <script optional ="1">DROP INDEX PARAMS_NAME_VAL;</script>
+    <script optional ="1">DROP INDEX PARAMS_IDX_UP_NAME;</script>
+    <script optional ="1">DROP INDEX LIFTER_UANAME;</script>
+    <script optional ="1">DROP INDEX LIFTER_UNAME;</script>
+    <script optional ="1">ALTER TABLE COMPETIT DROP MIN_RAZR_ID;</script>
+
+    <script>CREATE INDEX PARAMS_NAME_VAL ON PARAMS (NAME, "VALUE");</script>
+    <script>CREATE UNIQUE INDEX PARAMS_IDX_UP_NAME ON PARAMS COMPUTED BY (UPPER(NAME));</script>
+    <script>CREATE INDEX LIFTER_UANAME ON LIFTER COMPUTED BY (UPPER(ANAME));</script>
+    <script>CREATE INDEX LIFTER_UNAME ON LIFTER COMPUTED BY (UPPER(NAME));</script>	
+
+	<script>SET TERM ^ ;
+CREATE OR ALTER procedure CHECK_ENTRY (
+    COMPET_ID numeric(12,0),
+    TOTALL double precision,
+    AGECLASS_ID numeric(12,0),
+    WEIGHTCLASS_ID numeric(12,0),
+    LIFTER_ID numeric(12,0))
+returns (
+    RESULT integer,
+    MINRAZRNAME varchar(4) character set WIN1251 collate WIN1251)
+as
+declare variable CEL integer;
+declare variable MINTOTALL double precision;
+begin
+    result = 1;
+
+    cel = null;
+    minTotall = null;
+
+    select coalesce( cast( (select "VALUE" from params where upper(name) = upper('CheckEntryLimitations')) as int), 0) from tmp into cel;
+
+    if (cel = 0) then
+    begin
+      suspend;
+      exit;
+    end
+
+    select n.sum_tot, r.name
+    from compet_entry_limit cel inner join
+      razr r on  cel.id_razr = r.id_razr inner join
+      competit c on cel.id_compet = c.id_compet left join
+      normat n on (n.id_range = c.id_range and n.id_category = cel.id_category and cel.id_razr = n.id_razr)
+    where cel.id_compet = :compet_id
+      and cel.id_category = :weightclass_id
+      and cel.id_agecl = :ageclass_id
+      and n.sex = (select sex from lifter where id_lifter = :lifter_id)
+      and cel.sex = n.sex
+    into minTotall, MinRazrName;
+
+    if (coalesce(totall, 0) &lt; coalesce(minTotall, 0)) then result = 0;
+
+    cel = null;
+    minTotall = null;
+    suspend;
+end
+^ SET TERM ; ^</script>
 	
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DO_UP as
+begin 
+	UPDATE OR INSERT INTO PARAMS (ID, ID_PARENT, NAME, "VALUE", DESCRIPTION)
+						  VALUES (500, 1, 'General', NULL, 'Общие настройки')
+						MATCHING (ID);
+	UPDATE OR INSERT INTO PARAMS (ID, ID_PARENT, NAME, "VALUE", DESCRIPTION)
+						  VALUES (501, 500, 'CheckEntryLimitations', '0', 'Проверять ограничения по разряду')
+						MATCHING (ID);
+						
+	update RDB$FIELDS set RDB$FIELD_LENGTH = 512, RDB$CHARACTER_LENGTH = 512 where RDB$FIELD_NAME = 'RDB$391';
+
+	update razr set name = trim(name);
+	update lifter set name = trim(name), aname = trim(aname), town = trim(town);
+
+	update RDB$FIELDS set RDB$FIELD_TYPE = 37, RDB$CHARACTER_SET_ID = 52, RDB$COLLATION_ID = 0 where RDB$FIELD_NAME = 'RDB$441';
+	UPDATE RAZR  set ID_RAZR = -1 where ID_RAZR = 0;
+	UPDATE OR INSERT INTO RAZR (ID_RAZR, NAME) VALUES (1, '2Ю') MATCHING (ID_RAZR);
+	UPDATE OR INSERT INTO RAZR (ID_RAZR, NAME) VALUES (2, '1Ю') MATCHING (ID_RAZR);
+    UPDATE RAZR set NAME = TRIM(NAME);
+
+end
+^ SET TERM ; ^</script>
+		<script>EXECUTE PROCEDURE DO_UP;</script>
 	
+</version>	
+
+
+<version number="2.42">
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DO_UP as
+begin 
+  update RDB$RELATION_FIELDS set RDB$NULL_FLAG = 1 where (RDB$FIELD_NAME = 'ID_RAZR') and (RDB$RELATION_NAME = 'LIFTER');
+  update lifter set id_razr = -1 where id_razr = 0;
+end
+^ SET TERM ; ^</script>
+	<script>EXECUTE PROCEDURE DO_UP;</script>
+</version>	
+
+<version number="2.43">
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DO_UP as
+begin 
+/**/ 
+end^ 
+SET TERM ; ^</script>	
+
+	<script optional ="1">DROP INDEX FK_LIFTER_RAZR;</script>
+    <script>ALTER TABLE LIFTER ADD CONSTRAINT FK_LIFTER_RAZR FOREIGN KEY (ID_RAZR) REFERENCES RAZR(ID_RAZR);</script>	
+</version>	
+
+<version number="2.44">
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DO_UP as
+begin 
+	UPDATE OR INSERT INTO PARAMS (ID, ID_PARENT, NAME, "VALUE", DESCRIPTION)
+						  VALUES (1, NULL, 'ALL', NULL, NULL)
+						MATCHING (ID);
+	UPDATE OR INSERT INTO PARAMS (ID, ID_PARENT, NAME, "VALUE", DESCRIPTION)
+						  VALUES (200, 1, 'Секретарский модуль', NULL, NULL)
+						MATCHING (ID);
+	UPDATE OR INSERT INTO PARAMS (ID, ID_PARENT, NAME, "VALUE", DESCRIPTION)
+						  VALUES (300, 1, 'Модуль таймера', NULL, NULL)
+						MATCHING (ID);
+	UPDATE OR INSERT INTO PARAMS (ID, ID_PARENT, NAME, "VALUE", DESCRIPTION)
+						  VALUES (400, 1, 'Предварительная регистрации и взвешивание', NULL, NULL)
+						MATCHING (ID);
+	UPDATE OR INSERT INTO PARAMS (ID, ID_PARENT, NAME, "VALUE", DESCRIPTION)
+						  VALUES (500, 1, 'General', NULL, 'Общие настройки')
+						MATCHING (ID);
+
+	UPDATE OR INSERT INTO PARAMS (ID, ID_PARENT, NAME, "VALUE", DESCRIPTION)
+						  VALUES (402, 400, 'StreamsForCheckEntryLimitations', '', 'Потоки которые проверять на допуски')
+						MATCHING (ID);
+end
+^ SET TERM ; ^</script>
+		<script>EXECUTE PROCEDURE DO_UP;</script>
+	
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DO_UP as
+begin 
+	UPDATE OR INSERT INTO PARAMS (ID, ID_PARENT, NAME, "VALUE", DESCRIPTION)
+						  VALUES (500, 1, 'General', NULL, 'Общие настройки')
+						MATCHING (ID);
+	UPDATE OR INSERT INTO PARAMS (ID, ID_PARENT, NAME, "VALUE", DESCRIPTION)
+						  VALUES (501, 500, 'CheckEntryLimitations', '0', 'Проверять ограничения по разряду')
+						MATCHING (ID);
+						
+	update RDB$FIELDS set RDB$FIELD_LENGTH = 512, RDB$CHARACTER_LENGTH = 512 where RDB$FIELD_NAME = 'RDB$391';
+
+	update razr set name = trim(name);
+	update lifter set name = trim(name), aname = trim(aname), town = trim(town);
+
+	update RDB$FIELDS set RDB$FIELD_TYPE = 37, RDB$CHARACTER_SET_ID = 52, RDB$COLLATION_ID = 0 where RDB$FIELD_NAME = 'RDB$441';
+	UPDATE RAZR  set ID_RAZR = -1 where ID_RAZR = 0;
+	UPDATE OR INSERT INTO RAZR (ID_RAZR, NAME) VALUES (1, '2Ю') MATCHING (ID_RAZR);
+	UPDATE OR INSERT INTO RAZR (ID_RAZR, NAME) VALUES (2, '1Ю') MATCHING (ID_RAZR);
+    UPDATE RAZR set NAME = TRIM(NAME);
+
+end
+^ SET TERM ; ^</script>
+		<script>EXECUTE PROCEDURE DO_UP;</script>
+	
+</version>	
+
+	<version number="2.45">
+	<script>SET TERM ^ ;
+CREATE OR ALTER procedure CHECK_ENTRY (
+    COMPET_ID numeric(12,0),
+    TOTALL double precision,
+    AGECLASS_ID numeric(12,0),
+    WEIGHTCLASS_ID numeric(12,0),
+    LIFTER_ID numeric(12,0))
+returns (
+    RESULT integer,
+    MINRAZRNAME varchar(50) character set WIN1251 collate WIN1251)
+as
+declare variable CEL integer;
+declare variable MINTOTALL double precision;
+begin
+    result = 1;
+
+    cel = null;
+    minTotall = null;
+
+    select coalesce( cast( (select "VALUE" from params where upper(name) = upper('CheckEntryLimitations')) as int), 0) from tmp into cel;
+
+    if (cel = 0) then
+    begin
+      suspend;
+      exit;
+    end
+
+    select n.sum_tot, r.name ||' ('||n.sum_tot||'кг.)'
+    from compet_entry_limit cel inner join
+      razr r on  cel.id_razr = r.id_razr inner join
+      competit c on cel.id_compet = c.id_compet left join
+      normat n on (n.id_range = c.id_range and n.id_category = cel.id_category and cel.id_razr = n.id_razr)
+    where cel.id_compet = :compet_id
+      and cel.id_category = :weightclass_id
+      and cel.id_agecl = :ageclass_id
+      and n.sex = (select sex from lifter where id_lifter = :lifter_id)
+      and cel.sex = n.sex
+    into minTotall, MinRazrName;
+
+    if (coalesce(totall, 0) &lt; coalesce(minTotall, 0)) then result = 0;
+
+    cel = null;
+    minTotall = null;
+    suspend;
+end
+^ SET TERM ; ^</script>
+		
+</version>	
+
+	<version number="2.46">
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DO_UP as
+begin 
+ /*
+1. ПЛ без экипировки
+2. ПЛ в 1-эк
+3. ПЛ в многослойной эк.
+[16:06:49] Роянова Наталья: 4. ЖИМ без эк
+5.Жим в 1-эк
+6. Жим в мн. эк.
+[16:07:03] Роянова Наталья: 7.Тяга без эк.
+8. Тяга в эк. 
+ */
+
+ 
+/* WPC */    
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_7', '01') MATCHING (ID); --WPC raw powerlifting
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_9', '02') MATCHING (ID); -- WPC single ply powerlifting
+	UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_1', '03') MATCHING (ID); --WPC multi ply powerlifting
+
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_6', '04') MATCHING (ID); 	--WPC raw benchpress
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_8', '05') MATCHING (ID); 	--WPC single ply benchpress
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_0', '06') MATCHING (ID);	--WPC multi ply benchpress
+
+/* AWPC */	
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_5', '07') MATCHING (ID); -- AWPC raw powerlifting
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_11', '08') MATCHING (ID); -- AWPC single ply powerlifting
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_3', '09') MATCHING (ID); -- AWPC multi ply powerlifting
+	
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_4', '10') MATCHING (ID); -- AWPC raw benchpress
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_10', '11') MATCHING (ID); -- AWPC single ply benchpress
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_2', '12') MATCHING (ID); -- AWPC multi ply benchpress
+
+	
+/* DL */	
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_13', '13') MATCHING (ID); -- WPC raw deadlift
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_12', '14') MATCHING (ID); -- WPC multy ply deadlift
+	
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_16', '15') MATCHING (ID); -- AWPC raw deadlift
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_15', '16') MATCHING (ID); -- AWPC multy ply deadlift
+
+	
+end^ 
+SET TERM ; ^</script>
+
+		<script>EXECUTE PROCEDURE DO_UP;</script>
+	</version>
+
+<version number="2.47">
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DO_UP as
+begin 
+	UPDATE OR INSERT INTO PARAMS (ID, ID_PARENT, NAME, "VALUE", DESCRIPTION)
+						  VALUES (210, 200, 'MaxDelayForNextAttempt', '99999', 'Время для подачи заявки на следующий подход (секунды)')
+						MATCHING (ID);
+end
+^ SET TERM ; ^</script>
+		<script>EXECUTE PROCEDURE DO_UP;</script>
+		
+</version>	
+
+
+	<version number="2.48">
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DO_UP as
+begin 
+  update lifter set name = trim(name);
+  update lifter set aname = trim(coalesce(aname, ''));
+  update WEIGTH_CATEGORY set name = trim(name);
+	update RDB$RELATION_FIELDS set
+	RDB$NULL_FLAG = 1
+	where (RDB$FIELD_NAME = 'ID_EXER') and
+	(RDB$RELATION_NAME = 'RECORDS');
+	update RDB$RELATION_FIELDS set
+	RDB$NULL_FLAG = 1
+	where (RDB$FIELD_NAME = 'ID_AGECL') and
+	(RDB$RELATION_NAME = 'RECORDS');
+	update RDB$RELATION_FIELDS set
+	RDB$NULL_FLAG = 1
+	where (RDB$FIELD_NAME = 'ID_LIFTER') and
+	(RDB$RELATION_NAME = 'RECORDS');
+	update RDB$RELATION_FIELDS set
+	RDB$NULL_FLAG = 1
+	where (RDB$FIELD_NAME = 'ID_CATEGORY') and
+	(RDB$RELATION_NAME = 'RECORDS');
+	update RDB$RELATION_FIELDS set
+	RDB$NULL_FLAG = 1
+	where (RDB$FIELD_NAME = 'ID_RANGE') and
+	(RDB$RELATION_NAME = 'RECORDS');
+	update RDB$RELATION_FIELDS set
+	RDB$NULL_FLAG = 1
+	where (RDB$FIELD_NAME = 'LEVEL') and
+	(RDB$RELATION_NAME = 'RECORDS');
+
+  
+end^ 
+SET TERM ; ^</script>
+
+		<script>EXECUTE PROCEDURE DO_UP;</script>
+		<script optional ="1">DROP INDEX XPKWEIGTH_CATEGORY;</script>
+		<script optional ="1">DROP INDEX WEIGTH_CATEGORY_UNAME;</script>
+		<script optional ="1">DROP INDEX RECORDS_REC_SEARCH;</script>
+		<script>CREATE INDEX WEIGTH_CATEGORY_UNAME ON WEIGTH_CATEGORY COMPUTED BY (UPPER(NAME))</script>
+<script>CREATE INDEX RECORDS_REC_SEARCH ON RECORDS (
+    ID_RECORD,
+    ID_EXER,
+    ID_AGECL,
+    ID_LIFTER,
+    ID_CATEGORY,
+    ID_COMPET,
+    ID_RANGE,
+    "LEVEL",
+    WEGHT
+);</script>
+	</version>
+
 <!--
+
+
 
 ALTER TABLE COMPETIT ADD MIN_NORMAT_ID ID;
 ALTER TABLE COMPETIT ADD CONSTRAINT FK_COMPETIT_1 FOREIGN KEY (MIN_NORMAT_ID) REFERENCES NORMAT(ID_NORMAT);
