@@ -9009,7 +9009,6 @@ end
 		
 </version>	
 
-
 	<version number="2.48">
     <script>SET TERM ^ ; 
 CREATE OR ALTER PROCEDURE DO_UP as
@@ -9064,6 +9063,97 @@ SET TERM ; ^</script>
 );</script>
 	</version>
 
+	
+	
+	<version number="2.49">
+    <script>SET TERM ^ ; 
+CREATE OR ALTER procedure GET_COMPETNEWRAZR (IDC numeric(12,0))
+returns (
+    LIFTER numeric(12,0),
+    LNAME varchar(60) character set WIN1251,
+    ORAZR numeric(12,0),
+    NRAZR numeric(12,0),
+    LOC numeric(12,0),
+    TOTALL float,
+    WCATEG numeric(12,0),
+    NORMAT numeric(12,0))
+as begin
+for
+select
+  l.id_lifter,
+  l.name,
+ COALESCE((
+     select
+      max(n2.id_razr)
+     from
+       lifter2razr lr1 join
+       normat n2 on n2.id_normat = lr1.id_normat
+     where
+       lr1.id_lifter = l.id_lifter and
+       n2.id_range = c.id_range and
+       n2.sex = l.sex
+     rows 1 to 1
+  ), -1) as old_razr,
+
+  (select max (id_razr) from normat n1 where
+   n1.id_category=lc.id_category and n1.sex=l.sex and sum_tot &lt;= le.summaall and id_range=c.id_range) as new_razr,
+  (select first 1 id_normat from normat n1 where
+   n1.id_category=lc.id_category and n1.sex=l.sex and sum_tot &lt;= le.summaall and id_range=c.id_range order by id_razr desc ) as new_normat,
+  lc.ID_LIFTER_COMPET,
+  le.summaall,
+  lc.id_category
+from
+  Lifter_Exersis le,
+  Lifter_on_competition lc,
+  Lifter L,
+  Competit C
+where
+  lc.id_compet=c.id_compet and
+  l.id_lifter=lc.id_lifter and
+  le.ID_LIFTER_COMPET=lc.ID_LIFTER_COMPET and
+  lc.id_compet= :IDC and
+  COALESCE((
+     select
+      max(n2.id_razr)
+     from
+       lifter2razr lr1 join
+       normat n2 on n2.id_normat = lr1.id_normat
+     where
+       lr1.id_lifter = l.id_lifter and
+       n2.id_range = c.id_range and
+       n2.sex = l.sex
+     rows 1 to 1
+  ), -1)
+  &lt;=
+  (
+     select
+       max (id_razr)
+     from
+       normat n1
+     where
+       n1.id_category = lc.id_category and
+       n1.sex = l.sex and
+       sum_tot &lt;= le.summaall and
+       id_range=c.id_range
+     rows 1 to 1
+  )
+  and le.summaall&gt;0
+order by
+  l.sex, l.name
+into
+  :lifter,
+  :lname,
+  :orazr,
+  :nrazr,
+  :normat,
+  :loc,
+  :totall,
+  :wcateg
+  DO suspend;
+end	
+^
+SET TERM ; ^</script>
+	</version>
 <!--
 
 
