@@ -1,0 +1,5 @@
+<main>
+  <reportfilename ru="frf\RecordsReport_ru.frf" eng="frf\RecordsReport_eng.frf"/>
+  <info name=""/>
+  <sql>SELECT 1 FROM TMP</sql>
+</main>

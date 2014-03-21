@@ -12,6 +12,28 @@ select
   l.sex as sex,
   TransLiter(l.TOWN) as EngTOWN,
   l.TOWN as RusTOWN,
+  case Coalesce(le.squat1, '0.0')
+    when '0.0' then ''
+    else Coalesce(le.squat1, '0.0')||'-'
+  end
+  ||
+  case Coalesce(le.bench1, '0.0')
+    when '0.0' then ''
+    else Coalesce(le.bench1, '0.0')
+  end
+    ||
+  case Coalesce(le.squat1, '0.0')
+    when '0.0' then ''
+    else '-'
+  end
+    ||
+  case Coalesce(le.dl1, '0.0')
+    when '0.0' then ''
+    else Coalesce(le.dl1, '0.0')
+  end
+  as pbest,
+
+  cast(coalesce(
   (select max(table1.t1) from
     (select coalesce(le1.summaall, 0) as t1
        from  Lifter_on_Competition loc1 inner join  lifter_exersis le1 on loc1.id_lifter_compet = le1.id_lifter_compet inner join competit c1 on c1.id_compet = loc1.id_compet
@@ -23,8 +45,7 @@ select
        where loc1.id_lifter = loc.id_lifter
          and c1.id_range = c.id_range
     ) table1
-  ) as pbest
-
+  ), '0') as numeric(6,1))as pbest1
 from
   lifter l inner join
   Lifter_on_Competition loc
