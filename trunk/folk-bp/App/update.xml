@@ -1,4 +1,5 @@
-﻿<versions>
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<versions>
 
 	<version number="0.01">
 		<script>alter table LIFTER_ON_COMPETITION add CREATETIME TIMESTAMP</script>
@@ -1849,7 +1850,7 @@ INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Башкортостан','Б�
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Башкортостан','Благовещенск', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Башкортостан','Давлеканово', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Башкортостан','Дюртюли', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Башкортостан','?шимбай', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Башкортостан','Ишимбай', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Башкортостан','Кумертау', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Башкортостан','Межгорье', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Башкортостан','Мелеуз', CURRENT_TIMESTAMP FROM TMP;
@@ -1980,7 +1981,7 @@ INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Воронежская обл�
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Дагестан','Буйнакск', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Дагестан','Дагестанские Огни', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Дагестан','Дербент', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Дагестан','?збербаш', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Дагестан','Избербаш', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Дагестан','Каспийск', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Дагестан','Кизилюрт', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Дагестан','Кизляр', CURRENT_TIMESTAMP FROM TMP;
@@ -1999,15 +2000,15 @@ INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Забайкальский к�
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Забайкальский край','Хилок', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Забайкальский край','Чита', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Забайкальский край','Шилка', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?вановская область','Вичуга', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?вановская область','Гаврилов Посад', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?вановская область','Заволжск', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?вановская область','?ваново', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?вановская область','Кинешма', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?вановская область','Комсомольск', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?вановская область','Кохма', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?вановская область','Наволоки', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?вановская область','Плёс', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ивановская область','Вичуга', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ивановская область','Гаврилов Посад', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ивановская область','Заволжск', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ивановская область','Иваново', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ивановская область','Кинешма', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ивановская область','Комсомольск', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ивановская область','Кохма', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ивановская область','Наволоки', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ивановская область','Плёс', CURRENT_TIMESTAMP FROM TMP;
 end
 ^
 SET TERM ; ^</script>
@@ -2018,40 +2019,40 @@ SET TERM ; ^</script>
 CREATE OR ALTER PROCEDURE DO_UP 
 as
 begin
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?вановская область','Приволжск', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?вановская область','Пучеж', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?вановская область','Родники', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?вановская область','Тейково', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?вановская область','Фурманов', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?вановская область','Шуя', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?вановская область','Южа', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?вановская область','Юрьевец', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?нгушетия','Карабулак', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?нгушетия','Магас', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?нгушетия','Малгобек', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?нгушетия','Назрань', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?ркутская область','Алзамай', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?ркутская область','Ангарск', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?ркутская область','Байкальск', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?ркутская область','Бирюсинск', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?ркутская область','Бодайбо', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?ркутская область','Братск', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?ркутская область','Вихоревка', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?ркутская область','Железногорск-?лимский', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?ркутская область','Зима', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?ркутская область','?ркутск', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?ркутская область','Киренск', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?ркутская область','Нижнеудинск', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?ркутская область','Саянск', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?ркутская область','Свирск', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?ркутская область','Слюдянка', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?ркутская область','Тайшет', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?ркутская область','Тулун', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?ркутская область','Усолье-Сибирское', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?ркутская область','Усть-?лимск', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?ркутская область','Усть-Кут', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?ркутская область','Черемхово', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?ркутская область','Шелехов', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ивановская область','Приволжск', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ивановская область','Пучеж', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ивановская область','Родники', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ивановская область','Тейково', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ивановская область','Фурманов', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ивановская область','Шуя', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ивановская область','Южа', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ивановская область','Юрьевец', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ингушетия','Карабулак', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ингушетия','Магас', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ингушетия','Малгобек', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ингушетия','Назрань', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Иркутская область','Алзамай', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Иркутская область','Ангарск', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Иркутская область','Байкальск', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Иркутская область','Бирюсинск', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Иркутская область','Бодайбо', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Иркутская область','Братск', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Иркутская область','Вихоревка', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Иркутская область','Железногорск-Илимский', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Иркутская область','Зима', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Иркутская область','Иркутск', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Иркутская область','Киренск', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Иркутская область','Нижнеудинск', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Иркутская область','Саянск', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Иркутская область','Свирск', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Иркутская область','Слюдянка', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Иркутская область','Тайшет', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Иркутская область','Тулун', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Иркутская область','Усолье-Сибирское', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Иркутская область','Усть-Илимск', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Иркутская область','Усть-Кут', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Иркутская область','Черемхово', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Иркутская область','Шелехов', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Кабардино-Балкария','Баксан', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Кабардино-Балкария','Майский', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Кабардино-Балкария','Нальчик', CURRENT_TIMESTAMP FROM TMP;
@@ -2177,7 +2178,7 @@ INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Кировская облас�
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Коми','Воркута', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Коми','Вуктыл', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Коми','Емва', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Коми','?нта', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Коми','Инта', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Коми','Микунь', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Коми','Печора', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Коми','Сосногорск', CURRENT_TIMESTAMP FROM TMP;
@@ -2241,8 +2242,8 @@ INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Красноярский кр�
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Красноярский край','Железногорск', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Красноярский край','Заозёрный', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Красноярский край','Зеленогорск', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Красноярский край','?гарка', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Красноярский край','?ланский', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Красноярский край','Игарка', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Красноярский край','Иланский', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Красноярский край','Канск', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Красноярский край','Кодинск', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Красноярский край','Красноярск', CURRENT_TIMESTAMP FROM TMP;
@@ -2280,7 +2281,7 @@ INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ленинградская о�
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ленинградская область','Выборг', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ленинградская область','Высоцк', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ленинградская область','Гатчина', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ленинградская область','?вангород', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ленинградская область','Ивангород', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ленинградская область','Каменногорск', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ленинградская область','Кингисепп', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ленинградская область','Кириши', CURRENT_TIMESTAMP FROM TMP;
@@ -2319,7 +2320,7 @@ INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Марий Эл','Звениг
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Марий Эл','Йошкар-Ола', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Марий Эл','Козьмодемьянск', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Мордовия','Ардатов', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Мордовия','?нсар', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Мордовия','Инсар', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Мордовия','Ковылкино', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Мордовия','Краснослободск', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Мордовия','Рузаевка', CURRENT_TIMESTAMP FROM TMP;
@@ -2355,8 +2356,8 @@ INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Московская обла�
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Московская область','Жуковский', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Московская область','Зарайск', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Московская область','Звенигород', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Московская область','?вантеевка', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Московская область','?стра', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Московская область','Ивантеевка', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Московская область','Истра', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Московская область','Кашира', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Московская область','Климовск', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Московская область','Клин', CURRENT_TIMESTAMP FROM TMP;
@@ -2480,7 +2481,7 @@ INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Новгородская об�
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Новосибирская область','Барабинск', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Новосибирская область','Бердск', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Новосибирская область','Болотное', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Новосибирская область','?скитим', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Новосибирская область','Искитим', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Новосибирская область','Карасук', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Новосибирская область','Каргат', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Новосибирская область','Куйбышев', CURRENT_TIMESTAMP FROM TMP;
@@ -2491,7 +2492,7 @@ INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Новосибирская о�
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Новосибирская область','Тогучин', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Новосибирская область','Черепаново', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Новосибирская область','Чулым', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Омская область','?силькуль', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Омская область','Исилькуль', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Омская область','Калачинск', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Омская область','Называевск', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Омская область','Омск', CURRENT_TIMESTAMP FROM TMP;
@@ -2506,7 +2507,7 @@ INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Оренбургская об�
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Оренбургская область','Новотроицк', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Оренбургская область','Оренбург', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Оренбургская область','Орск', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Оренбургская область','Соль-?лецк', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Оренбургская область','Соль-Илецк', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Оренбургская область','Сорочинск', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Оренбургская область','Ясный', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Орловская область','Болхов', CURRENT_TIMESTAMP FROM TMP;
@@ -2698,8 +2699,8 @@ INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Свердловская об�
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Свердловская область','Дегтярск', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Свердловская область','Екатеринбург', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Свердловская область','Заречный', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Свердловская область','?вдель', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Свердловская область','?рбит', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Свердловская область','Ивдель', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Свердловская область','Ирбит', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Свердловская область','Каменск-Уральский', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Свердловская область','Камышлов', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Свердловская область','Карпинск', CURRENT_TIMESTAMP FROM TMP;
@@ -2757,8 +2758,8 @@ INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ставропольский �
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ставропольский край','Ессентуки', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ставропольский край','Железноводск', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ставропольский край','Зеленокумск', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ставропольский край','?зобильный', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ставропольский край','?патово', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ставропольский край','Изобильный', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ставропольский край','Ипатово', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ставропольский край','Кисловодск', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ставропольский край','Лермонтов', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ставропольский край','Минеральные Воды', CURRENT_TIMESTAMP FROM TMP;
@@ -2862,19 +2863,19 @@ INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Тыва','Туран', CURREN
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Тыва','Чадан', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Тыва','Шагонар', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Тюменская область','Заводоуковск', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Тюменская область','?шим', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Тюменская область','Ишим', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Тюменская область','Тобольск', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Тюменская область','Тюмень', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Тюменская область','Ялуторовск', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Удмуртия','Воткинск', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Удмуртия','Глазов', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Удмуртия','?жевск', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Удмуртия','Ижевск', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Удмуртия','Камбарка', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Удмуртия','Можга', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Удмуртия','Сарапул', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ульяновская область','Барыш', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ульяновская область','Димитровград', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ульяновская область','?нза', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ульяновская область','Инза', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ульяновская область','Новоульяновск', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ульяновская область','Сенгилей', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ульяновская область','Ульяновск', CURRENT_TIMESTAMP FROM TMP;
@@ -2915,7 +2916,7 @@ INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Челябинская обл�
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Челябинская область','Карабаш', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Челябинская область','Карталы', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Челябинская область','Касли', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Челябинская область','Катав-?вановск', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Челябинская область','Катав-Ивановск', CURRENT_TIMESTAMP FROM TMP;
 end
 ^
 SET TERM ; ^</script>
@@ -2993,7 +2994,7 @@ INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ярославская обл�
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ярославская область','Тутаев', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ярославская область','Углич', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ярославская область','Ярославль', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?нгушетия','станица Орджоникидзевская', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ингушетия','станица Орджоникидзевская', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Краснодарский край','станица Каневская', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ставропольский край','пгт Горячеводский', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Краснодарский край','станица Ленинградская', CURRENT_TIMESTAMP FROM TMP;
@@ -3004,7 +3005,7 @@ INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Краснодарский к�
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Московская область','пгт Томилино', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Краснодарский край','станица Староминская', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Воронежская область','село Новая Усмань', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ставропольский край','пгт ?ноземцево', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ставропольский край','пгт Иноземцево', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Краснодарский край','станица Кущёвская', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ставропольский край','село Александровское', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ставропольский край','село Кочубеевское', CURRENT_TIMESTAMP FROM TMP;
@@ -3018,13 +3019,13 @@ INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Краснодарский к�
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Краснодарский край','станица Елизаветинская', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Краснодарский край','станица Новотитаровская', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Московская область','пгт Малаховка', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Краснодарский край','пгт ?льский', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Краснодарский край','пгт Ильский', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Краснодарский край','станица Отрадная', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Самарская область','пгт Безенчук', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Московская область','пгт Монино', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Чечня','село Курчалой', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Краснодарский край','станица Брюховецкая', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?нгушетия','станица Нестеровская', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ингушетия','станица Нестеровская', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Московская область','пгт Калининец', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Волгоградская область','пгт Городище', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Московская область','пгт Красково', CURRENT_TIMESTAMP FROM TMP;
@@ -3033,7 +3034,7 @@ INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Приморский край'
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Вологодская область','пгт Шексна', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Башкортостан','пгт Приютово', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Красноярский край','пгт Берёзовка', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Удмуртия','пгт ?гра', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Удмуртия','пгт Игра', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Новосибирская область','пгт Линёво', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ханты-Мансийский автономный округ — Югра','пгт Фёдоровский', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Кабардино-Балкария','село Дугулубгей', CURRENT_TIMESTAMP FROM TMP;
@@ -3053,13 +3054,13 @@ CREATE OR ALTER PROCEDURE DO_UP
 as
 begin
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Московская область','пгт Томилино', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ставропольский край','пгт ?ноземцево', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ставропольский край','пгт Иноземцево', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Адыгея','пгт Яблоновский', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Московская область','пгт Власиха', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ханты-Мансийский автономный округ','пгт Пойковский', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Краснодарский край','пгт Мостовской', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Московская область','пгт Малаховка', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Краснодарский край','пгт ?льский', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Краснодарский край','пгт Ильский', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Самарская область','пгт Безенчук', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Московская область','пгт Монино', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Московская область','пгт Красково', CURRENT_TIMESTAMP FROM TMP;
@@ -3070,7 +3071,7 @@ INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Приморский край'
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Вологодская область','пгт Шексна', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Башкортостан','пгт Приютово', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Красноярский край','пгт Берёзовка', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Удмуртия','пгт ?гра', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Удмуртия','пгт Игра', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Новосибирская область','пгт Линёво', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ханты-Мансийский автономный округ','пгт Фёдоровский', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Краснодарский край','пгт Ахтырский', CURRENT_TIMESTAMP FROM TMP;
@@ -3086,7 +3087,7 @@ INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Воронежская обл�
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Адыгея','пгт Энем', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Московская область','пгт Белоозёрский', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Красноярский край','пгт Шушенское', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ханты-Мансийский автономный округ','пгт ?злучинск', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ханты-Мансийский автономный округ','пгт Излучинск', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Московская область','пгт Тучково', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Дагестан','пгт Тарки', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Хабаровский край','пгт Ванино', CURRENT_TIMESTAMP FROM TMP;
@@ -3110,7 +3111,7 @@ INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Дагестан','пгт Ле
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Приморский край','пгт Кавалерово', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Новосибирская область','пгт Сузун', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Белгородская область','пгт Чернянка', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?ркутская область','пгт Чунский', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Иркутская область','пгт Чунский', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Тыва','пгт Каа-Хем', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Московская область','пгт Удельная', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Волгоградская область','пгт Елань', CURRENT_TIMESTAMP FROM TMP;
@@ -3156,7 +3157,7 @@ INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Тамбовская обла�
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Московская область','пгт Большие Вязёмы', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Московская область','пгт Селятино', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Свердловская область','пгт Белоярский', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Кемеровская область','пгт ?нской', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Кемеровская область','пгт Инской', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Дагестан','пгт Белиджи', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Волгоградская область','пгт Светлый Яр', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Саратовская область','пгт Светлый', CURRENT_TIMESTAMP FROM TMP;
@@ -3204,7 +3205,7 @@ INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Московская обла�
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Омская область','пгт Большеречье', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Московская область','пгт Фряново', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ростовская область','пгт Каменоломни', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Волгоградская область','пгт ?ловля', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Волгоградская область','пгт Иловля', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Московская область','пгт Кокошкино', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Татарстан','пгт Алексеевское', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Амурская область','пгт Прогресс', CURRENT_TIMESTAMP FROM TMP;
@@ -3235,13 +3236,13 @@ INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Пензенская обла�
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Самарская область','пгт Алексеевка', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Хабаровский край','пгт Хор', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Забайкальский край','пгт Атамановка', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ульяновская область','пгт ?шеевка', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ульяновская область','пгт Ишеевка', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Красноярский край','пгт Солнечный', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ханты-Мансийский автономный округ','пгт Новоаганск', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Пермский край','пгт Яйва', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Мордовия','пгт Зубова Поляна', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Белгородская область','пгт Ракитное', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Московская область','пгт ?льинский', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Московская область','пгт Ильинский', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Московская область','пгт Некрасовский', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Приморский край','пгт Пограничный', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Белгородская область','пгт Ровеньки', CURRENT_TIMESTAMP FROM TMP;
@@ -3254,9 +3255,9 @@ INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Новосибирская о�
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Сахалинская область','пгт Ноглики', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Кемеровская область','пгт Шерегеш', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Забайкальский край','пгт Новокручининский', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?ркутская область','пгт Новая ?гирма', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Иркутская область','пгт Новая Игирма', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Краснодарский край','пгт Новомихайловский', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','&#xD0;?ркутская область','пгт Куйтун', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Иркутская область','пгт Куйтун', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Владимирская область','пгт Балакирево', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ямало-Ненецкий автономный округ','пгт Уренгой', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Тульская область','пгт Первомайский', CURRENT_TIMESTAMP FROM TMP;
@@ -3288,7 +3289,7 @@ INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Свердловская об�
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Приморский край','поселок Трудовое', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Оренбургская область','поселок Тюльган', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Челябинская область','поселок Увельский', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?ркутская область','поселок Усть-Ордынский', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Иркутская область','поселок Усть-Ордынский', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Калужская область','поселок Ферзиково', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ростовская область','поселок Целина', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ростовская область','поселок Чертково', CURRENT_TIMESTAMP FROM TMP;
@@ -3328,9 +3329,9 @@ INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ставропольский �
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Кабардино-Балкария','село Дыгулыбгей', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Амурская область','село Екатеринославка', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Кабардино-Балкария','село Заюково', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Башкортостан','село ?глино', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Оренбургская область','село ?лек', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Кабардино-Балкария','село ?сламей', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Башкортостан','село Иглино', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Оренбургская область','село Илек', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Кабардино-Балкария','село Исламей', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Приморский край','село Камень-Рыболов', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Башкортостан','село Кандры', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?нгушетия','село Кантышево', CURRENT_TIMESTAMP FROM TMP;
@@ -3369,7 +3370,7 @@ INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Алтайский край','
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Нижегородская область','село Починки', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ставропольский край','село Прасковея', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Башкортостан','село Раевский', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?нгушетия','село Сагопши', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ингушетия','село Сагопши', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ростовская область','село Самарское', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Чечня','село Самашки', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Башкортостан','село Серафимовский', CURRENT_TIMESTAMP FROM TMP;
@@ -3377,7 +3378,7 @@ INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ставропольский �
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Чечня','село Старые Атаги', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Дагестан','село Султан-Янги-Юрт', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Северная Осетия','село Сунжа', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?нгушетия','село Сурхахи', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ингушетия','село Сурхахи', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Башкортостан','село Толбазы', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Оренбургская область','село Тоцкое Второе', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Алтайский край','село Троицкое', CURRENT_TIMESTAMP FROM TMP;
@@ -3394,9 +3395,9 @@ INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Приморский край'
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Приморский край','село Чугуевка', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Кабардино-Балкария','село Шалушка', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Алтайский край','село Шипуново', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?нгушетия','село Экажево', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ингушетия','село Экажево', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Северная Осетия','село Эльхотово', CURRENT_TIMESTAMP FROM TMP;
-INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','?нгушетия','село Яндаре', CURRENT_TIMESTAMP FROM TMP;
+INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ингушетия','село Яндаре', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Ставропольский край','станица Александрийская', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Краснодарский край','станица Анапская', CURRENT_TIMESTAMP FROM TMP;
 INSERT INTO TOWNS SELECT GEN_ID(TOWNS, 1), 'RUS','Краснодарский край','станица Анастасиевская', CURRENT_TIMESTAMP FROM TMP;
@@ -4674,6 +4675,126 @@ SET TERM ; ^</script>
 
       <script>ALTER TABLE COMPETIT ADD CONSTRAINT FK_COMPETIT_RAZR FOREIGN KEY (MIN_RAZR_ID) REFERENCES RAZR (ID_RAZR);</script>
    	  <script>ALTER TABLE COMPETIT ADD CONSTRAINT FK_COMPETIT_PARENT_ID FOREIGN KEY (GRP) REFERENCES COMPETIT(ID_COMPET);</script>
+
+<script>SET TERM ^ ;
+CREATE OR ALTER procedure SELECT_RECORDS (
+    LOC numeric(12,0),
+    EXERSCISE integer)
+returns (
+    ID_LIFTER numeric(12,0),
+    ID_AGECL numeric(12,0),
+    WEGHT double precision,
+    SOREVN_NAME varchar(200) character set WIN1251,
+    "LEVEL" integer)
+as
+declare variable TODAY date;
+declare variable ID_CATEGORY numeric(12,0);
+declare variable ID_COMPET numeric(12,0);
+declare variable ID_RANGE numeric(12,0);
+declare variable LIFTER_SEX integer;
+declare variable LIFTER_DATEBITH date;
+declare variable LEVLOW integer;
+declare variable LEVHIGH integer;
+declare variable FIX integer;
+declare variable LVL numeric(12,0);
+BEGIN
+    TODAY = CAST('NOW' AS DATE);
+
+  SELECT
+    LOC.ID_COMPET,
+    LOC.ID_CATEGORY,
+    C.ID_RANGE,
+    L.SEX,
+    c."LEVEL",
+    T.FIXRECORD
+  FROM
+    LIFTER_ON_COMPETITION LOC JOIN
+    COMPETIT C ON C.ID_COMPET= LOC.ID_COMPET JOIN
+    LIFTER L ON LOC.ID_LIFTER= L.ID_LIFTER JOIN
+    TEAM T on T.ID_TEAM = LOC.ID_TEAM
+  WHERE
+    LOC.ID_LIFTER_COMPET = :LOC
+  INTO
+    :ID_COMPET,
+    :ID_CATEGORY,
+    :ID_RANGE,
+    :LIFTER_SEX,
+    :LevHigh,
+    :LEVLOW;
+
+FOR SELECT "LEVEL" as lvl FROM PLEVEL where  "LEVEL" between :LEVLOW and :LEVHIGH order by 1 desc INTO :LVL do
+    begin
+    for SELECT
+    r.ID_LIFTER,
+    r.ID_AGECL,
+    WEGHT,
+    SOREVN_NAME,
+    "LEVEL"
+  FROM
+    (
+    select ID_RECORD, id_lifter, ID_CATEGORY, ID_RANGE, id_agecl,"LEVEL" ,ID_EXER, WEGHT, SOREVN_NAME  from RECORDS
+    union all
+    select ID_RECORD, id_lifter, ID_CATEGORY, ID_RANGE, id_agecl,"LEVEL" ,ID_EXER, WEGHT, SOREVN_NAME  from pRecord(:EXERSCISE, :ID_CATEGORY, :ID_RANGE)
+    )
+    R JOIN
+    LIFTER L ON L.ID_LIFTER = R.ID_LIFTER JOIN
+    AGE_CLASS AC ON ac.id_agecl=r.id_agecl
+  WHERE
+    ID_CATEGORY = :ID_CATEGORY AND
+    ID_RANGE = :ID_RANGE AND
+    ID_EXER = :EXERSCISE AND
+    L.SEX = :LIFTER_SEX AND
+    R."LEVEL" = :lvl AND
+    r.ID_AGECL IN
+      (
+          SELECT ID_AGECL
+          FROM
+            AGE_CLASS
+          WHERE
+            (
+             SELECT
+                (:TODAY - L.DAT_BITH) / 365
+              FROM
+                LIFTER_ON_COMPETITION LOC INNER JOIN
+                LIFTER L on loc.id_lifter = l.id_lifter
+              WHERE
+                LOC.ID_LIFTER_COMPET = :LOC
+            ) &gt;= cast(FROM_AGE as int)  and
+            (
+             SELECT
+                (:TODAY - L.DAT_BITH) / 365
+              FROM
+                LIFTER_ON_COMPETITION LOC INNER JOIN
+                LIFTER L on loc.id_lifter = l.id_lifter
+              WHERE
+                LOC.ID_LIFTER_COMPET = :LOC
+            ) &lt;= cast(TO_AGE as int)
+          OR ID_AGECL = -2
+      ) AND
+    R.ID_RECORD in (SELECT ID_RECORD FROM MAX_RECORDS(:id_range, :id_category, :lifter_sex, :exerscise))
+  ORDER BY
+     ac.from_age, "LEVEL"
+  INTO
+    :ID_LIFTER,
+    :ID_AGECL,
+    :WEGHT,
+    :SOREVN_NAME,
+    :"LEVEL"
+   do SUSPEND;
+  end
+
+  TODAY = NULL;
+  ID_CATEGORY = NULL;
+  ID_COMPET = NULL;
+  ID_RANGE = NULL;
+  LIFTER_SEX = NULL;
+  LIFTER_DATEBITH = NULL;
+  LEVLOW = NULL;
+  LEVHIGH = NULL;
+  FIX = NULL;
+  LVL = NULL;
+END^
+SET TERM ; ^</script>
 	</version>
 
 	<version number="0.28">
@@ -4710,18 +4831,440 @@ begin
 	);
 	delete from competit where ID_RANGE in (17, 14);
     DELETE FROM RANGE WHERE ID_RANGE in (17, 14); /* 'WPC 1 слойная становая тяга', 'AWPC 1 слойная становая тяга'*/
+/*
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_0', 'WPC multi ply benchpress') MATCHING (ID);
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_1', 'WPC multi ply powerlifting') MATCHING (ID);
+*/
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_2', 'Folk bench press single body weight') MATCHING (ID);
+/*
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_3', 'AWPC multi ply powerlifting') MATCHING (ID);
+*/	
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_4', 'Folk bench press half of body weight') MATCHING (ID);
+ 
+/*
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_5', 'AWPC raw powerlifting') MATCHING (ID);
+    
+	UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_6', 'WPC raw benchpress') MATCHING (ID);
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_7', 'WPC raw powerlifting') MATCHING (ID);
 
     UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
-    VALUES ('RANGE_2', 'Folk benchpress single body weight') MATCHING (ID);
+    VALUES ('RANGE_8', 'WPC single ply benchpress') MATCHING (ID);
     UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
-    VALUES ('RANGE_4', 'Folk benchpress half of  body weight') MATCHING (ID);
+    VALUES ('RANGE_9', 'WPC single ply powerlifting') MATCHING (ID);
+	
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_10', 'AWPC single ply benchpress') MATCHING (ID);
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_11', 'AWPC single ply powerlifting') MATCHING (ID);
+
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_12', 'WPC multy ply deadlift') MATCHING (ID);
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_13', 'WPC raw deadlift') MATCHING (ID);
+	
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_15', 'AWPC multy ply deadlift') MATCHING (ID);
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_16', 'AWPC raw deadlift') MATCHING (ID);
+*/
 end^ 
 SET TERM ; ^</script>
 
 		<script>EXECUTE PROCEDURE DO_UP;</script>
 	</version>
+
+
+
+	<version number="0.30">
+	<script optional ="1">DROP PROCEDURE CHECK_ENTRY;</script>
+	<script optional ="1">DROP TABLE COMPET_ENTRY_LIMIT;</script>
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DO_UP as
+begin 
+/**/ 
+end^ 
+SET TERM ; ^</script>
+
+    <script>SET TERM ^ ; 
+CREATE TABLE COMPET_ENTRY_LIMIT (
+    ID_COMPET    ID not null,
+    ID_CATEGORY  ID not null,
+    ID_RAZR      ID not null,
+    ID_AGECL     ID not null,
+	SEX			 INT not null
+)^
+SET TERM ; ^</script>
+
+    <script>SET TERM ^ ; 
+ALTER TABLE COMPET_ENTRY_LIMIT ADD CONSTRAINT PK_COMPET_ENTRY_LIMIT PRIMARY KEY (ID_COMPET, ID_CATEGORY, ID_RAZR, ID_AGECL, SEX)^	
+ALTER TABLE COMPET_ENTRY_LIMIT ADD CONSTRAINT FK_COMPET_ENTRY_LIMIT_COMPET FOREIGN KEY (ID_COMPET) REFERENCES COMPETIT (ID_COMPET)^
+ALTER TABLE COMPET_ENTRY_LIMIT ADD CONSTRAINT FK_COMPET_ENTRY_LIMIT_WC FOREIGN KEY (ID_CATEGORY) REFERENCES WEIGTH_CATEGORY (ID_CATEGORY)^
+ALTER TABLE COMPET_ENTRY_LIMIT ADD CONSTRAINT FK_COMPET_ENTRY_LIMIT_RAZR FOREIGN KEY (ID_RAZR) REFERENCES RAZR (ID_RAZR)^
+ALTER TABLE COMPET_ENTRY_LIMIT ADD CONSTRAINT FK_COMPET_ENTRY_LIMIT_AGECL FOREIGN KEY (ID_AGECL) REFERENCES AGE_CLASS (ID_AGECL)^
+SET TERM ; ^</script>
+</version>	
+
+
+	<version number="0.31">
+    <script optional ="1">DROP INDEX PARAMS_NAME_VAL;</script>
+    <script optional ="1">DROP INDEX PARAMS_IDX_UP_NAME;</script>
+    <script optional ="1">DROP INDEX LIFTER_UANAME;</script>
+    <script optional ="1">DROP INDEX LIFTER_UNAME;</script>
+    <script optional ="1">ALTER TABLE COMPETIT DROP MIN_RAZR_ID;</script>
+
+    <script>CREATE INDEX PARAMS_NAME_VAL ON PARAMS (NAME, "VALUE");</script>
+    <script>CREATE UNIQUE INDEX PARAMS_IDX_UP_NAME ON PARAMS COMPUTED BY (UPPER(NAME));</script>
+    <script>CREATE INDEX LIFTER_UANAME ON LIFTER COMPUTED BY (UPPER(ANAME));</script>
+    <script>CREATE INDEX LIFTER_UNAME ON LIFTER COMPUTED BY (UPPER(NAME));</script>	
+
+	<script>SET TERM ^ ;
+CREATE OR ALTER procedure CHECK_ENTRY (
+    COMPET_ID numeric(12,0),
+    TOTALL double precision,
+    AGECLASS_ID numeric(12,0),
+    WEIGHTCLASS_ID numeric(12,0),
+    LIFTER_ID numeric(12,0))
+returns (
+    RESULT integer,
+    MINRAZRNAME varchar(4) character set WIN1251 collate WIN1251)
+as
+declare variable CEL integer;
+declare variable MINTOTALL double precision;
+begin
+    result = 1;
+
+    cel = null;
+    minTotall = null;
+
+    select coalesce( cast( (select "VALUE" from params where upper(name) = upper('CheckEntryLimitations')) as int), 0) from tmp into cel;
+
+    if (cel = 0) then
+    begin
+      suspend;
+      exit;
+    end
+
+    select n.sum_tot, r.name
+    from compet_entry_limit cel inner join
+      razr r on  cel.id_razr = r.id_razr inner join
+      competit c on cel.id_compet = c.id_compet left join
+      normat n on (n.id_range = c.id_range and n.id_category = cel.id_category and cel.id_razr = n.id_razr)
+    where cel.id_compet = :compet_id
+      and cel.id_category = :weightclass_id
+      and cel.id_agecl = :ageclass_id
+      and n.sex = (select sex from lifter where id_lifter = :lifter_id)
+      and cel.sex = n.sex
+    into minTotall, MinRazrName;
+
+    if (coalesce(totall, 0) &lt; coalesce(minTotall, 0)) then result = 0;
+
+    cel = null;
+    minTotall = null;
+    suspend;
+end
+^ SET TERM ; ^</script>
 	
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DO_UP as
+begin 
+	UPDATE OR INSERT INTO PARAMS (ID, ID_PARENT, NAME, "VALUE", DESCRIPTION)
+						  VALUES (500, 1, 'General', NULL, 'Общие настройки')
+						MATCHING (ID);
+	UPDATE OR INSERT INTO PARAMS (ID, ID_PARENT, NAME, "VALUE", DESCRIPTION)
+						  VALUES (501, 500, 'CheckEntryLimitations', '0', 'Проверять ограничения по разряду')
+						MATCHING (ID);
+						
+	update RDB$FIELDS set RDB$FIELD_LENGTH = 512, RDB$CHARACTER_LENGTH = 512 where RDB$FIELD_NAME = 'RDB$391';
+
+	update razr set name = trim(name);
+	update lifter set name = trim(name), aname = trim(aname), town = trim(town);
+
+	update RDB$FIELDS set RDB$FIELD_TYPE = 37, RDB$CHARACTER_SET_ID = 52, RDB$COLLATION_ID = 0 where RDB$FIELD_NAME = 'RDB$441';
+	UPDATE RAZR  set ID_RAZR = -1 where ID_RAZR = 0;
+	UPDATE OR INSERT INTO RAZR (ID_RAZR, NAME) VALUES (1, '2Ю') MATCHING (ID_RAZR);
+	UPDATE OR INSERT INTO RAZR (ID_RAZR, NAME) VALUES (2, '1Ю') MATCHING (ID_RAZR);
+    UPDATE RAZR set NAME = TRIM(NAME);
+
+end
+^ SET TERM ; ^</script>
+		<script>EXECUTE PROCEDURE DO_UP;</script>
 	
+</version>	
+
+
+<version number="0.32">
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DO_UP as
+begin 
+  update RDB$RELATION_FIELDS set RDB$NULL_FLAG = 1 where (RDB$FIELD_NAME = 'ID_RAZR') and (RDB$RELATION_NAME = 'LIFTER');
+  update lifter set id_razr = -1 where id_razr = 0;
+end
+^ SET TERM ; ^</script>
+	<script>EXECUTE PROCEDURE DO_UP;</script>
+</version>	
+
+<version number="2.43">
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DO_UP as
+begin 
+/**/ 
+end^ 
+SET TERM ; ^</script>	
+
+	<script optional ="1">DROP INDEX FK_LIFTER_RAZR;</script>
+    <script>ALTER TABLE LIFTER ADD CONSTRAINT FK_LIFTER_RAZR FOREIGN KEY (ID_RAZR) REFERENCES RAZR(ID_RAZR);</script>	
+</version>	
+
+<version number="0.34">
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DO_UP as
+begin 
+	UPDATE OR INSERT INTO PARAMS (ID, ID_PARENT, NAME, "VALUE", DESCRIPTION)
+						  VALUES (1, NULL, 'ALL', NULL, NULL)
+						MATCHING (ID);
+	UPDATE OR INSERT INTO PARAMS (ID, ID_PARENT, NAME, "VALUE", DESCRIPTION)
+						  VALUES (200, 1, 'Секретарский модуль', NULL, NULL)
+						MATCHING (ID);
+	UPDATE OR INSERT INTO PARAMS (ID, ID_PARENT, NAME, "VALUE", DESCRIPTION)
+						  VALUES (300, 1, 'Модуль таймера', NULL, NULL)
+						MATCHING (ID);
+	UPDATE OR INSERT INTO PARAMS (ID, ID_PARENT, NAME, "VALUE", DESCRIPTION)
+						  VALUES (400, 1, 'Предварительная регистрации и взвешивание', NULL, NULL)
+						MATCHING (ID);
+	UPDATE OR INSERT INTO PARAMS (ID, ID_PARENT, NAME, "VALUE", DESCRIPTION)
+						  VALUES (500, 1, 'General', NULL, 'Общие настройки')
+						MATCHING (ID);
+
+	UPDATE OR INSERT INTO PARAMS (ID, ID_PARENT, NAME, "VALUE", DESCRIPTION)
+						  VALUES (402, 400, 'StreamsForCheckEntryLimitations', '', 'Потоки которые проверять на допуски')
+						MATCHING (ID);
+end
+^ SET TERM ; ^</script>
+		<script>EXECUTE PROCEDURE DO_UP;</script>
+	
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DO_UP as
+begin 
+	UPDATE OR INSERT INTO PARAMS (ID, ID_PARENT, NAME, "VALUE", DESCRIPTION)
+						  VALUES (500, 1, 'General', NULL, 'Общие настройки')
+						MATCHING (ID);
+	UPDATE OR INSERT INTO PARAMS (ID, ID_PARENT, NAME, "VALUE", DESCRIPTION)
+						  VALUES (501, 500, 'CheckEntryLimitations', '0', 'Проверять ограничения по разряду')
+						MATCHING (ID);
+						
+	update RDB$FIELDS set RDB$FIELD_LENGTH = 512, RDB$CHARACTER_LENGTH = 512 where RDB$FIELD_NAME = 'RDB$391';
+
+	update razr set name = trim(name);
+	update lifter set name = trim(name), aname = trim(aname), town = trim(town);
+
+	update RDB$FIELDS set RDB$FIELD_TYPE = 37, RDB$CHARACTER_SET_ID = 52, RDB$COLLATION_ID = 0 where RDB$FIELD_NAME = 'RDB$441';
+	UPDATE RAZR  set ID_RAZR = -1 where ID_RAZR = 0;
+	UPDATE OR INSERT INTO RAZR (ID_RAZR, NAME) VALUES (1, '2Ю') MATCHING (ID_RAZR);
+	UPDATE OR INSERT INTO RAZR (ID_RAZR, NAME) VALUES (2, '1Ю') MATCHING (ID_RAZR);
+    UPDATE RAZR set NAME = TRIM(NAME);
+
+end
+^ SET TERM ; ^</script>
+		<script>EXECUTE PROCEDURE DO_UP;</script>
+	
+</version>	
+
+	<version number="0.35">
+	<script>SET TERM ^ ;
+CREATE OR ALTER procedure CHECK_ENTRY (
+    COMPET_ID numeric(12,0),
+    TOTALL double precision,
+    AGECLASS_ID numeric(12,0),
+    WEIGHTCLASS_ID numeric(12,0),
+    LIFTER_ID numeric(12,0))
+returns (
+    RESULT integer,
+    MINRAZRNAME varchar(50) character set WIN1251 collate WIN1251)
+as
+declare variable CEL integer;
+declare variable MINTOTALL double precision;
+begin
+    result = 1;
+
+    cel = null;
+    minTotall = null;
+
+    select coalesce( cast( (select "VALUE" from params where upper(name) = upper('CheckEntryLimitations')) as int), 0) from tmp into cel;
+
+    if (cel = 0) then
+    begin
+      suspend;
+      exit;
+    end
+
+    select n.sum_tot, r.name ||' ('||n.sum_tot||'кг.)'
+    from compet_entry_limit cel inner join
+      razr r on  cel.id_razr = r.id_razr inner join
+      competit c on cel.id_compet = c.id_compet left join
+      normat n on (n.id_range = c.id_range and n.id_category = cel.id_category and cel.id_razr = n.id_razr)
+    where cel.id_compet = :compet_id
+      and cel.id_category = :weightclass_id
+      and cel.id_agecl = :ageclass_id
+      and n.sex = (select sex from lifter where id_lifter = :lifter_id)
+      and cel.sex = n.sex
+    into minTotall, MinRazrName;
+
+    if (coalesce(totall, 0) &lt; coalesce(minTotall, 0)) then result = 0;
+
+    cel = null;
+    minTotall = null;
+    suspend;
+end
+^ SET TERM ; ^</script>
+		
+</version>	
+
+	<version number="0.36">
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DO_UP as
+begin 
+ /*
+1. ПЛ без экипировки
+2. ПЛ в 1-эк
+3. ПЛ в многослойной эк.
+[16:06:49] Роянова Наталья: 4. ЖИМ без эк
+5.Жим в 1-эк
+6. Жим в мн. эк.
+[16:07:03] Роянова Наталья: 7.Тяга без эк.
+8. Тяга в эк. 
+ */
+
+ 
+/* WPC */    
+/*
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_7', '01') MATCHING (ID); --WPC raw powerlifting
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_9', '02') MATCHING (ID); -- WPC single ply powerlifting
+	UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_1', '03') MATCHING (ID); --WPC multi ply powerlifting
+
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_6', '04') MATCHING (ID); 	--WPC raw benchpress
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_8', '05') MATCHING (ID); 	--WPC single ply benchpress
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_0', '06') MATCHING (ID);	--WPC multi ply benchpress
+*/
+/* AWPC */	
+/*
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_5', '07') MATCHING (ID); -- AWPC raw powerlifting
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_11', '08') MATCHING (ID); -- AWPC single ply powerlifting
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_3', '09') MATCHING (ID); -- AWPC multi ply powerlifting
+*/	
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_4', '10') MATCHING (ID); -- AWPC raw benchpress
+/*
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_10', '11') MATCHING (ID); -- AWPC single ply benchpress
+*/
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_2', '12') MATCHING (ID); -- AWPC multi ply benchpress
+
+	
+/* DL */	
+/*
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_13', '13') MATCHING (ID); -- WPC raw deadlift
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_12', '14') MATCHING (ID); -- WPC multy ply deadlift
+	
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_16', '15') MATCHING (ID); -- AWPC raw deadlift
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_15', '16') MATCHING (ID); -- AWPC multy ply deadlift
+*/
+	
+end^ 
+SET TERM ; ^</script>
+
+		<script>EXECUTE PROCEDURE DO_UP;</script>
+	</version>
+
+<version number="0.37">
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DO_UP as
+begin 
+	UPDATE OR INSERT INTO PARAMS (ID, ID_PARENT, NAME, "VALUE", DESCRIPTION)
+						  VALUES (210, 200, 'MaxDelayForNextAttempt', '99999', 'Время для подачи заявки на следующий подход (секунды)')
+						MATCHING (ID);
+end
+^ SET TERM ; ^</script>
+		<script>EXECUTE PROCEDURE DO_UP;</script>
+		
+</version>	
+
+
+	<version number="0.38">
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DO_UP as
+begin 
+  update lifter set name = trim(name);
+  update lifter set aname = trim(coalesce(aname, ''));
+  update WEIGTH_CATEGORY set name = trim(name);
+	update RDB$RELATION_FIELDS set
+	RDB$NULL_FLAG = 1
+	where (RDB$FIELD_NAME = 'ID_EXER') and
+	(RDB$RELATION_NAME = 'RECORDS');
+	update RDB$RELATION_FIELDS set
+	RDB$NULL_FLAG = 1
+	where (RDB$FIELD_NAME = 'ID_AGECL') and
+	(RDB$RELATION_NAME = 'RECORDS');
+	update RDB$RELATION_FIELDS set
+	RDB$NULL_FLAG = 1
+	where (RDB$FIELD_NAME = 'ID_LIFTER') and
+	(RDB$RELATION_NAME = 'RECORDS');
+	update RDB$RELATION_FIELDS set
+	RDB$NULL_FLAG = 1
+	where (RDB$FIELD_NAME = 'ID_CATEGORY') and
+	(RDB$RELATION_NAME = 'RECORDS');
+	update RDB$RELATION_FIELDS set
+	RDB$NULL_FLAG = 1
+	where (RDB$FIELD_NAME = 'ID_RANGE') and
+	(RDB$RELATION_NAME = 'RECORDS');
+	update RDB$RELATION_FIELDS set
+	RDB$NULL_FLAG = 1
+	where (RDB$FIELD_NAME = 'LEVEL') and
+	(RDB$RELATION_NAME = 'RECORDS');
+
+  
+end^ 
+SET TERM ; ^</script>
+
+		<script>EXECUTE PROCEDURE DO_UP;</script>
+		<script optional ="1">DROP INDEX XPKWEIGTH_CATEGORY;</script>
+		<script optional ="1">DROP INDEX WEIGTH_CATEGORY_UNAME;</script>
+		<script optional ="1">DROP INDEX RECORDS_REC_SEARCH;</script>
+		<script>CREATE INDEX WEIGTH_CATEGORY_UNAME ON WEIGTH_CATEGORY COMPUTED BY (UPPER(NAME))</script>
+<script>CREATE INDEX RECORDS_REC_SEARCH ON RECORDS (
+    ID_RECORD,
+    ID_EXER,
+    ID_AGECL,
+    ID_LIFTER,
+    ID_CATEGORY,
+    ID_COMPET,
+    ID_RANGE,
+    "LEVEL",
+    WEGHT
+);</script>
+	</version>
+
 <!--
 	<version number="0.18">
 		<script>SET TERM ^ ;
