@@ -4832,6 +4832,7 @@ begin
 	delete from competit where ID_RANGE in (17, 14);
     DELETE FROM RANGE WHERE ID_RANGE in (17, 14); /* 'WPC 1 слойная становая тяга', 'AWPC 1 слойная становая тяга'*/
 /*
+
     UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
     VALUES ('RANGE_0', 'WPC multi ply benchpress') MATCHING (ID);
     UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
@@ -5011,7 +5012,7 @@ end
 	<script>EXECUTE PROCEDURE DO_UP;</script>
 </version>	
 
-<version number="2.43">
+<version number="0.33">
     <script>SET TERM ^ ; 
 CREATE OR ALTER PROCEDURE DO_UP as
 begin 
@@ -5265,19 +5266,584 @@ SET TERM ; ^</script>
 );</script>
 	</version>
 
-<!--
-	<version number="0.18">
-		<script>SET TERM ^ ;
-CREATE OR ALTER PROCEDURE DO_UP 
-as
-begin
-insert into lifterexrange
-select id_lifter, id_range, current_timestamp from range r, lifter l where l.id_lifter<0   order by   id_lifter, id_range;
-end
-^
+	<version number="0.39">
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DO_UP as
+begin 
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (0, 7, 8, 2, 14, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (1, 7, 13, 2, 13, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (2, 7, 7, 2, 16, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (3, 7, 6, 2, 18, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (4, 7, 5, 2, 19, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (5, 7, 4, 2, 20, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (6, 7, 3, 2, 21, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (7, 7, 2, 2, 22, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (8, 7, 1, 2, 23, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (9, 7, 0, 2, 24, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (10, 8, 13, 2, 15, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (11, 8, 8, 2, 18, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (12, 8, 7, 2, 21, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (13, 8, 6, 2, 23, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (14, 8, 5, 2, 24, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (15, 8, 4, 2, 25, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (16, 8, 3, 2, 26, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (17, 8, 2, 2, 27, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (18, 8, 1, 2, 28, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (19, 8, 0, 2, 29, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (20, 3, 13, 4, 12, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (21, 3, 8, 4, 14, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (22, 3, 7, 4, 16, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (23, 3, 6, 4, 18, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (24, 3, 5, 4, 20, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (25, 3, 4, 4, 21, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (26, 3, 3, 4, 22, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (27, 3, 2, 4, 23, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (28, 3, 1, 4, 24, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (29, 3, 0, 4, 25, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (30, 4, 13, 4, 24, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (31, 4, 8, 4, 26, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (32, 4, 7, 4, 28, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (33, 4, 6, 4, 30, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (34, 4, 5, 4, 32, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (35, 4, 4, 4, 33, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (36, 4, 3, 4, 34, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (37, 4, 2, 4, 35, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (38, 4, 1, 4, 36, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (39, 4, 0, 4, 37, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (40, 5, 13, 4, 36, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (41, 6, 13, 4, 49, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (42, 6, 8, 4, 51, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (43, 5, 8, 4, 38, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (44, 6, 7, 4, 53, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (45, 5, 7, 4, 40, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (46, 6, 6, 4, 55, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (47, 5, 6, 4, 42, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (48, 6, 5, 4, 57, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (49, 5, 5, 4, 44, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (50, 6, 4, 4, 58, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (51, 5, 4, 4, 45, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (52, 6, 3, 4, 59, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (53, 5, 3, 4, 46, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (54, 6, 2, 4, 60, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (55, 5, 2, 4, 47, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (56, 6, 1, 4, 61, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (57, 5, 1, 4, 48, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (58, 6, 0, 4, 62, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (59, 5, 0, 4, 49, 0, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (60, 1, 14, 4, 18, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (61, 1, 12, 4, 19, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (62, 1, 11, 4, 20, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (63, 1, 10, 4, 21, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (64, 1, 9, 4, 22, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (65, 1, 8, 4, 23, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (66, 1, 7, 4, 24, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (67, 1, 6, 4, 25, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (68, 1, 5, 4, 26, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (69, 1, 4, 4, 27, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (70, 1, 3, 4, 28, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (71, 1, 2, 4, 29, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (72, 2, 2, 4, 35, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (73, 2, 3, 4, 34, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (74, 2, 4, 4, 33, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (75, 2, 5, 4, 32, 1, '-1')
+                    MATCHING (ID_NORMAT);
+end^ 
 SET TERM ; ^</script>
-		<script>EXECUTE PROCEDURE DO_UP;</script>
-	</version>
--->
 
+		<script>EXECUTE PROCEDURE DO_UP;</script>
+
+		<script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DO_UP as
+begin 
+
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (76, 2, 6, 4, 31, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (77, 2, 7, 4, 30, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (78, 2, 8, 4, 29, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (79, 2, 9, 4, 28, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (80, 2, 10, 4, 27, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (81, 2, 11, 4, 26, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (82, 2, 12, 4, 25, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (83, 2, 14, 4, 24, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (84, 8, 14, 2, 31, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (85, 7, 14, 2, 26, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (86, 6, 14, 2, 21, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (87, 5, 14, 2, 17, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (88, 4, 14, 2, 13, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (89, 3, 14, 2, 9, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (90, 8, 12, 2, 34, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (91, 7, 12, 2, 28, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (92, 6, 12, 2, 23, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (93, 5, 12, 2, 19, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (94, 4, 12, 2, 15, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (95, 3, 12, 2, 11, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (96, 8, 11, 2, 37, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (97, 7, 11, 2, 31, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (98, 6, 11, 2, 25, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (99, 5, 11, 2, 21, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (100, 4, 11, 2, 17, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (101, 3, 11, 2, 13, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (102, 8, 10, 2, 39, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (103, 7, 10, 2, 33, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (104, 6, 10, 2, 28, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (105, 5, 10, 2, 23, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (106, 4, 10, 2, 19, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (107, 3, 10, 2, 15, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (108, 8, 9, 2, 41, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (109, 7, 9, 2, 35, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (110, 6, 9, 2, 30, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (111, 5, 9, 2, 24, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (112, 4, 9, 2, 20, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (113, 3, 9, 2, 16, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (114, 8, 8, 2, 43, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (115, 7, 8, 2, 37, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (116, 6, 8, 2, 32, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (117, 5, 8, 2, 25, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (118, 4, 8, 2, 21, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (119, 3, 8, 2, 17, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (120, 8, 7, 2, 45, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (121, 7, 7, 2, 39, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (122, 6, 7, 2, 34, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (123, 5, 7, 2, 26, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (124, 4, 7, 2, 22, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (125, 3, 7, 2, 18, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (126, 8, 6, 2, 47, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (127, 7, 6, 2, 41, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (128, 6, 6, 2, 36, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (129, 5, 6, 2, 28, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (130, 4, 6, 2, 23, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (131, 3, 6, 2, 19, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (132, 8, 5, 2, 49, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (133, 7, 5, 2, 43, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (134, 6, 5, 2, 38, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (135, 5, 5, 2, 29, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (136, 4, 5, 2, 24, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (137, 3, 5, 2, 20, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (138, 8, 4, 2, 51, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (139, 7, 4, 2, 45, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (140, 6, 4, 2, 40, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (141, 5, 4, 2, 30, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (142, 4, 4, 2, 25, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (143, 3, 4, 2, 21, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (144, 8, 3, 2, 52, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (145, 7, 3, 2, 46, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (146, 6, 3, 2, 41, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (147, 5, 3, 2, 31, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (148, 4, 3, 2, 26, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (149, 3, 3, 2, 22, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (150, 8, 2, 2, 53, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (151, 7, 2, 2, 47, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (152, 6, 2, 2, 42, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (153, 5, 2, 2, 32, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (154, 4, 2, 2, 27, 1, '-1')
+                    MATCHING (ID_NORMAT);
+UPDATE OR INSERT INTO NORMAT (ID_NORMAT, ID_RAZR, ID_CATEGORY, ID_RANGE, SUM_TOT, SEX, NK)
+                      VALUES (155, 3, 2, 2, 23, 1, '-1')
+                    MATCHING (ID_NORMAT);
+end^ 
+SET TERM ; ^</script>
+
+		<script>EXECUTE PROCEDURE DO_UP;</script>
+
+		<script>SET TERM ^ ; 
+CREATE OR ALTER procedure GET_COMPETNEWRAZR (IDC numeric(12))
+returns (
+    LIFTER numeric(12),
+    LNAME varchar(60) character set WIN1251,
+    ORAZR numeric(12),
+    NRAZR numeric(12),
+    LOC numeric(12),
+    TOTALL float,
+    WCATEG numeric(12),
+    NORMAT numeric(12))
+as begin
+for
+select
+  l.id_lifter,
+  l.name,
+ COALESCE((
+     select
+      max(n2.id_razr)
+     from
+       lifter2razr lr1 join
+       normat n2 on n2.id_normat = lr1.id_normat
+     where
+       lr1.id_lifter = l.id_lifter and
+       n2.id_range = c.id_range and
+       n2.sex = l.sex
+     rows 1 to 1
+  ), -1) as old_razr,
+
+  (select max (id_razr) from normat n1 where
+   n1.id_category=lc.id_category and n1.sex=l.sex and sum_tot &lt;= le.bench2 and id_range=c.id_range) as new_razr,
+  (select first 1 id_normat from normat n1 where
+   n1.id_category=lc.id_category and n1.sex=l.sex and sum_tot &lt;= le.bench2 and id_range=c.id_range order by id_razr desc ) as new_normat,
+  lc.ID_LIFTER_COMPET,
+  le.bench2,
+  lc.id_category
+from
+  Lifter_Exersis le,
+  Lifter_on_competition lc,
+  Lifter L,
+  Competit C
+where
+  lc.id_compet=c.id_compet and
+  l.id_lifter=lc.id_lifter and
+  le.ID_LIFTER_COMPET=lc.ID_LIFTER_COMPET and
+  lc.id_compet= :IDC and
+  COALESCE((
+     select
+      max(n2.id_razr)
+     from
+       lifter2razr lr1 join
+       normat n2 on n2.id_normat = lr1.id_normat
+     where
+       lr1.id_lifter = l.id_lifter and
+       n2.id_range = c.id_range and
+       n2.sex = l.sex
+     rows 1 to 1
+  ), -1)
+  &lt;=
+  (
+     select
+       max (id_razr)
+     from
+       normat n1
+     where
+       n1.id_category = lc.id_category and
+       n1.sex = l.sex and
+       sum_tot &lt;= le.bench2 and
+       id_range=c.id_range
+     rows 1 to 1
+  )
+  and le.summaall &gt; 0
+order by
+  l.sex, l.name
+into
+  :lifter,
+  :lname,
+  :orazr,
+  :nrazr,
+  :normat,
+  :loc,
+  :totall,
+  :wcateg
+  DO suspend;
+end ^
+SET TERM ; ^</script>
+	</version>
+
+<!--
+	
+	<version number="0.39">
+	</version>
+
+-->	
 </versions>
