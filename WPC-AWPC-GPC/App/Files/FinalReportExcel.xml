@@ -6,14 +6,17 @@ select
   cast(Transliter(fr.fio) as varchar(50)) as EngFio,
   cast(Transliter(fr.town) as varchar(103))as engTown,
   cast(Transliter(fr.Coach) as varchar(50))as engCoach,
+  datediff(year from l.dat_bith to cast(loc.edittime as date)) as age,
   fr.*,
   c.*
 from finalreport(%IDC%) fr
 left join
   Lifter_on_competition loc
-    on loc.id_lifter_compet=fr.loc left join
+    on loc.id_lifter_compet=fr.loc inner join
   Competit C
-    on c.id_compet=loc.id_compet
+    on c.id_compet=loc.id_compet inner join
+  Lifter l
+    on l.id_lifter = loc.id_lifter
 WHERE
   loc.id_stream > 0
   </sql>
