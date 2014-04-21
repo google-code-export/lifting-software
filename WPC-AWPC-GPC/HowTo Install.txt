@@ -1,6 +1,6 @@
 Итак процедура установки:
 1) Скачать и установить SVN http://tortoisesvn.net/ совместимый с вашей верисей Windows
-2) Выкачать файлы программы по ссылке http://lifting-software.googlecode.com/svn/trunk/WPC-AWPC-GPC
+2) При помощи SVN выкачать файлы программы по ссылке http://lifting-software.googlecode.com/svn/trunk/WPC-AWPC-GPC
 3) из папки WPC-AWPC-GPC\Database установить сервер БД Firebird-2.1.5.18497_0_Win32
 4) в папку сервера БД C:\Program Files (x86)\Firebird\Firebird_2_1\UDF скопировать из WPC-AWPC-GPC\Database файл IbRoutines.dll
 5) распаковать тестовую БД WPC-AWPC-GPC\Database\test.7z
