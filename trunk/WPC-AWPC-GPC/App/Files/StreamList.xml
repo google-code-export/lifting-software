@@ -1,5 +1,5 @@
 <main>
-  <reportfilename ru="frf\StreamReport_ru.frf" eng="frf\BpStreamReport_eng.frf"/>
+  <reportfilename ru="frf\StreamReport_ru.frf" eng="frf\StreamReport_eng.frf"/>
   <info name=""/>
   <sql>
 select cast(fr.fio as varchar(150)) as RUSFio,
@@ -9,11 +9,17 @@ select cast(fr.fio as varchar(150)) as RUSFio,
   loc.id_stream, 
   fr.*, 
   c.*,
-  r.sname as divis
+  r.name as rusrname,
+  s.name as StreamName,
+  trnsl.val as engrname
+  
 from finalreport(%IDC%) fr 
   inner join Lifter_on_competition loc on loc.id_lifter_compet=fr.loc 
   inner join Competit c on c.id_compet=loc.id_compet 
   inner join Range r on r.id_range = c.id_range
+  inner join Stream s on s.id_stream = loc.id_stream
+  left join translate_rus_eng trnsl on trnsl.id = 'RANGE_'||r.id_range
+
 %WHERE% 
   </sql>
 </main>
