@@ -1,0 +1,131 @@
+body {
+ font-family: Verdana, "Tahoma";
+}
+
+table.competition_title {
+ width: 100%;
+ border-collapse:collapse;
+ border: 1px solid #C8DFC8;
+}
+
+table.competition_title td {
+  background-color: #CCFFCC;
+  padding: 5px 10px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+table.competitions_list {
+ border-collapse:collapse;
+
+}
+table.competitions_list td{
+ border: 1px solid #F4F3E8;
+ font-size: 12px;
+ }
+
+table.competitions_list td[colspan]{
+ background-color: #DD7977;
+    color: #FFFFFF;
+    padding-left: 10px;
+    text-shadow: 0 0 4px #39100F;
+}
+table.competitions_list td[colspan] p {
+padding: 0px;
+margin: 0px;
+} 
+table.competitions_list td:nth-child(2){
+width: 150px;
+}
+
+table.competitions_list td a {
+color: #333;
+font-size: 12px;
+text-decoration: none;
+font-weight: normal;
+
+}
+table.competitions_list td a:hover {
+text-decoration: underline;
+}
+
+table.lifter_table {
+ border-collapse:collapse;
+ border: 1px solid	#A0BFE2;
+ font-size: 12px;
+ width: 100%;
+ margin-top: 20px;
+}
+
+table.lifter_table td {
+ border: 1px solid	#A0BFE2;
+ padding: 3px;
+}
+
+table.lifter_table tr.lifter_table_header td{
+	background-color: #BAD1FC;
+    color: #355495;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+}
+table.lifter_table tr td.agecl{
+	background-color: #648AB7;
+    border: 1px solid #648AB7;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: bold;
+    padding-left: 6pt;
+    text-align: left;
+    text-shadow: 0 0 12px #000000;
+}
+
+table.lifter_table tr td.w_class{
+	background-color: #759BC8;
+    border-color: #759BC8;
+    border-width: 1px;
+    color: #FFFFFF;
+    font-size: 0.9em;
+    font-weight: bold;
+    padding-left: 15pt;
+    text-align: left;
+    text-shadow: 0 0 11px #000000;
+}
+
+table.lifter_table tr td.goodLift{
+ background-color: #B9E5AF;
+    border-bottom: 1px solid #FFFFFF;
+    border-right: 1px solid #FFFFFF;
+    color: #000000;
+    width: 42pt;
+}
+
+table.lifter_table tr.table_data td:nth-child(n+5),table.lifter_table tr.table_data td:nth-child(1) /*,table.lifter_table tr td:nth-child(6),table.lifter_table tr td:nth-child(7),table.lifter_table tr td:nth-child(8)*/{
+text-align: right;
+}
+table.lifter_table tr.table_data td:nth-child(1) {
+    width: 42pt;
+}
+
+table.lifter_table tr td.notLifted{
+    background-color: #C0C0C0;
+}
+
+table.lifter_table tr td.noLift {
+    background-color: #FCACB3;
+    border-bottom: 1px solid #FFFFFF;
+    border-right: 1px solid #FFFFFF;
+    color: #000000;
+    text-decoration: line-through;
+    width: 42pt;
+}
+
+table.lifter_table tr.selection{
+	background-color: #FFFFB3 !important;
+}
+
+table.lifter_table  td.selected_cell{
+    border: 2px solid red !important;
+	font-weight: bold;
+}
