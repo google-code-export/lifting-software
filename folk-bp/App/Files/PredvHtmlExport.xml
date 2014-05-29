@@ -39,11 +39,13 @@ select
        from  Lifter_on_Competition loc1 inner join  lifter_exersis le1 on loc1.id_lifter_compet = le1.id_lifter_compet inner join competit c1 on c1.id_compet = loc1.id_compet
        where loc1.id_lifter = loc.id_lifter
          and c1.id_range = c.id_range
+         and c1.date_begin &lt;= c.date_begin
        union all
-       select coalesce(le1.squat1, 0)+ coalesce(le1.bench1, 0)+ coalesce(le1.dl1, 0)
+       select case r.kind when 1 then coalesce(le1.squat1, 0)+ coalesce(le1.bench1, 0)+ coalesce(le1.dl1, 0) else 0 end
        from  Lifter_on_Competition loc1 inner join  lifter_exersis le1 on loc1.id_lifter_compet = le1.id_lifter_compet inner join competit c1 on c1.id_compet = loc1.id_compet
        where loc1.id_lifter = loc.id_lifter
          and c1.id_range = c.id_range
+         and c1.date_begin &lt;= c.date_begin
     ) table1
   ), '0') as numeric(6,1))as pbest1
 from
@@ -54,6 +56,8 @@ from
     on loc.id_lifter_compet = le.id_lifter_compet inner join
   competit c
     on c.id_compet = loc.id_compet inner join
+  range r
+    on r.id_range  = c.id_range inner join
   Age_Class Ac
     on Ac.id_agecl = loc.id_agecl inner join
   WEIGTH_CATEGORY WC
