@@ -5,7 +5,7 @@
 
 CREATE OR ALTER PROCEDURE VER 
 returns (
-    "VERSION" float )
+    "VERSION" float)
 as
 begin
   VERSION = 1.0/* ; compile error to avoid make changes in Folk BP*/
@@ -983,7 +983,7 @@ begin
   do
 /*
     for select cw.fio, cw.totall, cw.gloss, cw.ageclass, cw.sex, cw.loc
-        from categorywinners(:"IDC", :"IDCAT") cw
+        from categorywinners(:idc, :"IDCAT") cw
         where place = 1
         into :"FIO", :"TOTALL", :"GLOSS", :"AGECLASS", :"SEX", :"LOC"
     do suspend;
@@ -1033,19 +1033,19 @@ returns (
 as
 BEGIN
 for
-select first 24 ab.catname, ab.fio, ab.totall, ab.gloss,  ab.sex, ab.loc,'Teenagers' as agename, 1 as agenum  from absolutebyage(:"IDC") ab
+select first 24 ab.catname, ab.fio, ab.totall, ab.gloss,  ab.sex, ab.loc,'Teenagers' as agename, 1 as agenum  from absolutebyage(:idc) ab
 where ageclass in (2, 14, 15)
 
 union all
-select first 24 ab.catname, ab.fio, ab.totall, ab.gloss, ab.sex , ab.loc,'Junior   ', 2 from absolutebyage(:"IDC") ab
+select first 24 ab.catname, ab.fio, ab.totall, ab.gloss, ab.sex , ab.loc,'Junior   ', 2 from absolutebyage(:idc) ab
 where ageclass in (1)
 
 union all
-select first 24 ab.catname, ab.fio, ab.totall, ab.gloss, ab.sex , ab.loc,'Open     ', 3 from absolutebyage(:"IDC") ab
+select first 24 ab.catname, ab.fio, ab.totall, ab.gloss, ab.sex , ab.loc,'Open     ', 3 from absolutebyage(:idc) ab
 where ageclass in (-2)
 
 union all
-select first 24 ab.catname, ab.fio, ab.totall, ab.gloss, ab.sex , ab.loc,'Masters  ', 4 from absolutebyage(:"IDC") ab
+select first 24 ab.catname, ab.fio, ab.totall, ab.gloss, ab.sex , ab.loc,'Masters  ', 4 from absolutebyage(:idc) ab
 where ageclass in (3,4,5,6,7,8,9,10,11,12,13)
 order by 5,8,4 desc
 into :"CAT", :"FIO", :"TOTALL", :"GLOSS", :"SEX", :"LOC", :"AGENAME", :"AGENUM"
@@ -1354,25 +1354,25 @@ returns (
     loc double precision)
 as
 BEGIN
-for select ab.catname, ab.fio, ab.totall, ab.gloss,  ab.sex, ab.loc,'Teenagers' as agename, 1 as agenum  from absolutebyage(:"IDC") ab
+for select ab.catname, ab.fio, ab.totall, ab.gloss,  ab.sex, ab.loc,'Teenagers' as agename, 1 as agenum  from absolutebyage(:idc) ab
 where ageclass in (2, 14, 15) and sex = 0
 order by 5,8,4 desc  rows 24
 into :"CAT", :"FIO", :"TOTALL", :"GLOSS", :"SEX", :"LOC", :"AGENAME", :"AGENUM"
 do suspend;
 
-for select ab.catname, ab.fio, ab.totall, ab.gloss, ab.sex , ab.loc,'Junior   ', 2 from absolutebyage(:"IDC") ab
+for select ab.catname, ab.fio, ab.totall, ab.gloss, ab.sex , ab.loc,'Junior   ', 2 from absolutebyage(:idc) ab
 where ageclass = (1)  and sex = 0
 order by 5,8,4 desc rows 24
 into :"CAT", :"FIO", :"TOTALL", :"GLOSS", :"SEX", :"LOC", :"AGENAME", :"AGENUM"
 do suspend;
 
-for select ab.catname, ab.fio, ab.totall, ab.gloss, ab.sex , ab.loc,'Open     ', 3 from absolutebyage(:"IDC") ab
+for select ab.catname, ab.fio, ab.totall, ab.gloss, ab.sex , ab.loc,'Open     ', 3 from absolutebyage(:idc) ab
 where ageclass = (-2) and sex = 0
 order by 5,8,4 desc rows 24
 into :"CAT", :"FIO", :"TOTALL", :"GLOSS", :"SEX", :"LOC", :"AGENAME", :"AGENUM"
 do suspend;
 
-for select ab.catname, ab.fio, ab.totall, ab.gloss, ab.sex , ab.loc,'Masters  ', 4 from absolutebyage(:"IDC") ab
+for select ab.catname, ab.fio, ab.totall, ab.gloss, ab.sex , ab.loc,'Masters  ', 4 from absolutebyage(:idc) ab
 where ageclass in (3,4,5,6,7,8,9,10,11,12,13) and sex = 0
 order by 5,8,4 desc  rows 24
 into :"CAT", :"FIO", :"TOTALL", :"GLOSS", :"SEX", :"LOC", :"AGENAME", :"AGENUM"
@@ -1380,25 +1380,25 @@ do suspend;
 
 
 
-for select ab.catname, ab.fio, ab.totall, ab.gloss,  ab.sex, ab.loc,'Teenagers' as agename, 1 as agenum  from absolutebyage(:"IDC") ab
+for select ab.catname, ab.fio, ab.totall, ab.gloss,  ab.sex, ab.loc,'Teenagers' as agename, 1 as agenum  from absolutebyage(:idc) ab
 where ageclass in (2, 14, 15) and sex = 1
 order by 5,8,4 desc  rows 24
 into :"CAT", :"FIO", :"TOTALL", :"GLOSS", :"SEX", :"LOC", :"AGENAME", :"AGENUM"
 do suspend;
 
-for select ab.catname, ab.fio, ab.totall, ab.gloss, ab.sex , ab.loc,'Junior   ', 2 from absolutebyage(:"IDC") ab
+for select ab.catname, ab.fio, ab.totall, ab.gloss, ab.sex , ab.loc,'Junior   ', 2 from absolutebyage(:idc) ab
 where ageclass = (1)  and sex = 1
 order by 5,8,4 desc rows 24
 into :"CAT", :"FIO", :"TOTALL", :"GLOSS", :"SEX", :"LOC", :"AGENAME", :"AGENUM"
 do suspend;
 
-for select ab.catname, ab.fio, ab.totall, ab.gloss, ab.sex , ab.loc,'Open     ', 3 from absolutebyage(:"IDC") ab
+for select ab.catname, ab.fio, ab.totall, ab.gloss, ab.sex , ab.loc,'Open     ', 3 from absolutebyage(:idc) ab
 where ageclass = (-2) and sex = 1
 order by 5,8,4 desc rows 24
 into :"CAT", :"FIO", :"TOTALL", :"GLOSS", :"SEX", :"LOC", :"AGENAME", :"AGENUM"
 do suspend;
 
-for select ab.catname, ab.fio, ab.totall, ab.gloss, ab.sex , ab.loc,'Masters  ', 4 from absolutebyage(:"IDC") ab
+for select ab.catname, ab.fio, ab.totall, ab.gloss, ab.sex , ab.loc,'Masters  ', 4 from absolutebyage(:idc) ab
 where ageclass in (3,4,5,6,7,8,9,10,11,12,13) and sex = 1
 order by 5,8,4 desc  rows 24
 into :"CAT", :"FIO", :"TOTALL", :"GLOSS", :"SEX", :"LOC", :"AGENAME", :"AGENUM"
@@ -2823,7 +2823,7 @@ begin
   do
 /*
     for select cw.fio, cw.totall, cw.gloss, cw.ageclass, cw.sex, cw.loc
-        from categorywinners(:"IDC", :"IDCAT") cw
+        from categorywinners(:idc, :"IDCAT") cw
         where place = 1
         into :"FIO", :"TOTALL", :"GLOSS", :"AGECLASS", :"SEX", :"LOC"
     do suspend;
@@ -4965,7 +4965,7 @@ begin
   NAME = 'Кол-во спортсменов общее';
   SELECT COUNT(ID_LIFTER_COMPET)
   FROM LIFTER_ON_COMPETITION
-  WHERE ID_COMPET = :"IDC"
+  WHERE ID_COMPET = :idc
   INTO :"VALUE";
   suspend;
 
@@ -4987,7 +4987,7 @@ begin
   select count(distinct(l.town))
   from lifter_on_competition loc join
     Lifter L on l.id_lifter = loc.id_lifter
-  where loc.id_compet = :"IDC"
+  where loc.id_compet = :idc
   into :"VALUE";
   suspend;
   
@@ -8050,7 +8050,7 @@ begin
   NAME = 'Кол-во спортсменов общее';
   SELECT COUNT(ID_LIFTER_COMPET)
   FROM LIFTER_ON_COMPETITION
-  WHERE ID_COMPET = :"IDC"
+  WHERE ID_COMPET = :idc
   INTO :"VALUE";
   suspend;
 
@@ -8156,7 +8156,7 @@ from
     on loc.id_wilks = w.id_wilks
 where
   loc.INZACH = -1 and
-  loc.id_compet=:"IDC" and
+  loc.id_compet=:idc and
   loc.id_agecl =:"IDA" and
   loc.id_category=:"IDCAT" and
   L.Sex = :"SEX"
@@ -8193,21 +8193,21 @@ as
 begin
 for
 select lf.place, lf.fio, lf.totall, lf.gloss, lf.ageclass, lf.loc,  0
-  from lifterfromplace(:"IDC", :"IDA", 1, :"IDCAT", 0) lf union all
+  from lifterfromplace(:idc, :"IDA", 1, :"IDCAT", 0) lf union all
 select lf.place, lf.fio, lf.totall, lf.gloss, lf.ageclass, lf.loc,  0
-  from lifterfromplace(:"IDC", :"IDA", 2, :"IDCAT", 0) lf union all
+  from lifterfromplace(:idc, :"IDA", 2, :"IDCAT", 0) lf union all
 select lf.place, lf.fio, lf.totall, lf.gloss, lf.ageclass, lf.loc,  0
-  from lifterfromplace(:"IDC", :"IDA", 3, :"IDCAT", 0) lf
+  from lifterfromplace(:idc, :"IDA", 3, :"IDCAT", 0) lf
 into :"PLACE", :"FIO", :"TOTALL", :"GLOSS", :"AGECLASS", :"LOC", :"SEX"
 do suspend;
 
 for
 select lf.place, lf.fio, lf.totall, lf.gloss, lf.ageclass, lf.loc,  1
-  from lifterfromplace(:"IDC", :"IDA", 1, :"IDCAT", 1) lf union all
+  from lifterfromplace(:idc, :"IDA", 1, :"IDCAT", 1) lf union all
 select lf.place, lf.fio, lf.totall, lf.gloss, lf.ageclass, lf.loc,  1
-  from lifterfromplace(:"IDC", :"IDA", 2, :"IDCAT", 1) lf union all
+  from lifterfromplace(:idc, :"IDA", 2, :"IDCAT", 1) lf union all
 select lf.place, lf.fio, lf.totall, lf.gloss, lf.ageclass, lf.loc,  1
-  from lifterfromplace(:"IDC", :"IDA", 3, :"IDCAT", 1) lf
+  from lifterfromplace(:idc, :"IDA", 3, :"IDCAT", 1) lf
 into :"PLACE", :"FIO", :"TOTALL", :"GLOSS", :"AGECLASS", :"LOC", :"SEX"
 do suspend;
 
@@ -8231,12 +8231,12 @@ select
 from
   Lifter_On_Competition Loc
 where
-  loc.id_compet=:"IDC" and
+  loc.id_compet=:idc and
   loc.id_category=:"IDCAT"
 into :IDA
 do
 begin
- for select place, fio, totall, gloss, ageclass, sex, loc from liftersfromplace( :"IDC", :ida, :"IDCAT") into
+ for select place, fio, totall, gloss, ageclass, sex, loc from liftersfromplace( :idc, :ida, :"IDCAT") into
    :"PLACE", :"FIO", :"TOTALL", :"GLOSS", :"AGECLASS", :"SEX", :"LOC"
  do suspend;
 end
@@ -8262,7 +8262,7 @@ begin
   do
     for
       select Place, Fio, Totall, Gloss, AgeClass, Sex, Loc
-      from CategoryWinners(:"IDC", :"IDCATEG")
+      from CategoryWinners(:idc, :"IDCATEG")
       into :"PLACE", :"FIO", :"TOTALL", :"GLOSS",  :"AGECLASS", :"SEX", :"LOC"
     do suspend;
 end
@@ -9154,31 +9154,1143 @@ end
 ^
 SET TERM ; ^</script>
 	</version>
-<!--
+	
+<version number="2.50">
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DO_UP as
+begin 
+delete from deleted;
+delete from info;
 
+UPDATE OR INSERT INTO AGE_CLASS (ID_AGECL, NAME, FROM_AGE, TO_AGE, ENGNAME)
+                         VALUES (80 /*=13*/, 'Мастера 80+', 80, 999, 'Masters 80up')
+                       MATCHING (ID_AGECL);
+update  compet_entry_limit       set id_agecl = 80 where id_agecl =13;
+update  lifter_on_competition    set id_agecl = 80 where id_agecl =13;
+update                   records set id_agecl = 80 where id_agecl =13;
+delete from age_class                              where id_agecl =13;
 
+UPDATE OR INSERT INTO AGE_CLASS (ID_AGECL, NAME, FROM_AGE, TO_AGE, ENGNAME)
+                         VALUES (75 /*=12*/, 'Мастера 75 - 79', 75, 79, 'Masters 75-79')
+                       MATCHING (ID_AGECL);
+update  compet_entry_limit       set id_agecl = 75 where id_agecl =12;
+update  lifter_on_competition    set id_agecl = 75 where id_agecl =12;
+update                   records set id_agecl = 75 where id_agecl =12;
+delete from age_class                              where id_agecl =12;
 
-ALTER TABLE COMPETIT ADD MIN_NORMAT_ID ID;
-ALTER TABLE COMPETIT ADD CONSTRAINT FK_COMPETIT_1 FOREIGN KEY (MIN_NORMAT_ID) REFERENCES NORMAT(ID_NORMAT);
+UPDATE OR INSERT INTO AGE_CLASS (ID_AGECL, NAME, FROM_AGE, TO_AGE, ENGNAME)
+                         VALUES (70 /*=11*/, 'Мастера 70 - 74', 70, 74, 'Masters 70-74')
+                       MATCHING (ID_AGECL);
+update  compet_entry_limit       set id_agecl = 70 where id_agecl =11;
+update  lifter_on_competition    set id_agecl = 70 where id_agecl =11;
+update                   records set id_agecl = 70 where id_agecl =11;
+Delete from age_class                              where id_agecl =11;
 
-	<version number="2.30">
-      <script>CREATE INDEX LIFTER_ON_COMPETITION_IDX2 ON LIFTER_ON_COMPETITION (CREATETIME);</script>
-      <script>CREATE INDEX LIFTER_ON_COMPETITION_IDX1 ON LIFTER_ON_COMPETITION (EDITTIME);</script>
-	</version>
+UPDATE OR INSERT INTO AGE_CLASS (ID_AGECL, NAME, FROM_AGE, TO_AGE, ENGNAME)
+                         VALUES (65 /*=10*/, 'Мастера 65 - 69', 65, 69, 'Masters 65-69')
+                       MATCHING (ID_AGECL);
+update  compet_entry_limit       set id_agecl = 65 where id_agecl =10;
+update  lifter_on_competition    set id_agecl = 65 where id_agecl =10;
+update                   records set id_agecl = 65 where id_agecl =10;
+Delete from age_class                              where id_agecl =10;
 
+UPDATE OR INSERT INTO AGE_CLASS (ID_AGECL, NAME, FROM_AGE, TO_AGE, ENGNAME)
+                         VALUES (60 /*=9*/, 'Мастера 60 - 64', 60, 64, 'Masters 60-64')
+                       MATCHING (ID_AGECL);
+update  compet_entry_limit       set id_agecl = 60 where id_agecl =9;
+update  lifter_on_competition    set id_agecl = 60 where id_agecl =9;
+update                   records set id_agecl = 60 where id_agecl =9;
+Delete from age_class                              where id_agecl =9;
 
-	<version number="2.29">
+UPDATE OR INSERT INTO AGE_CLASS (ID_AGECL, NAME, FROM_AGE, TO_AGE, ENGNAME)
+                         VALUES (55 /*=8*/, 'Мастера 55 - 59', 55, 59, 'Masters 55-59')
+                       MATCHING (ID_AGECL);
+update  compet_entry_limit       set id_agecl = 55 where id_agecl =8;
+update  lifter_on_competition    set id_agecl = 55 where id_agecl =8;
+update                   records set id_agecl = 55 where id_agecl =8;
+Delete from age_class                              where id_agecl =8;
+
+UPDATE OR INSERT INTO AGE_CLASS (ID_AGECL, NAME, FROM_AGE, TO_AGE, ENGNAME)
+                         VALUES (50 /*=6*/, 'Мастера 50 - 54', 50, 54, 'Masters 50-54')
+                       MATCHING (ID_AGECL);
+update  compet_entry_limit       set id_agecl = 50 where id_agecl =6;
+update  lifter_on_competition    set id_agecl = 50 where id_agecl =6;
+update                   records set id_agecl = 50 where id_agecl =6;
+Delete from age_class                              where id_agecl =6;
+
+UPDATE OR INSERT INTO AGE_CLASS (ID_AGECL, NAME, FROM_AGE, TO_AGE, ENGNAME)
+                         VALUES (45 /*=4*/, 'Мастера 45 - 49', 45, 49, 'Masters 45-49')
+                       MATCHING (ID_AGECL);
+update  compet_entry_limit       set id_agecl = 45 where id_agecl =4;
+update  lifter_on_competition    set id_agecl = 45 where id_agecl =4;
+update                   records set id_agecl = 45 where id_agecl =4;
+Delete from age_class                              where id_agecl =4;
+
+UPDATE OR INSERT INTO AGE_CLASS (ID_AGECL, NAME, FROM_AGE, TO_AGE, ENGNAME)
+                         VALUES (40 /*=3*/, 'Мастера 40 - 44', 40, 44, 'Masters 40-44')
+                       MATCHING (ID_AGECL);
+update  compet_entry_limit       set id_agecl = 40 where id_agecl =3;
+update  lifter_on_competition    set id_agecl = 40 where id_agecl =3;
+update                   records set id_agecl = 40 where id_agecl =3;
+Delete from age_class                              where id_agecl =3;
+
+UPDATE OR INSERT INTO AGE_CLASS (ID_AGECL, NAME, FROM_AGE, TO_AGE, ENGNAME)
+                         VALUES (20 /*=1*/, 'Юниоры 20 - 23', 20, 23, 'Juniors 20-23')
+                       MATCHING (ID_AGECL);
+update  compet_entry_limit       set id_agecl = 20 where id_agecl =1;
+update  lifter_on_competition    set id_agecl = 20 where id_agecl =1;
+update                   records set id_agecl = 20 where id_agecl =1;
+Delete from age_class                              where id_agecl =1;
+
+UPDATE OR INSERT INTO AGE_CLASS (ID_AGECL, NAME, FROM_AGE, TO_AGE, ENGNAME)
+                         VALUES (18 /*=2*/, 'Юноши 18 - 19', 18, 19, 'Teen 18-19')
+                       MATCHING (ID_AGECL);
+update  compet_entry_limit       set id_agecl = 18 where id_agecl =2;
+update  lifter_on_competition    set id_agecl = 18 where id_agecl =2;
+update                   records set id_agecl = 18 where id_agecl =2;
+Delete from age_class                              where id_agecl =2;
+
+UPDATE OR INSERT INTO AGE_CLASS (ID_AGECL, NAME, FROM_AGE, TO_AGE, ENGNAME)
+                         VALUES (16 /*=15*/, 'Юноши 16 - 17', 16, 17, 'Teen 16-17')
+                       MATCHING (ID_AGECL);
+update  compet_entry_limit       set id_agecl = 16 where id_agecl =15;
+update  lifter_on_competition    set id_agecl = 16 where id_agecl =15;
+update                   records set id_agecl = 16 where id_agecl =15;
+Delete from age_class                              where id_agecl =15;
+
+UPDATE OR INSERT INTO AGE_CLASS (ID_AGECL, NAME, FROM_AGE, TO_AGE, ENGNAME)
+                         VALUES (13 /*=14*/, 'Юноши 13 - 15', 1, 15, 'Teen 13-15')
+                       MATCHING (ID_AGECL);
+update  compet_entry_limit       set id_agecl = 13 where id_agecl =14;
+update  lifter_on_competition    set id_agecl = 13 where id_agecl =14;
+update                   records set id_agecl = 13 where id_agecl =14;
+Delete from age_class                              where id_agecl =14;
+
+  update age_class set name = trim(name);
+  update age_class set ENGNAME = trim(coalesce(ENGNAME, ''));
+end^ 
+SET TERM ; ^</script>
+		<script>EXECUTE PROCEDURE DO_UP;</script>	
+
 		<script>SET TERM ^ ;
-CREATE OR ALTER PROCEDURE DO_UP 
+CREATE OR ALTER procedure AGE_CLASS2
+returns (
+    ID_AGECL numeric(12,0),
+    NAME varchar(25) character set WIN1251,
+    FROM_AGE numeric(3,0),
+    TO_AGE numeric(3,0),
+    ENGNAME varchar(25) character set WIN1251)
 as
 begin
-insert into lifterexrange
-select id_lifter, id_range, current_timestamp from range r, lifter l where l.id_lifter<0   order by   id_lifter, id_range;
-end
-^
-SET TERM ; ^</script>
-		<script>EXECUTE PROCEDURE DO_UP;</script>
+  FOR SELECT
+    id_agecl, name, from_age, to_age, engname
+  FROM
+    age_class
+  WHERE
+    id_agecl in (20,-2)
+  INTO
+    id_agecl, name, from_age, to_age, engname
+  DO SUSPEND;
+
+  FOR SELECT
+    id_agecl, 'Юноши 13-19', 1, 19, 'T 13-19'
+  FROM
+    age_class
+  WHERE
+    id_agecl in (13, 16, 18)
+  INTO
+    id_agecl, name, from_age, to_age, engname
+  DO SUSPEND;
+
+  FOR SELECT
+    id_agecl, 'Мастера 40+', 40, 999, 'M 40+'
+  FROM
+    age_class
+  WHERE
+    id_agecl > 39
+  INTO
+    id_agecl, name, from_age, to_age, engname
+  DO SUSPEND;
+end^		
+SET TERM ; ^</script>	
 	</version>
--->
+	
+<version number="2.51">
+    <script optional ="1">DROP PROCEDURE DO_UP;</script>
+	<script>ALTER TABLE RANGE ALTER NAME TYPE varchar(60)  CHARACTER SET WIN1251;</script>  
+	<script>ALTER TABLE RANGE ALTER SNAME TYPE varchar(20)  CHARACTER SET WIN1251;</script>  
+</version>
+ 
+<version number="2.52">
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DO_UP as
+begin 
+
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+                                 VALUES ('RANGE_SNAME_0', 'WPC m.ply BP')
+                               MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+                                 VALUES ('RANGE_SNAME_1', 'WPC m.ply PL')
+                               MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+                                 VALUES ('RANGE_SNAME_2', 'AWPC m.ply BP')
+                               MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+                                 VALUES ('RANGE_SNAME_3', 'AWPC m.ply PL')
+                               MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+                                 VALUES ('RANGE_SNAME_4', 'AWPC raw BP')
+                               MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+                                 VALUES ('RANGE_SNAME_5', 'AWPC raw PL')
+                               MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+                                 VALUES ('RANGE_SNAME_6', 'WPC raw BP')
+                               MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+                                 VALUES ('RANGE_SNAME_7', 'WPC raw PL')
+                               MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+                                 VALUES ('RANGE_SNAME_8', 'WPC s.ply BP')
+                               MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+                                 VALUES ('RANGE_SNAME_9', 'WPC s.ply PL')
+                               MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+                                 VALUES ('RANGE_SNAME_10', 'AWPC s.ply BP')
+                               MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+                                 VALUES ('RANGE_SNAME_11', 'AWPC s.ply PL')
+                               MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+                                 VALUES ('RANGE_SNAME_12', 'WPC m.ply DL')
+                               MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+                                 VALUES ('RANGE_SNAME_13', 'WPC raw DL')
+                               MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+                                 VALUES ('RANGE_SNAME_15', 'AWPC m.ply DL')
+                               MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+                                 VALUES ('RANGE_SNAME_16', 'AWPC raw DL')
+                               MATCHING (ID);
+
+UPDATE OR INSERT INTO RANGE (ID_RANGE, NAME, KIND, SNAME)
+                     VALUES (0, 'WPC экипировочный жим лежа', 2, 'WPC мн.слой жим')
+                   MATCHING (ID_RANGE);
+UPDATE OR INSERT INTO RANGE (ID_RANGE, NAME, KIND, SNAME)
+                     VALUES (2, 'AWPC экипировочный жим лежа', 2, 'AWPC мн.слой жим')
+                   MATCHING (ID_RANGE);
+UPDATE OR INSERT INTO RANGE (ID_RANGE, NAME, KIND, SNAME)
+                     VALUES (1, 'WPC экипировочный пауэрлифтинг', 1, 'WPC мн.слой ПЛ')
+                   MATCHING (ID_RANGE);
+UPDATE OR INSERT INTO RANGE (ID_RANGE, NAME, KIND, SNAME)
+                     VALUES (3, 'AWPC экипировочный пауэрлифтинг', 1, 'AWPC мн.слой ПЛ')
+                   MATCHING (ID_RANGE);
+UPDATE OR INSERT INTO RANGE (ID_RANGE, NAME, KIND, SNAME)
+                     VALUES (4, 'AWPC без экипировочный жим лежа', 2, 'AWPC б\э жим')
+                   MATCHING (ID_RANGE);
+UPDATE OR INSERT INTO RANGE (ID_RANGE, NAME, KIND, SNAME)
+                     VALUES (5, 'AWPC без экипировочный пауэрлифтинг', 1, 'AWPC б\э ПЛ')
+                   MATCHING (ID_RANGE);
+UPDATE OR INSERT INTO RANGE (ID_RANGE, NAME, KIND, SNAME)
+                     VALUES (6, 'WPC без экипировочный жим лежа', 2, 'WPC б\э жим')
+                   MATCHING (ID_RANGE);
+UPDATE OR INSERT INTO RANGE (ID_RANGE, NAME, KIND, SNAME)
+                     VALUES (7, 'WPC без экипировочный пауэрлифтинг', 1, 'WPC б\э ПЛ')
+                   MATCHING (ID_RANGE);
+UPDATE OR INSERT INTO RANGE (ID_RANGE, NAME, KIND, SNAME)
+                     VALUES (9, 'WPC 1 слойный пауэрлифтинг', 1, 'WPC 1 слой ПЛ')
+                   MATCHING (ID_RANGE);
+UPDATE OR INSERT INTO RANGE (ID_RANGE, NAME, KIND, SNAME)
+                     VALUES (8, 'WPC 1 слойный жим лежа', 2, 'WPC 1 слой жим')
+                   MATCHING (ID_RANGE);
+UPDATE OR INSERT INTO RANGE (ID_RANGE, NAME, KIND, SNAME)
+                     VALUES (11, 'AWPC 1 слойный пауэрлифтинг', 1, 'AWPC 1 слой ПЛ')
+                   MATCHING (ID_RANGE);
+UPDATE OR INSERT INTO RANGE (ID_RANGE, NAME, KIND, SNAME)
+                     VALUES (10, 'AWPC 1 слойный жим лежа', 2, 'AWPC 1 слой жим')
+                   MATCHING (ID_RANGE);
+UPDATE OR INSERT INTO RANGE (ID_RANGE, NAME, KIND, SNAME)
+                     VALUES (12, 'WPC экипировочная становая тяга', 3, 'WPC мн.слой тяга')
+                   MATCHING (ID_RANGE);
+UPDATE OR INSERT INTO RANGE (ID_RANGE, NAME, KIND, SNAME)
+                     VALUES (13, 'WPC без экипировочная становая тяга', 3, 'WPC б\э тяга')
+                   MATCHING (ID_RANGE);
+UPDATE OR INSERT INTO RANGE (ID_RANGE, NAME, KIND, SNAME)
+                     VALUES (15, 'AWPC экипировочная становая тяга', 3, 'AWPC мн.слой тяга')
+                   MATCHING (ID_RANGE);
+UPDATE OR INSERT INTO RANGE (ID_RANGE, NAME, KIND, SNAME)
+                     VALUES (16, 'AWPC без экипировочная становая тяга', 3, 'AWPC б\э тяга')
+                   MATCHING (ID_RANGE);
+end^ 
+SET TERM ; ^</script>
+		<script>EXECUTE PROCEDURE DO_UP;</script>	
+        <script optional ="1">DROP PROCEDURE DO_UP;</script>
+	</version>
+
+<version number="2.53">
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DELETE_LIFTER (
+    id double precision)
+returns (
+    ts timestamp)
+as
+begin
+  DELETE FROM
+    LIFTER
+  WHERE
+    ID_LIFTER = :ID;
+
+ TS = CURRENT_TIMESTAMP;
+
+ INSERT INTO DELETED
+    (ID, "TABLE", EDITTIME, "VALUE")
+  VALUES
+    (GEN_ID(DELETED, 1), 'LIFTER', :"TS", :"ID");
+
+  POST_EVENT 'LIFTER_DELETE';
+  POST_EVENT 'DELETE';
+end^ 
+SET TERM ; ^</script>
+
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DELETE_COACH (
+    id double precision)
+returns (
+    ts timestamp)
+as
+begin
+  DELETE FROM
+    TRENER
+  WHERE
+    ID_TRENER = :ID;
+
+ TS = CURRENT_TIMESTAMP;
+
+ INSERT INTO DELETED
+    (ID, "TABLE", EDITTIME, "VALUE")
+  VALUES
+    (GEN_ID(DELETED, 1), 'TRENER', :"TS", :"ID");
+
+  POST_EVENT 'COACH_DELETE';
+  POST_EVENT 'DELETE';
+end^ 
+SET TERM ; ^</script>
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DELETE_TEAM (
+    id double precision)
+returns (
+    ts timestamp)
+as
+begin
+  IF (ID &lt; 0) THEN
+    EXCEPTION ESYSTEMDATADEL;
+    
+  DELETE FROM
+    TEAM
+  WHERE
+    ID_TEAM = :ID;
+
+ TS = CURRENT_TIMESTAMP;
+
+ INSERT INTO DELETED
+    (ID, "TABLE", EDITTIME, "VALUE")
+  VALUES
+    (GEN_ID(DELETED, 1), 'TEAM', :"TS", :"ID");
+
+  POST_EVENT 'TEAM_DELETE';
+end^
+SET TERM ; ^</script>
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DELETE_TOWN (
+    id numeric(12,0))
+returns (
+    ts timestamp)
+as
+begin
+  DELETE FROM
+    TOWNS
+  WHERE
+    ID = :ID;
+
+ TS = CURRENT_TIMESTAMP;
+
+ INSERT INTO DELETED
+    (ID, "TABLE", EDITTIME, "VALUE")
+  VALUES
+    (GEN_ID(DELETED, 1), 'TOWNS', :"TS", :"ID");
+
+  POST_EVENT 'TOWN_DELETE';
+  POST_EVENT 'DELETE';
+end^
+SET TERM ; ^</script>
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DELETE_LOC (
+    id double precision)
+returns (
+    ts timestamp)
+as
+begin
+  TS = CURRENT_TIMESTAMP;
+
+  DELETE FROM
+    LIFTER_EXERSIS
+  WHERE
+    ID_LIFTER_COMPET = :ID;
+
+  DELETE FROM
+    LIFTER_ON_COMPETITION
+  WHERE
+    ID_LIFTER_COMPET = :ID;
+
+ INSERT INTO DELETED
+    (ID, "TABLE", EDITTIME, "VALUE")
+  VALUES
+    (GEN_ID(DELETED, 1), 'LIFTER_ON_COMPETITION', :"TS", :"ID");
+
+  POST_EVENT 'LOC_DELETE';
+  POST_EVENT 'DELETE';
+end^
+SET TERM ; ^</script>
+
+	<script optional ="1">DROP INDEX DELETED_IDX;</script>
+	<script>CREATE INDEX DELETED_IDX ON DELETED COMPUTED BY (UPPER("TABLE"));</script>
+
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE MEDALSCOUNT (
+    idc numeric(12,0),
+    sex smallint)
+returns (
+    id_compet numeric(12,0),
+    medals_teens integer,
+    medals_juns integer,
+    medals_open integer,
+    medals_masters integer)
+as
+begin
+for
+select c1.id_compet
+, (select count(fio) from competitionwinners(c1.id_compet)
+where  ageclass in (13, 16, 18) and sex = :sex) as medals_teens
+
+, (select count(fio) from competitionwinners(c1.id_compet)
+where  ageclass in (20) and sex = :sex) as medals_juns
+
+, (select count(fio) from competitionwinners(c1.id_compet)
+where  ageclass in (-2) and sex = :sex) as medals_open
+
+, (select count(fio)  from competitionwinners(c1.id_compet)
+where  ageclass &gt; 39 and sex = :sex ) as medals_masters
+
+from competit c1 inner join
+  competit c2 on  c1.grp = c2.grp
+where c2.id_compet = :idc
+into :id_compet
+  , :medals_teens
+  , :medals_juns
+  , :medals_open
+  , :medals_masters
+do suspend;
+end^
+SET TERM ; ^</script>
+
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE MEDALSCOUNTBYPLACE (
+    idc numeric(12,0),
+    sex smallint)
+returns (
+    id_compet numeric(12,0),
+    place integer,
+    amount integer,
+    age_name varchar(50))
+as
+begin
+for
+select c1.id_compet
+from competit c1 inner join
+  competit c2 on  c1.grp = c2.grp
+where c2.id_compet = :idc
+into :id_compet
+do
+begin
+for
+    select ac.name, place, count(1)
+    from competitionwinners(:id_compet)cw inner join age_class ac on cw.ageclass = ac.id_agecl
+    where sex = :sex
+    group by  ac.name, place
+    order by ac.name desc
+    into :age_name, :place, :amount
+do suspend;
+end
+end^
+SET TERM ; ^</script>
+
+
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE ABSOLUTE (
+    idc numeric(12,0))
+returns (
+    loc numeric(12,0),
+	cat varchar(25),
+    fio varchar(100),
+    totall double precision,
+    gloss double precision,
+    sex integer,
+    agename varchar(15),
+    agenum integer)
+as
+BEGIN
+for select ab.catname, ab.fio, ab.totall, ab.gloss,  ab.sex, ab.loc,'Teenagers' as agename, 1 as agenum  from absolutebyage(:idc) ab
+where ageclass in (13, 16, 18) and sex = 0
+order by 5,8,4 desc  rows 24
+into :"CAT", :"FIO", :"TOTALL", :"GLOSS", :"SEX", :"LOC", :"AGENAME", :"AGENUM"
+do suspend;
+
+for select ab.catname, ab.fio, ab.totall, ab.gloss, ab.sex , ab.loc,'Junior   ', 2 from absolutebyage(:idc) ab
+where ageclass = (20)  and sex = 0
+order by 5,8,4 desc rows 24
+into :"CAT", :"FIO", :"TOTALL", :"GLOSS", :"SEX", :"LOC", :"AGENAME", :"AGENUM"
+do suspend;
+
+for select ab.catname, ab.fio, ab.totall, ab.gloss, ab.sex , ab.loc,'Open     ', 3 from absolutebyage(:idc) ab
+where ageclass = (-2) and sex = 0
+order by 5,8,4 desc rows 24
+into :"CAT", :"FIO", :"TOTALL", :"GLOSS", :"SEX", :"LOC", :"AGENAME", :"AGENUM"
+do suspend;
+
+for select ab.catname, ab.fio, ab.totall, ab.gloss, ab.sex , ab.loc,'Masters  ', 4 from absolutebyage(:idc) ab
+where ageclass &gt; 39 and sex = 0
+order by 5,8,4 desc  rows 24
+into :"CAT", :"FIO", :"TOTALL", :"GLOSS", :"SEX", :"LOC", :"AGENAME", :"AGENUM"
+do suspend;
+
+
+
+for select ab.catname, ab.fio, ab.totall, ab.gloss,  ab.sex, ab.loc,'Teenagers' as agename, 1 as agenum  from absolutebyage(:idc) ab
+where ageclass in (13, 16, 18) and sex = 1
+order by 5,8,4 desc  rows 24
+into :"CAT", :"FIO", :"TOTALL", :"GLOSS", :"SEX", :"LOC", :"AGENAME", :"AGENUM"
+do suspend;
+
+for select ab.catname, ab.fio, ab.totall, ab.gloss, ab.sex , ab.loc,'Junior   ', 2 from absolutebyage(:idc) ab
+where ageclass = 20  and sex = 1
+order by 5,8,4 desc rows 24
+into :"CAT", :"FIO", :"TOTALL", :"GLOSS", :"SEX", :"LOC", :"AGENAME", :"AGENUM"
+do suspend;
+
+for select ab.catname, ab.fio, ab.totall, ab.gloss, ab.sex , ab.loc,'Open     ', 3 from absolutebyage(:idc) ab
+where ageclass = (-2) and sex = 1
+order by 5,8,4 desc rows 24
+into :"CAT", :"FIO", :"TOTALL", :"GLOSS", :"SEX", :"LOC", :"AGENAME", :"AGENUM"
+do suspend;
+
+for select ab.catname, ab.fio, ab.totall, ab.gloss, ab.sex , ab.loc,'Masters  ', 4 from absolutebyage(:idc) ab
+where ageclass &gt; 39 and sex = 1
+order by 5,8,4 desc  rows 24
+into :"CAT", :"FIO", :"TOTALL", :"GLOSS", :"SEX", :"LOC", :"AGENAME", :"AGENUM"
+do suspend;
+end^
+SET TERM ; ^</script>
+
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE ABSOLUTEBYAGE (
+    idc numeric(12,0))
+returns (
+    loc numeric(12,0),
+	idcat numeric(12,0),
+    fio varchar(150),
+    totall double precision,
+    gloss double precision,
+    ageclass numeric(12,0),
+    sex integer,
+    catname varchar(15))
+as
+begin
+
+  for select ID_CATEGORY, NAME from WEIGTH_CATEGORY into :"IDCAT", :"CATNAME"
+  do
+   for select
+         distinct trim(l.name),
+         coalesce(le.summaall, 0),
+         case
+           when loc.id_agecl &lt;&gt; -2 then
+             coalesce(le.summaall, 0)* w.coef *
+             coalesce((select agecoef from agecorrection where age = (
+              select (cast('now' as date) - dat_bith)/365 from lifter where id_lifter = loc.id_lifter)
+             ), 1)
+           else
+             coalesce(le.summaall, 0)* w.coef
+         end,
+         loc.id_agecl,
+         l.sex,
+         loc.id_lifter_compet
+       from
+         lifter l join
+         lifter_on_competition loc on l.id_lifter = loc.id_lifter join
+         lifter_exersis le on loc.id_lifter_compet = le.id_lifter_compet join
+         wilks w on loc.id_wilks= w.id_wilks
+       where
+         coalesce(le.summaall, 0) &gt; 0 and
+         loc.id_category = :IDCAT and
+         loc.ID_Compet= :IDC
+       into :FIO, :TOTALL, :GLOSS, :AGECLASS, :SEX, :LOC
+       do suspend;
+end^
+SET TERM ; ^</script>
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE FINALREPORT (
+    idc numeric(12,0))
+returns (
+    loc numeric(12,0),
+    fio varchar(60) character set win1251,
+    ageclass varchar(25) character set win1251,
+    bithdate date,
+    bodyweight double precision,
+    coef float,
+    team varchar(60) character set win1251,
+    town varchar(160) character set win1251,
+    squat1 varchar(9) character set win1251,
+    oc1 integer,
+    squat2 varchar(9) character set win1251,
+    oc2 integer,
+    squat3 varchar(9) character set win1251,
+    oc3 integer,
+    squat4 varchar(9) character set win1251,
+    oc4 integer,
+    bench1 varchar(9) character set win1251,
+    oc5 integer,
+    bench2 varchar(9) character set win1251,
+    oc6 integer,
+    bench3 varchar(9) character set win1251,
+    oc7 integer,
+    bench4 varchar(9) character set win1251,
+    oc8 integer,
+    dl1 varchar(9) character set win1251,
+    oc9 integer,
+    dl2 varchar(9) character set win1251,
+    oc10 integer,
+    dl3 varchar(9) character set win1251,
+    oc11 integer,
+    dl4 varchar(9) character set win1251,
+    oc12 integer,
+    totall varchar(12) character set win1251,
+    pts double precision,
+    coach varchar(50) character set win1251,
+    wcateg varchar(4) character set win1251,
+    sex integer,
+    ageclasseng varchar(25) character set win1251,
+    orazr varchar(6) character set win1251,
+    nrazr varchar(6) character set win1251)
+as
+declare variable tmp char(1);
+declare variable acoef double precision;
+declare variable aclass double precision;
+begin
+for
+select loc.id_lifter_compet,
+  trim(cutfio2(l.name)) as Fio,   l.dat_bith as DateBith,
+  trim(ac.ENGNAME) as AgeClass,   trim(ac.ENGNAME) as ageclasseng,
+  w.Self_Weight as BodyWeight,    w.Coef as Coef,
+  t.name as TeamName,
+  case
+    when position('/' in l.TOWN) &gt; 0 then
+      case
+      when substring(l.town from 1 for position('/' in l.TOWN)-1) = substring(l.town from position('/' in l.TOWN)+1 for 99) then substring(l.town from 1 for position('/' in l.TOWN)-1)
+      else l.town
+      end
+    else l.town
+  end as LifterTown,
+  le.Squat1,                      le.Oc1,
+  le.Squat2,                      le.Oc2,
+  le.Squat3,                      le.oc3,
+  le.Squat4,                      le.oc10,
+  le.Bench1,                      le.oc4,
+  le.Bench2,                      le.oc5,
+  le.Bench3,                      le.oc6,
+  le.Bench4,                      le.oc11,
+  le.Dl1,                         le.oc7,
+  le.Dl2,                         le.oc8,
+  le.Dl3,                         le.oc9,
+  le.Dl4,                         le.oc12,
+  Le.SummaAll as Totall,          le.SummaAll * w.Coef as Pts,
+  loc.Trener,                     trim(Wc.name) as Categ,
+  l.sex,                          loc.WasRazr,
+  Loc.NewRazr,                   coalesce( (
+select agecoef from agecorrection where age = (
+select (cast('now' as date) - dat_bith)/365 from lifter where id_lifter = loc.id_lifter)
+), 1) as acoef,
+  loc.id_agecl
+  from  lifter_on_competition loc 
+    inner join  lifter_exersis le on le.id_lifter_compet=loc.id_lifter_compet
+    inner join  Team T on t.id_team=loc.id_team 
+    inner join  Lifter L on l.id_lifter=loc.id_lifter 
+    inner join  Age_class Ac on ac.id_agecl=loc.id_agecl 
+    inner join  Wilks w on w.id_wilks=loc.id_wilks 
+    inner join  WEIGTH_CATEGORY wc on wc.ID_CATEGORY = Loc.ID_CATEGORY
+where loc.id_compet = :idc
+order by  l.sex
+  , Loc.ID_CATEGORY
+  , ac.from_age
+  , le.summaall desc
+  , w.Self_Weight asc
+into 
+  :loc, :FIO, :BITHDATE, :"AGECLASS", :"AGECLASSENG", :"BODYWEIGHT",
+  :"COEF", :"TEAM", :"TOWN", 
+  :"SQUAT1", :"OC1", :SQUAT2, :OC2, :"SQUAT3", :"OC3", :"SQUAT4", :"OC4"
+  ,:"BENCH1", :"OC5", :"BENCH2", :"OC6", :"BENCH3", :"OC7", :"BENCH4", :"OC8"
+  ,:"DL1", :"OC9", :"DL2", :"OC10", :"DL3", :"OC11", :"DL4", :"OC12"
+  ,:TOTALL, :PTS, :"COACH", :"WCATEG", :"SEX", :orazr, :nrazr, :acoef, :ACLASS
+
+do
+begin
+  tmp = '';
+
+  if (:ACLASS &lt;&gt; -2) then
+    COEF = :COEF * :ACOEF;
+
+  PTS = Cast(:TOTALL as float) * :COEF;
+
+  if
+    (
+      (nullif(:squat1, '0') &lt;&gt; '0') and
+      (nullif(:oc1, -1) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 0, :squat1) into :tmp;
+    squat1 = trim(:squat1)||:tmp;
+  end
+
+  if 
+    (
+      (nullif(:squat2, '0') &lt;&gt; '0') and
+      (nullif(:oc2, -1) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 0, :squat2) into :tmp;
+    squat2 = trim(:squat2)||:tmp;
+  end
+
+  if 
+    (
+      (nullif(:squat3, '0') &lt;&gt; '0') and
+      (nullif(:oc3, -1) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 0, :squat3) into :tmp;
+    squat3 = trim(:squat3)||:tmp;
+  end
+
+  if 
+    (
+      (nullif(:squat4, '0') &lt;&gt; '0') and
+      (nullif(:oc4, -1) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 0, :squat4) into :tmp;
+    squat4 = trim(:squat4)||:tmp;
+  end
+
+
+  if 
+    (
+      (nullif(:bench1, '0') &lt;&gt; '0') and
+      (nullif(:oc5, -1) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 1, :bench1) into :tmp;
+    bench1 = trim(:bench1)||:tmp;
+  end
+
+  if 
+    (
+      (nullif(:bench2, '0') &lt;&gt; '0') and
+      (nullif(:oc6, -1) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 1, :bench2) into :tmp;
+    bench2 = trim(:bench2)||:tmp;
+  end
+
+  if 
+    (
+      (nullif(:bench3, '0') &lt;&gt; '0') and
+      (nullif(:oc7, -1) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 1, :bench3) into :tmp;
+    bench3 = trim(:bench3)||:tmp;
+  end
+
+  if 
+    (
+      (nullif(:bench4, '0') &lt;&gt; '0') and
+      (nullif(:oc8, 0) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 1, :bench4) into :tmp;
+    bench4 = trim(:bench4)||:tmp;
+  end
+
+  if 
+    (
+      (nullif(:dl1, '0') &lt;&gt; '0') and
+      (nullif(:oc9, 0) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 2, :dl1) into :tmp;
+    dl1 = trim(:dl1)||:tmp;
+  end
+
+  if 
+    (
+      (nullif(:dl2, '0') &lt;&gt; '0') and
+      (nullif(:oc10, 0) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 2, :dl2) into :tmp;
+    dl2 = trim(:dl2)||:tmp;
+  end
+
+  if 
+    (
+      (nullif(:dl3, '0') &lt;&gt; '0') and
+      (nullif(:oc11, 0) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 2, :dl3) into :tmp;
+    dl3 = trim(:dl3)||:tmp;
+  end
+
+  if 
+    (
+      (nullif(:dl4, '0') &lt;&gt; '0') and
+      (nullif(:oc12, 0) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 2, :dl4) into :tmp;
+    dl4 = trim(:dl4)||:tmp;
+  end
+
+  if (nullif(:totall, '0') &lt;&gt; '0') then
+  begin 
+    select result from checkrecord(:loc, -2, :totall) into :tmp;
+    totall = trim(:totall)||:tmp;
+  end
+
+  tmp = null;
+  suspend;
+end
+end^
+SET TERM ; ^</script>
+
+    <script optional ="1">DROP PROCEDURE DO_UP;</script>
+	</version>
+
+	<version number="2.54">
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DO_UP as
+begin 
+/* */
+end^ 
+SET TERM ; ^</script>
+    <script>SET TERM ^ ; 
+CREATE OR ALTER procedure SELECT_SQUATOUT (
+    ID_STREAM numeric(12,0),
+    ID_COMPET numeric(12,0))
+returns (
+    NAME varchar(60) character set WIN1251,
+    WEIGHT double precision,
+    EXERSCISE varchar(15) character set WIN1251,
+    ZR double precision,
+    WEIGHTCAT varchar(10) character set WIN1251)
+as
+BEGIN
+
+for select name, weight, exerscise, min(zr), weightCat
+from
+(  select
+    l.name as Name,
+    le.squat1 as Weight,
+    'Squat1' as Exerscise,
+     zr as zr,
+     wc.name as weightCat
+  from
+    lifter_on_competition loc inner join
+    Lifter_exersis le on loc.id_lifter_compet = le.id_lifter_compet inner join
+    Lifter l  on loc.id_lifter = l.id_lifter inner join
+    weigth_category wc on loc.id_category = wc.id_category
+  where
+    loc.id_compet = :ID_COMPET and
+    loc.id_stream = :ID_STREAM and
+    le.squat1 &gt; 0 and
+    OC1 is null
+union all
+  select
+    l.name as Fio,
+    le.squat2 as Weight,
+    'Squat2' as exerscise,
+    zr as zr,
+    wc.name as weightCat
+  from
+    lifter_on_competition loc inner join
+    Lifter_exersis le on loc.id_lifter_compet = le.id_lifter_compet inner join
+    Lifter l  on loc.id_lifter = l.id_lifter inner join
+    weigth_category wc on loc.id_category = wc.id_category
+  where
+    loc.id_compet = :ID_COMPET and
+    loc.id_stream = :ID_STREAM and
+    le.squat2 &gt; 0 and
+    OC2 is null
+union all
+  select
+    l.name as Fio,
+    le.squat3 as Weight,
+    'Squat3' as exerscise,
+    zr as zr,
+    wc.name as weightCat
+  from
+    lifter_on_competition loc inner join
+    Lifter_exersis le on loc.id_lifter_compet = le.id_lifter_compet inner join
+    Lifter l  on loc.id_lifter = l.id_lifter inner join
+    weigth_category wc on loc.id_category = wc.id_category
+  where
+    loc.id_compet = :ID_COMPET and
+    loc.id_stream = :ID_STREAM  and
+    le.squat3 &gt; 0 and
+    OC3 is null
+) tbl
+group by name, Weight, Exerscise, weightCat
+order by 3, 2, 4 desc
+into :name, :weight, :exerscise, :zr,:weightcat
+
+DO SUSPEND;
+end^ 
+SET TERM ; ^</script>
+    <script>SET TERM ^ ; 
+CREATE OR ALTER procedure SELECT_BENCHOUT (
+    ID_STREAM numeric(12,0),
+    ID_COMPET numeric(12,0))
+returns (
+    NAME varchar(60) character set WIN1251,
+    WEIGHT double precision,
+    EXERSCISE varchar(15) character set WIN1251,
+    ZR double precision,
+    WEIGHTCAT varchar(10) character set WIN1251)
+as
+BEGIN
+for select name, weight, exerscise, min(zr), weightCat
+from
+(
+  select
+    l.name as Name,
+    le.bench1 as Weight,'Bench1' as Exerscise,
+    zr as zr,
+    wc.name as weightCat
+  from
+    lifter_on_competition loc inner join
+    Lifter_exersis le on loc.id_lifter_compet = le.id_lifter_compet inner join
+    Lifter l  on loc.id_lifter = l.id_lifter inner join
+    weigth_category wc on loc.id_category = wc.id_category
+  where
+    loc.id_compet = :ID_COMPET and
+    loc.id_stream = :ID_STREAM and
+    le.bench1 &gt; 0 and
+    OC4 is null
+union all
+  select
+    l.name as Fio,
+    le.Bench2 as Weight,
+    'Bench2' as exerscise,
+    zr as zr,
+    wc.name as weightCat
+  from
+    lifter_on_competition loc inner join
+    Lifter_exersis le on loc.id_lifter_compet = le.id_lifter_compet inner join
+    Lifter l  on loc.id_lifter = l.id_lifter inner join
+    weigth_category wc on loc.id_category = wc.id_category
+  where
+    loc.id_compet = :ID_COMPET and
+    loc.id_stream = :ID_STREAM and
+    le.bench2 &gt; 0 and
+    OC5 is null
+union all
+  select
+    l.name as Fio,
+    le.Bench3 as Weight,
+    'Bench3' as exerscise,
+    zr as zr,
+    wc.name as weightCat
+  from
+    lifter_on_competition loc inner join
+    Lifter_exersis le on loc.id_lifter_compet = le.id_lifter_compet inner join
+    Lifter l  on loc.id_lifter = l.id_lifter inner join
+    weigth_category wc on loc.id_category = wc.id_category
+  where
+    loc.id_compet = :ID_COMPET and
+    loc.id_stream = :ID_STREAM  and
+    le.bench3 &gt; 0 and
+    OC6 is null
+) tbl
+group by name, Weight, Exerscise, weightCat
+order by 3, 2, 4 desc
+into :name, :weight, :exerscise, :zr, :weightcat
+DO SUSPEND;
+end^ 
+SET TERM ; ^</script>
+    <script>SET TERM ^ ; 
+CREATE OR ALTER procedure SELECT_DLOUT (
+    ID_STREAM numeric(12,0),
+    ID_COMPET numeric(12,0))
+returns (
+    NAME varchar(60) character set WIN1251,
+    WEIGHT double precision,
+    EXERSCISE varchar(15) character set WIN1251,
+    ZR double precision,
+    WEIGHTCAT varchar(10) character set WIN1251)
+as
+BEGIN
+
+for select name, weight, exerscise, min(zr), weightCat
+from
+(  select
+    l.name as Name,
+    le.dl1 as Weight,
+    'DeadLift1' as Exerscise,
+    zr as zr,
+    wc.name as weightCat
+  from
+    lifter_on_competition loc inner join
+    Lifter_exersis le on loc.id_lifter_compet = le.id_lifter_compet inner join
+    Lifter l  on loc.id_lifter = l.id_lifter inner join
+    weigth_category wc on loc.id_category = wc.id_category
+  where
+    loc.id_compet = :ID_COMPET and
+    loc.id_stream = :ID_STREAM and
+    le.dl1 &gt; 0 and
+    OC7 is null
+union all
+  select
+    l.name as Fio,
+    le.dl2 as Weight,
+    'DeadLift2' as exerscise,
+    zr as zr,
+    wc.name as weightCat
+  from
+    lifter_on_competition loc inner join
+    Lifter_exersis le on loc.id_lifter_compet = le.id_lifter_compet inner join
+    Lifter l  on loc.id_lifter = l.id_lifter inner join
+    weigth_category wc on loc.id_category = wc.id_category
+  where
+    loc.id_compet = :ID_COMPET and
+    loc.id_stream = :ID_STREAM and
+    le.dl2 &gt; 0 and
+    OC8 is null
+union all
+  select
+    l.name as Fio,
+    le.dl3 as Weight,
+    'DeadLift3' as exerscise,
+    zr as zr,
+    wc.name as weightCat
+  from
+    lifter_on_competition loc inner join
+    Lifter_exersis le on loc.id_lifter_compet = le.id_lifter_compet inner join
+    Lifter l  on loc.id_lifter = l.id_lifter inner join
+    weigth_category wc on loc.id_category = wc.id_category
+  where
+    loc.id_compet = :ID_COMPET and
+    loc.id_stream = :ID_STREAM  and
+    le.dl3 &gt; 0 and
+    OC9 is null
+) tbl
+group by name, Weight, Exerscise, weightCat
+order by 3, 2, 4 desc
+into :name, :weight, :exerscise, :zr, :weightcat
+DO SUSPEND;
+end^ 
+SET TERM ; ^</script>
+
+</version>
+
+<version number="2.55">
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DO_UP as
+begin 
+  suspend;
+end^ 
+SET TERM ; ^</script>
+    
+	<script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE EDIT_LE (
+    le numeric(12),
+    sqltext varchar(254) character set win1251)
+returns (ts timestamp)
+as
+  declare variable tot float;
+begin
+  suspend;
+end^ 
+SET TERM ; ^</script>
+</version>
+
+
+<version number="2.56">
+    <script optional ="1">DROP table sql_log ;</script>
+    <script>CREATE TABLE SQL_LOG (
+    ID           ID,
+    TBL          VARCHAR(50) character set WIN1251,
+    SQL_STRING   VARCHAR(512) character set WIN1251,
+    CREATE_TIME  TIMESTAMP DEFAULT CURRENT_TIMESTAMP);</script>
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DO_UP as
+begin 
+/* */
+end^ 
+SET TERM ; ^</script>
+    <script>SET TERM ^ ; 
+
+	CREATE OR ALTER PROCEDURE EDIT_LE (
+    le numeric(12),
+    sqltext varchar(254) character set win1251)
+returns (
+    ts timestamp)
+as
+declare variable tot float;
+begin
+  ts = CURRENT_TIMESTAMP;
+  
+  if (:SQLTEXT is not NULL) then
+    EXECUTE STATEMENT :SQLTEXT;
+  
+  insert into sql_log (ID, TBL, SQL_STRING) values (:LE, 'LIFTER_EXERSIS', :sqltext);
+
+  select totall from CURRENTTOTALL(:LE) into :TOT;
+
+  update
+    LIFTER_EXERSIS
+  set
+    SUMMAALL = cast(:tot/2.5 as integer) * 2.5,
+    EDITTIME = :ts
+  where
+    ID_LIFTER_COMPET = :LE;
+
+  POST_EVENT 'LE_EDIT';
+  TOT = NULL;
+end^ 
+SET TERM ; ^</script>
+</version>
+
+<version number="2.57">
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DO_UP as
+begin 
+	UPDATE OR INSERT INTO PARAMS (ID, ID_PARENT, NAME, "VALUE", DESCRIPTION)
+	VALUES (210, 200, 'MinTotallCalculateBy', 'FIRST', 'При установленном ограничении по сумме как вычислять ее FIRST/BEST');
+end
+^ SET TERM ; ^</script>
+		<script>EXECUTE PROCEDURE DO_UP;</script>
+		
+</version>	
 
 </versions>
