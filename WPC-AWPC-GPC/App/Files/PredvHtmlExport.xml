@@ -2,16 +2,26 @@
   <reportfilename ru="xls\FinalExcel_ru.xls" eng="xls\FinalExcel_eng.xls"/>
   <info name=""/>
   <sql>
+select tbl.*
+  , Trim(TransLiter(RusFIO)) as EngFIO
+  , Trim(TransLiter(rusTOWN)) as EngTOWN
+from (
 select
-  TransLiter(CutFio2(l.name)) as EngFIO,
-  CutFio2(l.name) as RusFIO,
+  Trim(CutFio2(l.name)) as RusFIO,
   ac.name as rusAgeClass,
   ac.engname as engAgeClass,
   t.name TeamName,
   wc.Name as WC,
   l.sex as sex,
-  TransLiter(l.TOWN) as EngTOWN,
-  l.TOWN as RusTOWN,
+
+  case
+    when position('/' in l.TOWN) > 0 then
+      case
+      when substring(l.town from 1 for position('/' in l.TOWN)-1) = substring(l.town from position('/' in l.TOWN)+1 for 99) then substring(l.town from 1 for position('/' in l.TOWN)-1)
+      else l.town
+      end
+    else l.town
+  end  as rusTOWN,
   case Coalesce(le.squat1, '0.0')
     when '0.0' then ''
     else Coalesce(le.squat1, '0.0')||'-'
@@ -47,7 +57,9 @@ select
          and c1.id_range = c.id_range
          and c1.date_begin &lt;= c.date_begin
     ) table1
-  ), '0') as numeric(6,1))as pbest1
+  ), '0') as numeric(6,1))as pbest1,
+  wc.we,
+  ac.from_age
 from
   lifter l inner join
   Lifter_on_Competition loc
@@ -67,9 +79,10 @@ from
 where
   c.id_compet=%IDC%
   %CONDITION%
+) tbl
 order by
-  l.sex,
-  wc.we,
-  ac.from_age
+  tbl.sex,
+  tbl.we,
+  tbl.from_age
   </sql>
 </main>
