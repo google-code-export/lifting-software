@@ -11,12 +11,26 @@ select ab.cat,
   ab.agename, 
   ab.agenum, 
   ac.name as rusagedetname,
-  ac.engname as engagedetname
+  ac.engname as engagedetname,
+  trim(c.name)||', '|| case
+    when position('/', c.town) > 0 then
+      left(trim(c.town), position('/', c.town)-1)
+    else
+      trim(c.town)
+    end as RUScName1,
+  trim(r.name) ||', '||
+  case
+    when c.date_begin = c.date_end then
+      c.date_begin
+    else
+      extract(day from c.date_begin)||'-'|| extract(day from c.date_end)||'.'||extract(month from c.date_end)||'.'||extract(year from c.date_end)
+  end as RUScName2
 from
- absolute(%IDC%) ab left join
- lifter_on_competition loc
-   on loc.id_lifter_compet= ab.loc inner join
- age_class ac on ac.id_agecl=loc.id_agecl
+ absolute(%IDC%) ab inner join
+ lifter_on_competition loc on loc.id_lifter_compet= ab.loc inner join
+ age_class ac on ac.id_agecl=loc.id_agecl inner join
+ competit c on c.id_compet = loc.id_compet inner join
+ range r on r.id_range = c.id_range
 order by sex, agenum, gloss desc
   </sql>
 </main>

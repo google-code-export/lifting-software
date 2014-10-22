@@ -4,7 +4,7 @@
   <sql>
 select
   cast(Transliter(fr.fio) as varchar(50)) as EngFio,
-  cast(Transliter(fr.town) as varchar(130))as engTown,
+  cast(Transliter(fr.town) as varchar(103))as engTown,
   cast(Transliter(fr.Coach) as varchar(50))as engCoach,
   fr.*,
   c.*

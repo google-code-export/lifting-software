@@ -65,6 +65,8 @@ select r.id_range||':'||c.id_compet as id
 
 
 , le.summaall as total
+, loc.trener as coach
+, r.kind
 
 from lifter_on_competition loc inner join
   competit c on c.id_compet = loc.id_compet inner join
