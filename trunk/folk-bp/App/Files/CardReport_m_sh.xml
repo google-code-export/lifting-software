@@ -2,7 +2,7 @@
   <reportfilename ru="frf\CardReport_ru.frf" eng="frf\CardReport_eng.frf"/>
   <info name=""/>
   <sql>
-SELECT cast(Transliter(fr.fio) as varchar(50)) as EngFio
+select cast(Transliter(fr.fio) as varchar(50)) as EngFio
   , cast(Transliter(fr.town) as varchar(103))as engTown
   , cast(Transliter(fr.Coach) as varchar(50))as engCoach
   , (c.date_begin - fr.bithdate)/365 as age
@@ -11,10 +11,14 @@ SELECT cast(Transliter(fr.fio) as varchar(50)) as EngFio
   , loc.zr
   , loc.createtime
   , loc.id_stream
-FROM finalreport( %IDC% ) fr left join
-  Lifter_on_competition loc  on loc.id_lifter_compet = fr.loc left join
-  Competit C on c.id_compet = loc.id_compet left join
-  range r on r.id_range = c.id_range
-WHERE loc.id_lifter = %IDL% AND loc.ID_AGECL = %IDAC%
+  , r.sname as rusDivisionName
+  , trnsl.val as engDivisionName
+ 
+from finalreport(%IDC%) fr
+  inner join Lifter_on_competition loc on loc.id_lifter_compet = fr.loc 
+  inner join Competit C on c.id_compet = loc.id_compet 
+  inner join range r on r.id_range = c.id_range
+  left join translate_rus_eng trnsl on trnsl.id = 'RANGE_SNAME_'||r.id_range
+where loc.id_lifter = %IDL% AND loc.ID_AGECL = %IDAC%
   </sql>
 </main>

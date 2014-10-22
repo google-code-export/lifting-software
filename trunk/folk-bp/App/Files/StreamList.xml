@@ -11,7 +11,8 @@ select cast(fr.fio as varchar(150)) as RUSFio,
   c.*,
   r.name as rusrname,
   s.name as StreamName,
-  trnsl.val as engrname
+  trnsl.val as engrname,
+  descr as stream_description
   
 from finalreport(%IDC%) fr 
   inner join Lifter_on_competition loc on loc.id_lifter_compet=fr.loc 
@@ -19,6 +20,7 @@ from finalreport(%IDC%) fr
   inner join Range r on r.id_range = c.id_range
   inner join Stream s on s.id_stream = loc.id_stream
   left join translate_rus_eng trnsl on trnsl.id = 'RANGE_'||r.id_range
+  , GET_STREAM_DESCR(loc.id_compet, loc.id_stream)
 
 %WHERE% 
   </sql>
