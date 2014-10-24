@@ -6924,6 +6924,1027 @@ begin
   TOT = NULL;
 end
 ^ SET TERM ; ^</script>		
+
+    <script>SET TERM ^ ; 
+CREATE OR ALTER procedure BESTSQUATBYLOC (
+    LOC numeric(12))
+returns (
+    SQUAT varchar(6))
+as
+BEGIN
+/* best squat from loc*/
+  select
+    cast(case opt
+      when 0 then trunc(val/2.5, 0)*2.5 /*wpc-awpc round down to 2.5*/
+      when 100 then val                 /*gpc no round*/
+      else val                          /*unknown no round*/
+    end as numeric(4,2))
+  from
+    (select calc_opt.val as opt
+    ,  coalesce((
+          select squat1 as squat
+          from  lifter_exersis le
+          where oc1 = 1 and
+            le.id_lifter_compet = :Loc
+          union all
+          select squat2 as squat
+          from  lifter_exersis le
+          where oc2 = 1 and
+            le.id_lifter_compet = :Loc
+          union all
+          select squat3 as squat
+          from  lifter_exersis le
+          where oc3 =1 and
+            le.id_lifter_compet = :Loc
+          union all
+          select case calc_opt.val when 100     /*gpc get 4th attempt into totall*/
+            then squat4 else null end as squat  /*wpc-awpc no 4th attempt into totall*/
+          from  lifter_exersis le
+          where oc10 = 1 and
+            le.id_lifter_compet = :Loc
+          order by 1 desc
+          rows 1
+      ), 0) as val
+    from RDB$DATABASE,
+      (select min(id_range) as val from range) calc_opt
+    ) source_tbl
+  into :squat;
+
+  SUSPEND;
+END
+^ SET TERM ; ^</script>		
+
+    <script>SET TERM ^ ; 
+CREATE OR ALTER procedure BESTBENCHBYLOC (
+    LOC numeric(12))
+returns (
+    BENCH varchar(6))
+as
+BEGIN
+/* best bench from loc*/
+  select
+    cast(case opt
+      when 0 then trunc(val/2.5, 0)*2.5 /*wpc-awpc round down to 2.5*/
+      when 2 then val 					/*FOLK BP*/
+      when 100 then val                 /*gpc no round*/
+      else val                          /*unknown no round*/
+    end as numeric(6,2))
+  from
+    (select calc_opt.val as opt
+    ,  coalesce((
+          select case calc_opt.val
+            when 2 then case when bench2 > 7 then bench1 * bench2 else 0 end /*Folk BP*/
+            else bench1 end as bench  /*wpc-awpc-gpc*/
+          from  lifter_exersis le
+          where oc4 = 1 and
+            le.id_lifter_compet = :Loc
+          union all
+          select case calc_opt.val
+            when 2 then 0 /*Folk BP*/
+            else bench2 end as bench  /*wpc-awpc-gpc*/
+          from  lifter_exersis le
+          where oc5 = 1 and
+            le.id_lifter_compet = :Loc
+          union all
+          select bench3 as bench
+          from  lifter_exersis le
+          where oc6 =1 and
+            le.id_lifter_compet = :Loc
+          union all
+          select case calc_opt.val 
+		    when 100 then bench4     /*gpc get 4th attempt into totall*/
+		    when 2 then case when bench2 > 7 then bench1*bench2 else 0 end /*Folk BP*/
+		    else null end as bench  /*wpc-awpc no 4th attempt into totall*/
+          from  lifter_exersis le
+          where oc11 = 1 and
+            le.id_lifter_compet = :Loc
+          order by 1 desc
+          rows 1
+      ), 0) as val
+    from RDB$DATABASE,
+      (select min(id_range) as val from range) calc_opt
+    ) source_tbl
+  into :bench;
+  
+  SUSPEND;
+END
+^ SET TERM ; ^</script>		
+
+    <script>SET TERM ^ ; 
+CREATE OR ALTER procedure BESTDLBYLOC1 (
+    LOC numeric(12))
+returns (
+    DL varchar(6))
+as
+BEGIN
+/* best dl from loc*/
+  select
+    cast(case opt
+      when 0 then trunc(val/2.5, 0)*2.5 /*wpc-awpc round down to 2.5*/
+      when 100 then val                 /*gpc no round*/
+      else val                          /*unknown no round*/
+    end as numeric(4,2))
+  from
+    (select calc_opt.val as opt
+    ,  coalesce((
+          select dl1 as dl
+          from  lifter_exersis le
+          where oc7 = 1 and
+            le.id_lifter_compet = :Loc
+          union all
+          select dl2 as dl
+          from  lifter_exersis le
+          where oc8 = 1 and
+            le.id_lifter_compet = :Loc
+          union all
+          select dl3 as dl
+          from  lifter_exersis le
+          where oc9 =1 and
+            le.id_lifter_compet = :Loc
+          union all
+          select case calc_opt.val when 100     /*gpc get 4th attempt into totall*/
+            then dl4 else null end as dl  		/*wpc-awpc no 4th attempt into totall*/
+          from  lifter_exersis le
+          where oc12 = 1 and
+            le.id_lifter_compet = :Loc
+          order by 1 desc
+          rows 1
+      ), 0) as val
+    from RDB$DATABASE,
+      (select min(id_range) as val from range) calc_opt
+    ) source_tbl
+  into :dl;
+
+  SUSPEND;
+END	
+^ SET TERM ; ^</script>		
+
+    <script>SET TERM ^ ; 
+CREATE OR ALTER procedure BESTDLBYLOC (
+    LOC numeric(12),
+    SQ_BN DOUBLE PRECISION,
+    SUMMA DOUBLE PRECISION)
+returns (
+    DL varchar(6))
+as
+  declare variable OC1 smallint;
+  declare variable OC2 smallint;
+  declare variable OC3 smallint;
+  declare variable OC4 smallint;
+  declare variable DL1 DOUBLE PRECISION;
+  declare variable DL2 DOUBLE PRECISION;
+  declare variable DL3 DOUBLE PRECISION;
+  declare variable DL4 DOUBLE PRECISION;
+BEGIN
+ /* Лучшая тяга  */
+  select
+    DL1 , OC7,
+    DL2 , OC8,
+    DL3 , OC9,
+    DL4 , case calc_opt.val when 100 then OC12 else 0 end
+  from  lifter_exersis, (select min(id_range) as val from range) calc_opt
+  where id_lifter_compet = :Loc
+  into :dl1, :oc1, :dl2, :oc2, :dl3, :oc3, :dl4, :oc4;
+
+  if ((:oc4 = 1) and  (:sq_bn + :dl4 = :summa)) then
+    dl = dl4;
+  else
+  if ((:oc3 = 1) and  (:sq_bn + :dl3 = :summa)) then
+    dl = dl3;
+  else
+  if ((:oc2 = 1) and  (:sq_bn + :dl2 = :summa)) then
+    dl = dl2;
+  else
+  if ((:oc1 = 1) and  (:sq_bn + :dl1 = :summa)) then
+    dl = dl1;
+
+  if (:dl is null) then dl  =0;
+
+  dl1 = null;
+  oc1 = null;
+
+  dl2 = null;
+  oc2 = null;
+
+  dl3 = null;
+  oc3 = null;
+
+  dl4 = null;
+  oc4 = null;
+  SUSPEND;
+END	
+^ SET TERM ; ^</script>		
+
+    <script>SET TERM ^ ; 
+CREATE OR ALTER procedure CURRENTTOTALL (
+    LOC numeric(12))
+returns (
+    TOTALL double precision)
+as
+declare variable BESTSQUAT double precision;
+declare variable BESTBENCH double precision;
+declare variable BESTDL double precision;
+declare variable OCSQUAT integer;
+declare variable OCBENCH integer;
+declare variable OCDL integer;
+declare variable RANGE numeric(12);
+BEGIN
+
+  select cast(squat as numeric(3,1)) from bestsquatbyloc(:LOC)
+  into :BESTSQUAT;
+
+  select cast(bench as numeric(3,1))  from bestbenchbyloc(:LOC)
+  into :BESTBENCH;
+
+  select cast(DL as numeric(3,1)) from bestdlbyloc1(:LOC)
+  into :BESTDL;
+
+  select
+    coalesce(oc1, 0)+coalesce(oc2, 0)+coalesce(oc3, 0)+coalesce(oc10, 0) as ocsquat,
+    coalesce(oc4, 0)+coalesce(oc5, 0)+coalesce(oc6, 0)+coalesce(oc11, 0) as ocbench,
+    coalesce(oc7, 0)+coalesce(oc8, 0)+coalesce(oc9, 0)+coalesce(oc12, 0) as ocdl,
+    r.kind
+  from
+    lifter_on_competition loc join
+    competit c on loc.id_compet = c.id_compet join
+    lifter_exersis le on le.id_lifter_compet = loc.id_lifter_compet join
+    range r on r.id_range =c.id_range
+  where
+    loc.id_lifter_compet = :LOC
+  into :ocsquat, :ocbench, :ocdl, :RANGE;
+
+  TOTALL = 0;
+
+  if (range = 1) then
+    if ((ocbench &gt; 0) and (ocsquat &gt; 0) and (ocdl &gt; 0)) then
+      TOTALL =  :BESTSQUAT + :BESTBENCH + :BESTDL;
+
+  if ((range = 2) and (ocbench &gt; 0)) then
+      TOTALL =  :BESTBENCH;				  /* single benchpress */
+
+  if ((range = 3) and (ocdl &gt; 0)) then
+      TOTALL =  :BESTDL;				  /* single dead lift */
+
+  if ((range = 4) and (ocsquat &gt; 0)) then /* single squat */
+      TOTALL =  :BESTSQUAT;
+
+  ocsquat = null;
+  ocbench = null;
+  ocdl = null;
+  BestSquat = null;
+  BestBench = null;
+  BestDl = null;
+  RANGE = null;
+  Suspend;
+END
+^ SET TERM ; ^</script>		
 </version>	
+
+<version number="0.49">
+    <script>SET TERM ^ ; 
+CREATE OR ALTER procedure DELETE_COMPET (
+    ID_COMPET numeric(12))
+returns (
+    TS timestamp)
+as
+BEGIN
+
+  delete from LIFTER_EXERSIS where ID_LIFTER_COMPET in
+   (select ID_LIFTER_COMPET from LIFTER_ON_COMPETITION where ID_COMPET= :ID_COMPET);
+  delete from LIFTER_ON_COMPETITION where ID_COMPET=:ID_COMPET;
+  delete from compet_entry_limit where ID_COMPET=:ID_COMPET;
+
+  update records set id_compet = null where ID_COMPET=:ID_COMPET;
+ 
+  delete from COMPETIT where ID_COMPET = :ID_COMPET;
+
+
+ TS = CURRENT_TIMESTAMP;
+
+ INSERT INTO DELETED
+    (ID, "TABLE", EDITTIME, "VALUE")
+  VALUES
+    (GEN_ID(DELETED, 1), 'COMPETIT', :"TS", :"ID_COMPET");
+
+  POST_EVENT 'APP_REINIT';
+END^ SET TERM ; ^</script>		
+</version>	
+
+<version number="0.50">
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DO_UP as
+begin 
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_501', '07') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_503', '08') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_505', '05') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_507', '06') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_509', '01') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_511', '02') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_513', '03') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_515', '04') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_500', '09') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_502', '10') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_504', '11') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_506', '12') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_508', '13') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_510', '14') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_512', '15') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_520', '16') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_521', '17') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_522', '18') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_523', '19') MATCHING (ID);
+
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_501', 'PL mply') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_503', 'PL mply dc') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_505', 'PL 1ply') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_507', 'PL 1ply dc') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_509', 'PL raw') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_511', 'PL raw dc') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_513', 'PL wraps') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_515', 'PL wraps dc') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_500', 'Bench raw') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_502', 'Bench raw dc') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_504', 'Bench 1ply') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_506', 'Bench 1ply dc') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_508', 'Bench mply') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_510', 'Bench mply dc') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_512', 'Bench') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_520', 'DL raw') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_521', 'DL raw dc') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_522', 'DL eq') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_523', 'DL eq dc') MATCHING (ID);
+
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_SNAME_501', 'PL mply') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_SNAME_503', 'PL mply dc') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_SNAME_505', 'PL 1ply') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_SNAME_507', 'PL 1ply dc') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_SNAME_509', 'PL raw') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_SNAME_511', 'PL raw dc') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_SNAME_513', 'PL wraps') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_SNAME_515', 'PL wraps dc') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_SNAME_500', 'Bench raw') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_SNAME_502', 'Bench raw dc') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_SNAME_504', 'Bench 1ply') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_SNAME_506', 'Bench 1ply dc') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_SNAME_508', 'Bench mply') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_SNAME_510', 'Bench mply dc') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_SNAME_512', 'Bench') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_SNAME_520', 'DL raw') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_SNAME_521', 'DL raw dc') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_SNAME_522', 'DL eq') MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_SNAME_523', 'DL eq dc') MATCHING (ID);
+	
+end
+^ SET TERM ; ^</script>
+		<script>EXECUTE PROCEDURE DO_UP;</script>
+		
+</version>	
+
+<version number="0.51">
+    <script>SET TERM ^ ; 
+CREATE OR ALTER procedure FINALREPORT (
+    IDC numeric(12,0))
+returns (
+    LOC numeric(12,0),
+    FIO varchar(60) character set WIN1251,
+    AGECLASS varchar(25) character set WIN1251,
+    BITHDATE date,
+    BODYWEIGHT double precision,
+    COEF float,
+    TEAM varchar(60) character set WIN1251,
+    TOWN varchar(160) character set WIN1251,
+    SQUAT1 varchar(9) character set WIN1251,
+    OC1 integer,
+    SQUAT2 varchar(9) character set WIN1251,
+    OC2 integer,
+    SQUAT3 varchar(9) character set WIN1251,
+    OC3 integer,
+    SQUAT4 varchar(9) character set WIN1251,
+    OC4 integer,
+    BENCH1 varchar(9) character set WIN1251,
+    OC5 integer,
+    BENCH2 varchar(9) character set WIN1251,
+    OC6 integer,
+    BENCH3 varchar(9) character set WIN1251,
+    OC7 integer,
+    BENCH4 varchar(9) character set WIN1251,
+    OC8 integer,
+    DL1 varchar(9) character set WIN1251,
+    OC9 integer,
+    DL2 varchar(9) character set WIN1251,
+    OC10 integer,
+    DL3 varchar(9) character set WIN1251,
+    OC11 integer,
+    DL4 varchar(9) character set WIN1251,
+    OC12 integer,
+    TOTALL varchar(12) character set WIN1251,
+    PTS double precision,
+    COACH varchar(50) character set WIN1251,
+    WCATEG varchar(4) character set WIN1251,
+    SEX integer,
+    AGECLASSENG varchar(25) character set WIN1251,
+    ORAZR varchar(6) character set WIN1251,
+    NRAZR varchar(6) character set WIN1251)
+as
+declare variable TMP char(1);
+declare variable ACOEF double precision;
+declare variable ACLASS double precision;
+declare variable TMP1 double precision;
+begin
+for
+select
+  case calc_opt.val
+    when 2 then case when SummaAll &gt; 0 then bench2 else 0 end
+    else SummaAll
+  end as ordby,
+  loc.id_lifter_compet,
+  trim(cutfio2(l.name)) as Fio,   l.dat_bith as DateBith,
+  trim(ac.ENGNAME) as AgeClass,   trim(ac.ENGNAME) as ageclasseng,
+  w.Self_Weight as BodyWeight,    w.Coef as Coef,
+  t.name as TeamName,
+  case
+    when position('/' in l.TOWN) &gt; 0 then
+      case
+      when substring(l.town from 1 for position('/' in l.TOWN)-1) = substring(l.town from position('/' in l.TOWN)+1 for 99) then substring(l.town from 1 for position('/' in l.TOWN)-1)
+      else l.town
+      end
+    else l.town
+  end as LifterTown,
+  le.Squat1,                      le.Oc1,
+  le.Squat2,                      le.Oc2,
+  le.Squat3,                      le.oc3,
+  le.Squat4,                      le.oc10,
+  le.Bench1,                      le.oc4,
+  le.Bench2,                      le.oc5,
+  le.Bench3,                      le.oc6,
+  le.Bench4,                      le.oc11,
+  le.Dl1,                         le.oc7,
+  le.Dl2,                         le.oc8,
+  le.Dl3,                         le.oc9,
+  le.Dl4,                         le.oc12,
+  Le.SummaAll as Totall,          le.SummaAll * w.Coef as Pts,
+  loc.Trener,                     trim(Wc.name) as Categ,
+  l.sex,                          loc.WasRazr,
+  Loc.NewRazr,                   coalesce( (
+select agecoef from agecorrection where age = (
+select (cast('now' as date) - dat_bith)/365 from lifter where id_lifter = loc.id_lifter)
+), 1) as acoef,
+  loc.id_agecl
+  from  lifter_on_competition loc 
+    inner join  lifter_exersis le on le.id_lifter_compet=loc.id_lifter_compet
+    inner join  Team T on t.id_team=loc.id_team 
+    inner join  Lifter L on l.id_lifter=loc.id_lifter 
+    inner join  Age_class Ac on ac.id_agecl=loc.id_agecl 
+    inner join  Wilks w on w.id_wilks=loc.id_wilks 
+    inner join  WEIGTH_CATEGORY wc on wc.ID_CATEGORY = Loc.ID_CATEGORY,
+    (select min(id_range) as val from range) calc_opt
+where loc.id_compet = :idc
+order by  l.sex
+  , Loc.ID_CATEGORY
+  , ac.from_age
+  , 1 desc
+  , w.Self_Weight asc
+into 
+  :tmp1, :loc, :FIO, :BITHDATE, :"AGECLASS", :"AGECLASSENG", :"BODYWEIGHT",
+  :"COEF", :"TEAM", :"TOWN", 
+  :"SQUAT1", :"OC1", :SQUAT2, :OC2, :"SQUAT3", :"OC3", :"SQUAT4", :"OC4"
+  ,:"BENCH1", :"OC5", :"BENCH2", :"OC6", :"BENCH3", :"OC7", :"BENCH4", :"OC8"
+  ,:"DL1", :"OC9", :"DL2", :"OC10", :"DL3", :"OC11", :"DL4", :"OC12"
+  ,:TOTALL, :PTS, :"COACH", :"WCATEG", :"SEX", :orazr, :nrazr, :acoef, :ACLASS
+
+do
+begin
+  tmp = '';
+
+  if (:ACLASS &lt;&gt; -2) then
+    COEF = :COEF * :ACOEF;
+
+  PTS = Cast(:TOTALL as float) * :COEF;
+
+  if
+    (
+      (nullif(:squat1, '0') &lt;&gt; '0') and
+      (nullif(:oc1, -1) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 0, :squat1) into :tmp;
+    squat1 = trim(:squat1)||:tmp;
+  end
+
+  if 
+    (
+      (nullif(:squat2, '0') &lt;&gt; '0') and
+      (nullif(:oc2, -1) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 0, :squat2) into :tmp;
+    squat2 = trim(:squat2)||:tmp;
+  end
+
+  if 
+    (
+      (nullif(:squat3, '0') &lt;&gt; '0') and
+      (nullif(:oc3, -1) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 0, :squat3) into :tmp;
+    squat3 = trim(:squat3)||:tmp;
+  end
+
+  if 
+    (
+      (nullif(:squat4, '0') &lt;&gt; '0') and
+      (nullif(:oc4, -1) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 0, :squat4) into :tmp;
+    squat4 = trim(:squat4)||:tmp;
+  end
+
+
+  if 
+    (
+      (nullif(:bench1, '0') &lt;&gt; '0') and
+      (nullif(:oc5, -1) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 1, :bench1) into :tmp;
+    bench1 = trim(:bench1)||:tmp;
+  end
+
+  if 
+    (
+      (nullif(:bench2, '0') &lt;&gt; '0') and
+      (nullif(:oc6, -1) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 1, :bench2) into :tmp;
+    bench2 = trim(:bench2)||:tmp;
+  end
+
+  if 
+    (
+      (nullif(:bench3, '0') &lt;&gt; '0') and
+      (nullif(:oc7, -1) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 1, :bench3) into :tmp;
+    bench3 = trim(:bench3)||:tmp;
+  end
+
+  if 
+    (
+      (nullif(:bench4, '0') &lt;&gt; '0') and
+      (nullif(:oc8, 0) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 1, :bench4) into :tmp;
+    bench4 = trim(:bench4)||:tmp;
+  end
+
+  if 
+    (
+      (nullif(:dl1, '0') &lt;&gt; '0') and
+      (nullif(:oc9, 0) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 2, :dl1) into :tmp;
+    dl1 = trim(:dl1)||:tmp;
+  end
+
+  if 
+    (
+      (nullif(:dl2, '0') &lt;&gt; '0') and
+      (nullif(:oc10, 0) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 2, :dl2) into :tmp;
+    dl2 = trim(:dl2)||:tmp;
+  end
+
+  if 
+    (
+      (nullif(:dl3, '0') &lt;&gt; '0') and
+      (nullif(:oc11, 0) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 2, :dl3) into :tmp;
+    dl3 = trim(:dl3)||:tmp;
+  end
+
+  if 
+    (
+      (nullif(:dl4, '0') &lt;&gt; '0') and
+      (nullif(:oc12, 0) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 2, :dl4) into :tmp;
+    dl4 = trim(:dl4)||:tmp;
+  end
+
+  if (nullif(:totall, '0') &lt;&gt; '0') then
+  begin 
+    select result from checkrecord(:loc, -2, :totall) into :tmp;
+    totall = trim(:totall)||:tmp;
+  end
+
+  tmp = null;
+  suspend;
+end
+  tmp = null;
+  tmp1 = null;
+  acoef = null;
+  aclass = null;
+end
+^ SET TERM ; ^</script>
+
+    <script>SET TERM ^ ; 
+CREATE OR ALTER procedure FINALREPORT2 (
+    IDC double precision)
+returns (
+    LOC numeric(12,0),
+    FIO varchar(60) character set WIN1251,
+    AGECLASS varchar(25) character set WIN1251,
+    BITHDATE date,
+    BODYWEIGHT double precision,
+    COEF float,
+    TEAM varchar(60) character set WIN1251,
+    TOWN varchar(160) character set WIN1251,
+    SQUAT1 varchar(9) character set WIN1251,
+    OC1 integer,
+    SQUAT2 varchar(9) character set WIN1251,
+    OC2 integer,
+    SQUAT3 varchar(9) character set WIN1251,
+    OC3 integer,
+    SQUAT4 varchar(9) character set WIN1251,
+    OC4 integer,
+    BENCH1 varchar(9) character set WIN1251,
+    OC5 integer,
+    BENCH2 varchar(9) character set WIN1251,
+    OC6 integer,
+    BENCH3 varchar(9) character set WIN1251,
+    OC7 integer,
+    BENCH4 varchar(9) character set WIN1251,
+    OC8 integer,
+    DL1 varchar(9) character set WIN1251,
+    OC9 integer,
+    DL2 varchar(9) character set WIN1251,
+    OC10 integer,
+    DL3 varchar(9) character set WIN1251,
+    OC11 integer,
+    DL4 varchar(9) character set WIN1251,
+    OC12 integer,
+    TOTALL varchar(12) character set WIN1251,
+    PTS double precision,
+    COACH varchar(50) character set WIN1251,
+    WCATEG varchar(4) character set WIN1251,
+    SEX integer,
+    AGECLASSENG varchar(25) character set WIN1251,
+    ORAZR varchar(6) character set WIN1251,
+    NRAZR varchar(6) character set WIN1251,
+    TOT numeric(4,2))
+as
+declare variable TMP char(1);
+declare variable ACOEF double precision;
+declare variable ACLASS double precision;
+declare variable TMP1 double precision;
+BEGIN
+for
+select
+  case calc_opt.val
+    when 2 then case when SummaAll &gt; 0 then bench2 else 0 end
+    else SummaAll
+  end as ordby,
+  loc.id_lifter_compet,
+  trim(cutfio2(l.name)) as Fio,
+  l.dat_bith as DateBith,
+  trim(ac.ENGNAME) as AgeClass,
+  trim(ac.ENGNAME) as ageclasseng,
+  w.Self_Weight as BodyWeight,
+  w.Coef as Coef,
+  t.name as TeamName,
+  L.Town as LifterTown,
+  le.Squat1,  le.Oc1,
+  le.Squat2,  le.Oc2,
+  le.Squat3,  le.oc3,
+  le.Squat4,  le.oc10,
+  le.Bench1,  le.oc4,
+  le.Bench2,  le.oc5,
+  le.Bench3,  le.oc6,
+  le.Bench4,  le.oc11,
+  le.Dl1,     le.oc7,
+  le.Dl2,     le.oc8,
+  le.Dl3,     le.oc9,
+  le.Dl4,     le.oc12,
+  Le.SummaAll as Totall,
+  le.SummaAll * w.Coef as Pts,
+  loc.Trener,
+  trim(Wc.name) as Categ,
+  l.sex,
+  loc.WasRazr,
+  Loc.NewRazr,
+  (
+    select agecoef from agecorrection where age = (
+      select (cast('now' as date) - dat_bith)/365 from lifter where id_lifter = loc.id_lifter)
+  ) as acoef,
+  loc.id_agecl
+from lifter_on_competition loc inner join
+  lifter_exersis le on le.id_lifter_compet=loc.id_lifter_compet inner join
+  Team T on t.id_team=loc.id_team inner join
+  Lifter L on l.id_lifter=loc.id_lifter inner join
+  Age_class2 Ac on ac.id_agecl=loc.id_agecl inner join
+  Wilks w on w.id_wilks=loc.id_wilks inner join
+  WEIGTH_CATEGORY wc on wc.ID_CATEGORY = Loc.ID_CATEGORY,
+  (select min(id_range) as val from range) calc_opt
+where loc.id_compet = :idc
+order by  l.sex, Loc.ID_CATEGORY, ac.from_age, 1 desc/*le.bench2 desc*/, w.Self_Weight asc
+into :tmp1, :loc, :FIO, :BITHDATE, :"AGECLASS", :"AGECLASSENG", :"BODYWEIGHT",
+  :"COEF", :"TEAM", :"TOWN", 
+  :"SQUAT1", :"OC1", :SQUAT2, :OC2, :"SQUAT3", :"OC3", :"SQUAT4", :"OC4"
+  ,:"BENCH1", :"OC5", :"BENCH2", :"OC6", :"BENCH3", :"OC7", :"BENCH4", :"OC8"
+  ,:"DL1", :"OC9", :"DL2", :"OC10", :"DL3", :"OC11", :"DL4", :"OC12"
+  ,:TOTALL, :PTS, :"COACH", :"WCATEG", :"SEX", :orazr, :nrazr, :acoef, :ACLASS
+
+do
+begin
+  tmp = '';
+
+  if (:ACLASS &lt;&gt; -2) then
+    COEF = :COEF * :ACOEF;
+
+  PTS = Cast(:TOTALL as float) * :COEF;
+
+  if
+    (
+      (nullif(:squat1, '0') &lt;&gt; '0') and
+      (nullif(:oc1, -1) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 0, :squat1) into :tmp;
+    squat1 = trim(:squat1)||:tmp;
+  end
+
+  if 
+    (
+      (nullif(:squat2, '0') &lt;&gt; '0') and
+      (nullif(:oc2, -1) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 0, :squat2) into :tmp;
+    squat2 = trim(:squat2)||:tmp;
+  end
+
+  if 
+    (
+      (nullif(:squat3, '0') &lt;&gt; '0') and
+      (nullif(:oc3, -1) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 0, :squat3) into :tmp;
+    squat3 = trim(:squat3)||:tmp;
+  end
+
+  if 
+    (
+      (nullif(:squat4, '0') &lt;&gt; '0') and
+      (nullif(:oc4, -1) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 0, :squat4) into :tmp;
+    squat4 = trim(:squat4)||:tmp;
+  end
+
+
+  if 
+    (
+      (nullif(:bench1, '0') &lt;&gt; '0') and
+      (nullif(:oc5, -1) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 1, :bench1) into :tmp;
+    bench1 = trim(:bench1)||:tmp;
+  end
+
+  if 
+    (
+      (nullif(:bench2, '0') &lt;&gt; '0') and
+      (nullif(:oc6, -1) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 1, :bench2) into :tmp;
+    bench2 = trim(:bench2)||:tmp;
+  end
+
+  if 
+    (
+      (nullif(:bench3, '0') &lt;&gt; '0') and
+      (nullif(:oc7, -1) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 1, :bench3) into :tmp;
+    bench3 = trim(:bench3)||:tmp;
+  end
+
+  if 
+    (
+      (nullif(:bench4, '0') &lt;&gt; '0') and
+      (nullif(:oc8, 0) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 1, :bench4) into :tmp;
+    bench4 = trim(:bench4)||:tmp;
+  end
+
+  if 
+    (
+      (nullif(:dl1, '0') &lt;&gt; '0') and
+      (nullif(:oc9, 0) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 2, :dl1) into :tmp;
+    dl1 = trim(:dl1)||:tmp;
+  end
+
+  if 
+    (
+      (nullif(:dl2, '0') &lt;&gt; '0') and
+      (nullif(:oc10, 0) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 2, :dl2) into :tmp;
+    dl2 = trim(:dl2)||:tmp;
+  end
+
+  if 
+    (
+      (nullif(:dl3, '0') &lt;&gt; '0') and
+      (nullif(:oc11, 0) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 2, :dl3) into :tmp;
+    dl3 = trim(:dl3)||:tmp;
+  end
+
+  if 
+    (
+      (nullif(:dl4, '0') &lt;&gt; '0') and
+      (nullif(:oc12, 0) &gt; 0)
+    ) then
+  begin 
+    select result from checkrecord(:loc, 2, :dl4) into :tmp;
+    dl4 = trim(:dl4)||:tmp;
+  end
+
+  tot = :TOTALL;
+
+  if (nullif(:totall, '0') &lt;&gt; '0') then
+  begin 
+    select result from checkrecord(:loc, -2, :totall) into :tmp;
+    totall = trim(:totall)||:tmp;
+  end
+
+  tmp = null;
+  suspend;
+end
+
+  tmp = null;
+  tmp1 = null;
+  acoef = null;
+  aclass = null;
+end
+^ SET TERM ; ^</script>
+    <script>SET TERM ^ ; 
+CREATE OR ALTER procedure LIFTERFROMPLACE (
+    IDC double precision,
+    IDA double precision,
+    PL integer,
+    IDCAT double precision,
+    SEX integer)
+returns (
+    PLACE integer,
+    FIO varchar(150) character set WIN1251,
+    TOTALL double precision,
+    GLOSS double precision,
+    AGECLASS double precision,
+    LOC double precision)
+as
+declare variable COEF double precision;
+declare variable TMP1 double precision;
+begin
+
+for
+
+select
+  case calc_opt.val
+    when 2 then case when SummaAll &gt; 0 then bench2 else 0 end
+    else SummaAll
+  end as ordby,
+  :"PL" as place,
+  l.name as fio,
+  le. summaall as totall,
+  cast(le. summaall * w.coef as numeric(6,4)) as Gloss,
+  :"IDA",
+  loc.id_lifter_compet,
+  (
+  select agecoef from agecorrection where age = (
+    select (cast('now' as date) - dat_bith)/365 from lifter where id_lifter = loc.id_lifter)
+  ) as coef
+from
+  Lifter_On_Competition Loc inner join
+  Lifter_Exersis Le on le.id_lifter_compet=loc.id_lifter_compet inner join
+  Lifter L on l.id_lifter=loc.id_lifter inner join
+  Wilks W on loc.id_wilks = w.id_wilks,
+  (select min(id_range) as val from range) calc_opt
+where
+  loc.INZACH = -1 and
+  loc.id_compet=:"IDC" and
+  loc.id_agecl =:"IDA" and
+  loc.id_category=:"IDCAT" and
+  L.Sex = :"SEX"
+order by
+  /*summaall desc*/ 1 desc,
+  w.SELF_WEIGHT asc
+rows :"PL" to :"PL"
+into
+  :tmp1, :"PLACE", :"FIO", :"TOTALL", :"GLOSS", :"AGECLASS", :"LOC", :COEF
+do
+begin
+  if (:"AGECLASS" &lt;&gt; -2) then
+    GLOSS = :"GLOSS" * :COEF;
+  suspend;
+end
+
+  tmp1 = null;
+  coef = null;
+end
+^ SET TERM ; ^</script>
+</version>	
+
+<!--
+
+
+
+<version number="0.48">
+    <script>SET TERM ^ ; 
+^ SET TERM ; ^</script>		
+</version>	
+-->
 
 </versions>
