@@ -7627,30 +7627,18 @@ returns (
     COEF float,
     TEAM varchar(60) character set WIN1251,
     TOWN varchar(160) character set WIN1251,
-    SQUAT1 varchar(9) character set WIN1251,
-    OC1 integer,
-    SQUAT2 varchar(9) character set WIN1251,
-    OC2 integer,
-    SQUAT3 varchar(9) character set WIN1251,
-    OC3 integer,
-    SQUAT4 varchar(9) character set WIN1251,
-    OC4 integer,
-    BENCH1 varchar(9) character set WIN1251,
-    OC5 integer,
-    BENCH2 varchar(9) character set WIN1251,
-    OC6 integer,
-    BENCH3 varchar(9) character set WIN1251,
-    OC7 integer,
-    BENCH4 varchar(9) character set WIN1251,
-    OC8 integer,
-    DL1 varchar(9) character set WIN1251,
-    OC9 integer,
-    DL2 varchar(9) character set WIN1251,
-    OC10 integer,
-    DL3 varchar(9) character set WIN1251,
-    OC11 integer,
-    DL4 varchar(9) character set WIN1251,
-    OC12 integer,
+    SQUAT1 varchar(9) character set WIN1251,    OC1 integer,
+    SQUAT2 varchar(9) character set WIN1251,    OC2 integer,
+    SQUAT3 varchar(9) character set WIN1251,    OC3 integer,
+    SQUAT4 varchar(9) character set WIN1251,    OC4 integer,
+    BENCH1 varchar(9) character set WIN1251,    OC5 integer,
+    BENCH2 varchar(9) character set WIN1251,    OC6 integer,
+    BENCH3 varchar(9) character set WIN1251,    OC7 integer,
+    BENCH4 varchar(9) character set WIN1251,    OC8 integer,
+    DL1 varchar(9) character set WIN1251,       OC9 integer,
+    DL2 varchar(9) character set WIN1251,       OC10 integer,
+    DL3 varchar(9) character set WIN1251,       OC11 integer,
+    DL4 varchar(9) character set WIN1251,       OC12 integer,
     TOTALL varchar(12) character set WIN1251,
     PTS double precision,
     COACH varchar(50) character set WIN1251,
@@ -7659,12 +7647,12 @@ returns (
     AGECLASSENG varchar(25) character set WIN1251,
     ORAZR varchar(6) character set WIN1251,
     NRAZR varchar(6) character set WIN1251,
-    TOT numeric(4,2))
+    TOT numeric(7,2))
 as
-declare variable TMP char(1);
-declare variable ACOEF double precision;
-declare variable ACLASS double precision;
-declare variable TMP1 double precision;
+  declare variable TMP char(1);
+  declare variable ACOEF double precision;
+  declare variable ACLASS double precision;
+  declare variable TMP1 double precision;
 BEGIN
 for
 select
