@@ -1,10 +1,7 @@
 <main>
   <reportfilename ru="frf\finalReport_ru.frf" eng="frf\finalReport_eng.frf"/>
   <info name=""/>
-  <sql>
-
-select
-  tbl.town_ as rusTown,
+  <sql> select tbl.town_ as rusTown,
   trim(Transliter(tbl.town_)) as EngTown,
   tbl.*
 from ( select
