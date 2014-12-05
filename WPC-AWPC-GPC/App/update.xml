@@ -4349,30 +4349,17 @@ end
 ^
 SET TERM ; ^</script>
 		<script>EXECUTE PROCEDURE DO_UP;</script>
-
-		<script>SET TERM ^ ;
-CREATE OR ALTER PROCEDURE 'VER 
-returns (VERSION numeric(3,3))
-as              
-begin
-  VERSION = 2.16;
-  suspend;
-end
-^
-SET TERM ; ^</script>
 	</version>
 
 	<version number="2.17">
 		<script optional ="1" >ALTER TABLE LIFTER2RAZR DROP LOC_ID;</script>
 		<script>ALTER TABLE LIFTER2RAZR ADD LOC_ID NUMERIC(12);</script>
 		<script>ALTER TABLE LIFTER2RAZR ALTER ID_NORMAT position 3;</script>
-		<script>SET TERM ^ ;
+		<script>SET TERM ^;
 CREATE OR ALTER PROCEDURE DO_UP 
-as
-begin
+as begin
 UPDATE LIFTER2RAZR set LOC_ID = (select max(ID_LIFTER_COMPET) from LIFTER_ON_COMPETITION loc where loc.ID_LIFTER = LIFTER2RAZR.ID_LIFTER);
-end
-^
+end ^
 SET TERM ; ^</script>
 		<script>EXECUTE PROCEDURE DO_UP;</script>
 
@@ -10291,6 +10278,52 @@ end
 ^ SET TERM ; ^</script>
 		<script>EXECUTE PROCEDURE DO_UP;</script>
 		
-</version>	
+</version>
+
+<version number="2.574">
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DO_UP as
+begin 
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+                                 VALUES ('RANGE_SNAME_14', 'WPC s.ply DL')
+                               MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+                                 VALUES ('RANGE_SNAME_17', 'AWPC s.ply DL')
+                               MATCHING (ID);
+
+UPDATE OR INSERT INTO RANGE (ID_RANGE, NAME, KIND, SNAME)
+                     VALUES (14, 'WPC 1 слойная становая тяга', 3, 'WPC 1 слой тяга')
+                   MATCHING (ID_RANGE);
+UPDATE OR INSERT INTO RANGE (ID_RANGE, NAME, KIND, SNAME)
+                     VALUES (17, 'AWPC 1 слойная становая тяга', 3, 'AWPC 1 слой тяга')
+                   MATCHING (ID_RANGE);
+				   
+/* DL */	
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_13', '13') MATCHING (ID); -- WPC raw deadlift
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_14', '14') MATCHING (ID); -- WPC s.ply deadlift
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_12', '15') MATCHING (ID); -- WPC multy ply deadlift
+	
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_16', '16') MATCHING (ID); -- AWPC raw deadlift
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_17', '17') MATCHING (ID); -- AWPC s.ply deadlift
+    UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+    VALUES ('RANGE_ORD_15', '18') MATCHING (ID); -- AWPC multy ply deadlift
+				   
+end^ 
+SET TERM ; ^</script>
+		<script>EXECUTE PROCEDURE DO_UP;</script>	
+    <script>SET TERM ^ ; 
+CREATE OR ALTER PROCEDURE DO_UP as
+begin 
+/**/
+end
+^ SET TERM ; ^</script>
+	</version>
+
+	
 
 </versions>
