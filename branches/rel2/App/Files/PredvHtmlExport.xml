@@ -1,0 +1,88 @@
+<main>
+  <reportfilename ru="xls\FinalExcel_ru.xls" eng="xls\FinalExcel_eng.xls"/>
+  <info name=""/>
+  <sql>
+select tbl.*
+  , Trim(TransLiter(RusFIO)) as EngFIO
+  , Trim(TransLiter(rusTOWN)) as EngTOWN
+from (
+select
+  Trim(CutFio2(l.name)) as RusFIO,
+  ac.name as rusAgeClass,
+  ac.engname as engAgeClass,
+  t.name TeamName,
+  wc.Name as WC,
+  l.sex as sex,
+
+  case
+    when position('/' in l.TOWN) > 0 then
+      case
+      when substring(l.town from 1 for position('/' in l.TOWN)-1) = substring(l.town from position('/' in l.TOWN)+1 for 99) then substring(l.town from 1 for position('/' in l.TOWN)-1)
+      else l.town
+      end
+    else l.town
+  end  as rusTOWN,
+  case Coalesce(le.squat1, '0.0')
+    when '0.0' then ''
+    else Coalesce(le.squat1, '0.0')||'-'
+  end
+  ||
+  case Coalesce(le.bench1, '0.0')
+    when '0.0' then ''
+    else Coalesce(le.bench1, '0.0')
+  end
+    ||
+  case Coalesce(le.squat1, '0.0')
+    when '0.0' then ''
+    else '-'
+  end
+    ||
+  case Coalesce(le.dl1, '0.0')
+    when '0.0' then ''
+    else Coalesce(le.dl1, '0.0')
+  end
+  as pbest,
+
+  cast(coalesce(
+  (select max(table1.t1) from
+    (select coalesce(le1.summaall, 0) as t1
+       from  Lifter_on_Competition loc1 inner join  lifter_exersis le1 on loc1.id_lifter_compet = le1.id_lifter_compet inner join competit c1 on c1.id_compet = loc1.id_compet
+       where loc1.id_lifter = loc.id_lifter
+         and c1.id_range = c.id_range
+         and c1.date_begin &lt;= c.date_begin
+       union all
+       select case r.kind when 1 then coalesce(le1.squat1, 0)+ coalesce(le1.bench1, 0)+ coalesce(le1.dl1, 0) else 0 end
+       from  Lifter_on_Competition loc1 inner join  lifter_exersis le1 on loc1.id_lifter_compet = le1.id_lifter_compet inner join competit c1 on c1.id_compet = loc1.id_compet
+       where loc1.id_lifter = loc.id_lifter
+         and c1.id_range = c.id_range
+         and c1.date_begin &lt;= c.date_begin
+    ) table1
+  ), '0') as numeric(6,1))as pbest1,
+  wc.we,
+  ac.from_age
+from
+  lifter l inner join
+  Lifter_on_Competition loc
+    on l.id_lifter = loc.id_lifter inner join
+  lifter_exersis le
+    on loc.id_lifter_compet = le.id_lifter_compet inner join
+  competit c
+    on c.id_compet = loc.id_compet inner join
+  range r
+    on r.id_range  = c.id_range inner join
+  Age_Class Ac
+    on Ac.id_agecl = loc.id_agecl inner join
+  WEIGTH_CATEGORY WC
+    on Loc.Id_category = Wc.Id_category inner join
+  TEAM T
+    on t.id_team = loc.id_team
+where
+  c.id_compet=%IDC%
+  %CONDITION%
+) tbl
+order by
+  tbl.sex,
+  tbl.we,
+  tbl.from_age
+  </sql>
+</main>

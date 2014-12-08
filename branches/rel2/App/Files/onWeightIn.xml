@@ -1,0 +1,14 @@
+<main>
+  <reportfilename ru="frf\diplom.frf" eng="frf\diplom.frf"/>
+  <info name=""/>
+  <sql>
+select
+  cast(Transliter(CutFio2(l.Name))  as varchar(50))as engfio,
+  cast(CutFio2(l.Name)  as varchar(50)) as fio,
+  l.*
+from
+  Lifter l
+where
+  l.id_lifter = %IDL%
+  </sql>
+</main>

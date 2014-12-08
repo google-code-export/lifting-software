@@ -1,0 +1,61 @@
+<main>
+  <reportfilename ru="frf\finalReport_ru.frf" eng="frf\finalReport_eng.frf"/>
+  <info name=""/>
+  <sql> select tbl.town_ as rusTown,
+  trim(Transliter(tbl.town_)) as EngTown,
+  tbl.*
+from ( select
+      trim(fr.fio) as RusFio,
+      trim(Transliter(fr.fio)) as EngFio,
+    
+      case when position('/', c.town) > 0 then
+        left(trim(c.town), position('/', c.town)-1)
+      else
+        trim(c.town)
+      end as town_,
+    
+      trim(fr.Coach) as rusCoach,
+      trim(Transliter(fr.Coach)) as EngCoach,
+    
+      trim(c.name)||', '|| case
+        when position('/', c.town) > 0 then
+          left(trim(c.town), position('/', c.town)-1)
+        else
+          trim(c.town)
+        end as RUScName1,
+      trim(r.name) ||', '||
+      case
+        when c.date_begin = c.date_end then
+          c.date_begin
+        else
+          extract(day from c.date_begin)||'-'|| extract(day from c.date_end)||'.'||extract(month from c.date_end)||'.'||extract(year from c.date_end)
+      end as RUScName2,
+      fr.*
+    from finalreport(%IDC%) fr inner join
+      Lifter_on_competition loc on loc.id_lifter_compet=fr.loc inner join
+      Competit C on c.id_compet=loc.id_compet inner join
+      Range r on r.id_range = c.id_range
+	%WHERE%	  
+) tbl
+  </sql>
+</main>
+
+
+<!--  
+select
+  cast(Transliter(fr.fio) as varchar(60)) as EngFio,
+  cast(Transliter(fr.town) as varchar(103))as engTown,
+  cast(Transliter(fr.Coach) as varchar(60))as engCoach,
+  fr.*,
+  c.*,
+  r.sname as divis
+from finalreport(%IDC%) fr
+left join
+  Lifter_on_competition loc
+    on loc.id_lifter_compet=fr.loc left join
+  Competit C
+    on c.id_compet=loc.id_compet join
+  Range r
+    on r.id_range = c.id_range
+%WHERE%
+-->
