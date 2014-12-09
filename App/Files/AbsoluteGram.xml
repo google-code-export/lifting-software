@@ -27,11 +27,13 @@
   , loc.club as club
   , loc.wasrazr as wasrank
   , loc.newrazr as newrank
+  , w.self_weight
 from  absolute_gram(%IDC%) fr
   inner join Lifter_on_competition loc on fr.loc=loc.id_lifter_compet 
+  inner join wilks w on loc.id_wilks = w.id_wilks
   inner join Competit c on c.id_compet = loc.id_compet
   inner join Range r on r.id_range=c.id_range
-  left join lifter_exersis le on loc.id_lifter_compet = le.id_lifter_compet
+  inner join lifter_exersis le on loc.id_lifter_compet = le.id_lifter_compet
   left join translate_rus_eng eng on eng.id = 'RANGE_SNAME_'||r.id_range
   </sql>
 </main>

@@ -1,9 +1,7 @@
 <main>
   <reportfilename ru="frf\Gram_ru.frf" eng="frf\Gram_eng.frf"/>
   <info name=""/>
-  <sql>
-select 
-  fr.place, 
+  <sql>select fr.place, 
   cast(Transliter(CutFio2(fr.fio)) as varchar(60)) as engfio,
   cast(CutFio2(fr.fio) as varchar(60)) as rusfio,
   ac.name as RUSacname,
@@ -32,19 +30,16 @@ select
   loc.club as club,
   loc.wasrazr as wasrank,
   loc.newrazr as newrank
-from
-  COMPETITIONWINNERS(%IDC%) fr inner join
+from COMPETITIONWINNERS(%IDC%) fr inner join
   Age_class ac on ac.id_agecl= fr.ageclass inner join
   Lifter_on_competition loc on fr.loc=loc.id_lifter_compet inner join
   Wilks W on w.id_wilks = loc.id_wilks inner join
   competit c on c.id_compet = loc.id_compet inner join
   range r on r.id_range = c.id_range left join
   translate_rus_eng eng on eng.id = 'RANGE_SNAME_'||r.id_range
-where
-  fr.totall > 0
+where fr.totall > 0
 %CONDITION%
-order by 
-  fr.sex, 
+order by fr.sex, 
   idcateg desc, 
   ac.from_age, 
   place desc
