@@ -8921,6 +8921,7 @@ end
 	<version number="2.46">
     <script>SET TERM ^ ; 
 CREATE OR ALTER PROCEDURE DO_UP as
+declare variable NUM bigint;
 begin 
  /*
 1. ПЛ без экипировки
@@ -8933,7 +8934,13 @@ begin
 8. Тяга в эк. 
  */
 
- 
+  select count(1) from range where name like '%WPC%' into num;
+  if (num=0) then
+  begin
+    num = null;
+    exit;
+  end
+  
 /* WPC */    
     UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
     VALUES ('RANGE_ORD_7', '01') MATCHING (ID); --WPC raw powerlifting
@@ -8975,8 +8982,7 @@ begin
     VALUES ('RANGE_ORD_16', '15') MATCHING (ID); -- AWPC raw deadlift
     UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
     VALUES ('RANGE_ORD_15', '16') MATCHING (ID); -- AWPC multy ply deadlift
-
-	
+  num = null;
 end^ 
 SET TERM ; ^</script>
 
@@ -9311,7 +9317,15 @@ SET TERM ; ^</script>
 <version number="2.52">
     <script>SET TERM ^ ; 
 CREATE OR ALTER PROCEDURE DO_UP as
+declare variable NUM bigint;
 begin 
+  
+  select count(1) from range where name like '%WPC%' into num;
+  if (num=0) then
+  begin
+    num = null;
+    exit;
+  end
 
 UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
                                  VALUES ('RANGE_SNAME_0', 'WPC m.ply BP')
@@ -9410,6 +9424,8 @@ UPDATE OR INSERT INTO RANGE (ID_RANGE, NAME, KIND, SNAME)
 UPDATE OR INSERT INTO RANGE (ID_RANGE, NAME, KIND, SNAME)
                      VALUES (16, 'AWPC без экипировочная становая тяга', 3, 'AWPC б\э тяга')
                    MATCHING (ID_RANGE);
+
+  num = null;				   
 end^ 
 SET TERM ; ^</script>
 		<script>EXECUTE PROCEDURE DO_UP;</script>	
@@ -10312,7 +10328,14 @@ UPDATE OR INSERT INTO RANGE (ID_RANGE, NAME, KIND, SNAME)
     VALUES ('RANGE_ORD_17', '17') MATCHING (ID); -- AWPC s.ply deadlift
     UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
     VALUES ('RANGE_ORD_15', '18') MATCHING (ID); -- AWPC multy ply deadlift
-				   
+
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+                                 VALUES ('RANGE_14', 'WPC singlw ply deadlift')
+                               MATCHING (ID);
+UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
+                                 VALUES ('RANGE_17', 'WPC singlw ply deadlift')
+                               MATCHING (ID);
+	
 end^ 
 SET TERM ; ^</script>
 		<script>EXECUTE PROCEDURE DO_UP;</script>	
