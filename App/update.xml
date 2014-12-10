@@ -16384,6 +16384,240 @@ begin
 end
 ^ SET TERM ; ^
 </script>
+<!-- LIGHT_TABLE -->
+<script>SET TERM ^ ;
+CREATE OR ALTER procedure LIGHT_TABLE
+(IDC NUMERIC(12, 0),
+IDS NUMERIC(12, 0))
+returns (SPORTSMENNAME VARCHAR(200) character set WIN1251,
+RUSAGENAME VARCHAR(60) character set WIN1251,
+ENGAGENAME VARCHAR(60) character set WIN1251,
+TEAM_NAME VARCHAR(60) character set WIN1251,
+BWEIGHT double precision,
+WEIGHTCATEGORY double precision,
+TOTALL double precision,
+PTS double precision,
+LOC NUMERIC(12, 0))
+ as begin /*dummy*/ suspend; end
+^ SET TERM ; ^</script>
+<!-- LIGHT_TABLE -->
+<script>SET TERM ^ ;
+CREATE OR ALTER procedure LIGHT_TABLE
+(IDC NUMERIC(12, 0),
+IDS NUMERIC(12, 0))
+returns (SPORTSMENNAME VARCHAR(200) character set WIN1251,
+RUSAGENAME VARCHAR(60) character set WIN1251,
+ENGAGENAME VARCHAR(60) character set WIN1251,
+TEAM_NAME VARCHAR(60) character set WIN1251,
+BWEIGHT double precision,
+WEIGHTCATEGORY VARCHAR(6) character set WIN1251,
+TOTALL double precision,
+PTS double precision,
+LOC NUMERIC(12, 0))
+ as 
+begin
+
+for SELECT L.name AS SportsmenName
+  , AC.name AS RUSAgeName
+  , AC.engname AS ENGAgeName
+  , T.name AS Command
+  , W.self_weight AS BWeight
+  , WC.name AS WeightCategory
+  , le.SummaAll as totall
+  , case
+    when ac.from_age &gt; 39 then
+    coalesce( (
+    select agecoef from agecorrection where coef_kind = r.coef_kind and age = (
+    select (cast(&apos;now&apos; as date) - dat_bith)/365 from lifter where id_lifter = loc.id_lifter)
+    ), 1) * w.Coef
+    else w.Coef
+  end pts
+  , loc.id_lifter_compet
+from competit c, range r, lifter_on_competition loc, lifter_exersis le, team t,
+  lifter l, age_class ac, wilks w, weigth_category wc
+where c.id_compet = :idc
+  and c.id_range = r.id_range
+  and c.id_compet = loc.id_compet
+  and loc.id_lifter_compet = le.id_lifter_compet
+  and loc.id_stream = :ids
+  and loc.id_team = t.id_team
+  and loc.id_lifter = l.id_lifter
+  and loc.id_agecl = ac.id_agecl
+  and (loc.id_wilks = w.id_wilks and w.coef_kind = r.coef_kind)
+  and (loc.id_category = wc.id_category and r.id_federation = wc.id_federation)
+ORDER BY
+  wc.we, ac.From_Age, 7 DESC, w.self_weight ASC
+into  :SportsmenName, :RUSAgeName, :ENGAgeName, :team_name, :BWeight, :WeightCategory, :totall, :pts, :loc
+do  suspend;
+end
+^ SET TERM ; ^</script>
+<!-- ADD_LOC -->
+<script>SET TERM ^ ;
+CREATE OR ALTER procedure ADD_LOC
+(LID NUMERIC(12, 0),
+IDAC NUMERIC(12, 0),
+IDC NUMERIC(12, 0),
+SELFWEGHT double precision,
+IDT NUMERIC(12, 0),
+ZR INTEGER,
+INZ SMALLINT,
+STATE double precision,
+SQUAT double precision,
+BENCH double precision,
+DL double precision)
+returns (LOC NUMERIC(12, 0),
+COEF double precision,
+TS TIMESTAMP,
+IDCATEGORY NUMERIC(12, 0))
+ as begin /*dummy*/ suspend; end
+^ SET TERM ; ^</script>
+ 
+<!-- EDIT_LOC -->
+<script>SET TERM ^ ;
+CREATE OR ALTER procedure EDIT_LOC
+(LID NUMERIC(12, 0),
+IDAC NUMERIC(12, 0),
+IDC NUMERIC(12, 0),
+SELFWEGHT double precision,
+IDT NUMERIC(12, 0),
+INZ SMALLINT,
+STATE double precision,
+SQUAT double precision,
+BENCH double precision,
+DL double precision,
+LOC NUMERIC(12, 0))
+returns (COEF double precision,
+TS TIMESTAMP,
+IDCATEGORY NUMERIC(12, 0))
+ as begin /*dummy*/ suspend; end
+^ SET TERM ; ^</script>
+ 
+<!-- ADD_LOC -->
+<script>SET TERM ^ ;
+CREATE OR ALTER procedure ADD_LOC
+(LID NUMERIC(12, 0),
+IDAC NUMERIC(12, 0),
+IDC NUMERIC(12, 0),
+SELFWEGHT double precision,
+IDT NUMERIC(12, 0),
+ZR INTEGER,
+INZ SMALLINT,
+STATE double precision,
+SQUAT double precision,
+BENCH double precision,
+DL double precision)
+returns (LOC NUMERIC(12, 0),
+COEF double precision,
+TS TIMESTAMP,
+IDCATEGORY NUMERIC(12, 0))
+ as 
+declare variable IDWILKS numeric(12,0);
+declare variable ACLUB varchar(50);
+declare variable ATRENER varchar(50);
+BEGIN
+/* Fill data */
+  select df.club, df.trener, df.ts, df.loc, df.idcat, df.idw, df.coef
+  from data_filler(:lid, :idc, :selfweght) df
+  into :aclub, :atrener, :ts, :loc, :idcategory, :idwilks, :coef;
+/* modify data */
+  insert into lifter_on_competition
+    (
+      ID_LIFTER_COMPET,  id_category,
+      id_lifter,         id_compet,
+      id_wilks,          id_stream,
+      club,              trener,
+      id_team,           zr,
+      InZach,            id_agecl,
+      EDITTIME,      CREATETIME)
+  values
+    (
+      :loc,             :idcategory,
+      :lid  ,           :idc,
+      :idwilks,         :STATE,
+      :aclub,           :atrener,
+      :IDT,             :ZR,
+      :INZ,             :IDAC,
+      :TS,        :TS
+    );
+  
+  insert into lifter_exersis
+    (
+      ID_LIFTER_COMPET,      squat1,
+      bench1,                dl1,
+      STOY,                  EDITTIME
+    )
+  values 
+    (
+      :LOC,      :SQUAT, 
+      :BENCH,    :DL, 
+      &apos;0&apos;,       :TS
+    );
+
+  select result from check_lifter_excl(:LOC, NULL, NULL) into :idwilks;
+  if (idwilks = 1) then
+    exception cant_participate;
+    
+  idwilks = NULL;
+  ACLUB = NULL;
+  ATRENER = NULL;
+
+  POST_EVENT &apos;LOC_ADD&apos;;
+END
+^ SET TERM ; ^</script>
+ 
+<!-- EDIT_LOC -->
+<script>SET TERM ^ ;
+CREATE OR ALTER procedure EDIT_LOC
+(LID NUMERIC(12, 0),
+IDAC NUMERIC(12, 0),
+IDC NUMERIC(12, 0),
+SELFWEGHT double precision,
+IDT NUMERIC(12, 0),
+INZ SMALLINT,
+STATE double precision,
+SQUAT double precision,
+BENCH double precision,
+DL double precision,
+LOC NUMERIC(12, 0))
+returns (COEF double precision,
+TS TIMESTAMP,
+IDCATEGORY NUMERIC(12, 0))
+ as declare variable IDWILKS numeric(12,0);
+declare variable ACLUB varchar(50);
+declare variable ATRENER varchar(50);
+BEGIN
+  select result from check_lifter_excl(:loc, NULL, NULL) into :idwilks;
+  if (idwilks = 1) then
+    exception cant_participate;
+
+/* Fill data */
+  select df.club, df.trener, df.ts, df.idcat, df.idw, df.coef
+  from data_filler(:lid, :idc, :selfweght) df
+  into :aclub, :atrener, :ts, :idcategory, :idwilks, :coef;
+/* modify data */
+
+  update lifter_on_competition set
+    id_category = :idcategory,    id_compet = :idc,
+    id_wilks = :idwilks,          id_stream = :STATE,
+    club = :aclub,                trener = :atrener,
+    id_team = :idt,               InZach = :inz,
+    id_agecl = :idac,             EDITTIME = :ts
+  where
+    ID_LIFTER_COMPET = :loc;
+
+  update lifter_exersis set
+    squat1 = :SQUAT,    bench1 = :BENCH,
+    dl1 = :DL,    EDITTIME = :ts
+  where
+    ID_LIFTER_COMPET = :loc;
+
+  idwilks = NULL;
+  ACLUB = NULL;
+  ATRENER = NULL;
+
+  POST_EVENT &apos;LOC_EDIT&apos;;
+END
+^ SET TERM ; ^</script>
 </version>
 
 <!--
