@@ -60,18 +60,18 @@ AS `weight_category`,
 
 case data
 when 'open2429' then -2
-when 'junior2023' then 1
-when 'teenage1617' then 15
-when 'teenage1315' then 14
-when 'teenage1819' then 2
-when 'masters4044' then 3
-when 'masters4549' then 4
-when 'masters5054' then 6
-when 'masters5559' then 8
-when 'masters6064' then 9
-when 'masters6569' then 10
-when 'masters7074' then 11
-when 'masters7579' then 12
+when 'junior2023' then 20
+when 'teenage1617' then 16
+when 'teenage1315' then 13
+when 'teenage1819' then 18
+when 'masters4044' then 40
+when 'masters4549' then 45
+when 'masters5054' then 50
+when 'masters5559' then 55
+when 'masters6064' then 60
+when 'masters6569' then 65
+when 'masters7074' then 70
+when 'masters7579' then 75
 
 else data
 
