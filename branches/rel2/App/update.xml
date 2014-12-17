@@ -13644,14 +13644,13 @@ UPDATE OR INSERT INTO WEIGTH_CATEGORY (ID_CATEGORY, ID_FEDERATION, NAME, WE, SEX
 UPDATE OR INSERT INTO WEIGTH_CATEGORY (ID_CATEGORY, ID_FEDERATION, NAME, WE, SEX) VALUES (36, 3, '75', 75, 1) MATCHING (ID_CATEGORY);
 UPDATE OR INSERT INTO WEIGTH_CATEGORY (ID_CATEGORY, ID_FEDERATION, NAME, WE, SEX) VALUES (37, 3, '82.5', 82.5, 1) MATCHING (ID_CATEGORY);
 UPDATE OR INSERT INTO WEIGTH_CATEGORY (ID_CATEGORY, ID_FEDERATION, NAME, WE, SEX) VALUES (38, 3, '90', 90, 1) MATCHING (ID_CATEGORY);
-UPDATE OR INSERT INTO WEIGTH_CATEGORY (ID_CATEGORY, ID_FEDERATION, NAME, WE, SEX) VALUES (39, 3, '100', 100, 3) MATCHING (ID_CATEGORY);
+UPDATE OR INSERT INTO WEIGTH_CATEGORY (ID_CATEGORY, ID_FEDERATION, NAME, WE, SEX) VALUES (39, 3, '100', 100, 1) MATCHING (ID_CATEGORY);
 UPDATE OR INSERT INTO WEIGTH_CATEGORY (ID_CATEGORY, ID_FEDERATION, NAME, WE, SEX) VALUES (310, 3, '110', 110, 3) MATCHING (ID_CATEGORY);
 UPDATE OR INSERT INTO WEIGTH_CATEGORY (ID_CATEGORY, ID_FEDERATION, NAME, WE, SEX) VALUES (311, 3, '125', 125, 3) MATCHING (ID_CATEGORY);
 UPDATE OR INSERT INTO WEIGTH_CATEGORY (ID_CATEGORY, ID_FEDERATION, NAME, WE, SEX) VALUES (312, 3, '140', 140, 3) MATCHING (ID_CATEGORY);
-UPDATE OR INSERT INTO WEIGTH_CATEGORY (ID_CATEGORY, ID_FEDERATION, NAME, WE, SEX) VALUES (314, 3, '155', 155, 3) MATCHING (ID_CATEGORY);
-UPDATE OR INSERT INTO WEIGTH_CATEGORY (ID_CATEGORY, ID_FEDERATION, NAME, WE, SEX) VALUES (313, 3, '100', 100, 2) MATCHING (ID_CATEGORY);
-UPDATE OR INSERT INTO WEIGTH_CATEGORY (ID_CATEGORY, ID_FEDERATION, NAME, WE, SEX) VALUES (313, 3, '100+', 999, 2) MATCHING (ID_CATEGORY);
-UPDATE OR INSERT INTO WEIGTH_CATEGORY (ID_CATEGORY, ID_FEDERATION, NAME, WE, SEX) VALUES (314, 3, '155+', 999, 3) MATCHING (ID_CATEGORY);
+UPDATE OR INSERT INTO WEIGTH_CATEGORY (ID_CATEGORY, ID_FEDERATION, NAME, WE, SEX) VALUES (313, 3, '155', 155, 3) MATCHING (ID_CATEGORY);
+UPDATE OR INSERT INTO WEIGTH_CATEGORY (ID_CATEGORY, ID_FEDERATION, NAME, WE, SEX) VALUES (314, 3, '100+', 999, 2) MATCHING (ID_CATEGORY);
+UPDATE OR INSERT INTO WEIGTH_CATEGORY (ID_CATEGORY, ID_FEDERATION, NAME, WE, SEX) VALUES (315, 3, '155+', 999, 3) MATCHING (ID_CATEGORY);
 </script>
 
 <script ipo="">
@@ -16617,6 +16616,259 @@ BEGIN
 
   POST_EVENT &apos;LOC_EDIT&apos;;
 END
+^ SET TERM ; ^</script>
+</version>
+
+<version number="221">
+<script>
+UPDATE OR INSERT INTO COMPETIT (ID_COMPET, ID_RANGE, NAME, TOWN, DESCRIPTION, DATE_BEGIN, DATE_END, "LEVEL", EDITTIME, GRP) 
+VALUES (383, 406, 'WPA Кубок России 2014', 'Москва', 'RusR 2014', '2014-12-18', '2014-12-21', 2, '2014-10-11 17:20:39', 383) MATCHING (ID_COMPET, NAME, DESCRIPTION, GRP);
+UPDATE OR INSERT INTO COMPETIT (ID_COMPET, ID_RANGE, NAME, TOWN, DESCRIPTION, DATE_BEGIN, DATE_END, "LEVEL", EDITTIME, GRP) 
+VALUES (384, 407, 'WPA Кубок России 2014', 'Москва', 'RusR 2014', '2014-12-18', '2014-12-21', 2, '2014-10-11 17:21:10', 383) MATCHING (ID_COMPET, NAME, DESCRIPTION, GRP);
+UPDATE OR INSERT INTO COMPETIT (ID_COMPET, ID_RANGE, NAME, TOWN, DESCRIPTION, DATE_BEGIN, DATE_END, "LEVEL", EDITTIME, GRP) 
+VALUES (385, 408, 'WPA Кубок России 2014', 'Москва', 'RusR 2014', '2014-12-18', '2014-12-21', 2, '2014-10-11 17:21:36', 383) MATCHING (ID_COMPET, NAME, DESCRIPTION, GRP);
+UPDATE OR INSERT INTO COMPETIT (ID_COMPET, ID_RANGE, NAME, TOWN, DESCRIPTION, DATE_BEGIN, DATE_END, "LEVEL", EDITTIME, GRP) 
+VALUES (386, 403, 'WPA Кубок России 2014', 'Москва', 'RusR 2014', '2014-12-18', '2014-12-21', 2, '2014-10-11 17:22:02', 383) MATCHING (ID_COMPET, NAME, DESCRIPTION, GRP);
+UPDATE OR INSERT INTO COMPETIT (ID_COMPET, ID_RANGE, NAME, TOWN, DESCRIPTION, DATE_BEGIN, DATE_END, "LEVEL", EDITTIME, GRP) 
+VALUES (387, 404, 'WPA Кубок России 2014', 'Москва', 'RusR 2014', '2014-12-18', '2014-12-21', 2, '2014-10-11 17:22:33', 383) MATCHING (ID_COMPET, NAME, DESCRIPTION, GRP);
+UPDATE OR INSERT INTO COMPETIT (ID_COMPET, ID_RANGE, NAME, TOWN, DESCRIPTION, DATE_BEGIN, DATE_END, "LEVEL", EDITTIME, GRP) 
+VALUES (388, 405, 'WPA Кубок России 2014', 'Москва', 'RusR 2014', '2014-12-18', '2014-12-21', 2, '2014-10-11 17:23:05', 383) MATCHING (ID_COMPET, NAME, DESCRIPTION, GRP);
+UPDATE OR INSERT INTO COMPETIT (ID_COMPET, ID_RANGE, NAME, TOWN, DESCRIPTION, DATE_BEGIN, DATE_END, "LEVEL", EDITTIME, GRP) 
+VALUES (389, 400, 'WPA Кубок России 2014', 'Москва', 'RusR 2014', '2014-12-18', '2014-12-21', 2, '2014-10-11 17:23:32', 383) MATCHING (ID_COMPET, NAME, DESCRIPTION, GRP);
+UPDATE OR INSERT INTO COMPETIT (ID_COMPET, ID_RANGE, NAME, TOWN, DESCRIPTION, DATE_BEGIN, DATE_END, "LEVEL", EDITTIME, GRP) 
+VALUES (390, 402, 'WPA Кубок России 2014', 'Москва', 'RusR 2014', '2014-12-18', '2014-12-21', 2, '2014-10-11 17:23:48', 383) MATCHING (ID_COMPET, NAME, DESCRIPTION, GRP);
+UPDATE OR INSERT INTO COMPETIT (ID_COMPET, ID_RANGE, NAME, TOWN, DESCRIPTION, DATE_BEGIN, DATE_END, "LEVEL", EDITTIME, GRP) 
+VALUES (391, 416, 'WPA-A Кубок России 2014', 'Москва', 'RusR 2014', '2014-12-18', '2014-12-21', 2, '2014-10-11 17:24:52', 391) MATCHING (ID_COMPET, NAME, DESCRIPTION, GRP);
+UPDATE OR INSERT INTO COMPETIT (ID_COMPET, ID_RANGE, NAME, TOWN, DESCRIPTION, DATE_BEGIN, DATE_END, "LEVEL", EDITTIME, GRP) 
+VALUES (392, 417, 'WPA-A Кубок России 2014', 'Москва', 'RusR 2014', '2014-12-18', '2014-12-21', 2, '2014-10-11 17:25:17', 391) MATCHING (ID_COMPET, NAME, DESCRIPTION, GRP);
+UPDATE OR INSERT INTO COMPETIT (ID_COMPET, ID_RANGE, NAME, TOWN, DESCRIPTION, DATE_BEGIN, DATE_END, "LEVEL", EDITTIME, GRP) 
+VALUES (393, 418, 'WPA-A Кубок России 2014', 'Москва', 'RusR 2014', '2014-12-18', '2014-12-21', 2, '2014-10-11 17:25:40', 391) MATCHING (ID_COMPET, NAME, DESCRIPTION, GRP);
+UPDATE OR INSERT INTO COMPETIT (ID_COMPET, ID_RANGE, NAME, TOWN, DESCRIPTION, DATE_BEGIN, DATE_END, "LEVEL", EDITTIME, GRP) 
+VALUES (394, 413, 'WPA-A Кубок России 2014', 'Москва', 'RusR 2014', '2014-12-18', '2014-12-21', 2, '2014-10-11 17:25:58', 391) MATCHING (ID_COMPET, NAME, DESCRIPTION, GRP);
+UPDATE OR INSERT INTO COMPETIT (ID_COMPET, ID_RANGE, NAME, TOWN, DESCRIPTION, DATE_BEGIN, DATE_END, "LEVEL", EDITTIME, GRP) 
+VALUES (395, 414, 'WPA-A Кубок России 2014', 'Москва', 'RusR 2014', '2014-12-18', '2014-12-21', 2, '2014-10-11 17:26:23', 391) MATCHING (ID_COMPET, NAME, DESCRIPTION, GRP);
+UPDATE OR INSERT INTO COMPETIT (ID_COMPET, ID_RANGE, NAME, TOWN, DESCRIPTION, DATE_BEGIN, DATE_END, "LEVEL", EDITTIME, GRP) 
+VALUES (396, 415, 'WPA-A Кубок России 2014', 'Москва', 'RusR 2014', '2014-12-18', '2014-12-21', 2, '2014-10-11 17:26:47', 391) MATCHING (ID_COMPET, NAME, DESCRIPTION, GRP);
+UPDATE OR INSERT INTO COMPETIT (ID_COMPET, ID_RANGE, NAME, TOWN, DESCRIPTION, DATE_BEGIN, DATE_END, "LEVEL", EDITTIME, GRP) 
+VALUES (397, 410, 'WPA-A Кубок России 2014', 'Москва', 'RusR 2014', '2014-12-18', '2014-12-21', 2, '2014-10-11 17:27:09', 391) MATCHING (ID_COMPET, NAME, DESCRIPTION, GRP);
+UPDATE OR INSERT INTO COMPETIT (ID_COMPET, ID_RANGE, NAME, TOWN, DESCRIPTION, DATE_BEGIN, DATE_END, "LEVEL", EDITTIME, GRP) 
+VALUES (398, 412, 'WPA-A Кубок России 2014', 'Москва', 'RusR 2014', '2014-12-18', '2014-12-21', 2, '2014-10-11 17:27:30', 391) MATCHING (ID_COMPET, NAME, DESCRIPTION, GRP);
+</script>
+</version>
+
+<version number="222">
+<!-- ABSOLUTE -->
+<script>SET TERM ^ ;
+CREATE OR ALTER procedure ABSOLUTE
+(IDC NUMERIC(12, 0))
+returns (LOC NUMERIC(12, 0),
+CAT VARCHAR(25) character set WIN1251,
+FIO VARCHAR(100) character set WIN1251,
+TOTALL double precision,
+GLOSS double precision,
+SEX INTEGER,
+AGENAME VARCHAR(15) character set WIN1251,
+AGENUM INTEGER)
+ as begin /*dummy*/ suspend; end
+^ SET TERM ; ^</script>
+ 
+<!-- ABSOLUTEBYAGE -->
+<script>SET TERM ^ ;
+CREATE OR ALTER procedure ABSOLUTEBYAGE
+(IDC NUMERIC(12, 0))
+returns (LOC NUMERIC(12, 0),
+IDCAT NUMERIC(12, 0),
+FIO VARCHAR(150) character set WIN1251,
+TOTALL double precision,
+GLOSS double precision,
+AGECLASS NUMERIC(12, 0),
+SEX INTEGER,
+CATNAME VARCHAR(15) character set WIN1251)
+ as begin /*dummy*/ suspend; end
+^ SET TERM ; ^</script>
+ 
+<!-- ABSOLUTE -->
+<script>SET TERM ^ ;
+CREATE OR ALTER procedure ABSOLUTE
+(IDC NUMERIC(12, 0))
+returns (LOC NUMERIC(12, 0),
+CAT VARCHAR(25) character set WIN1251,
+FIO VARCHAR(100) character set WIN1251,
+TOTALL double precision,
+GLOSS double precision,
+SEX INTEGER,
+AGENAME VARCHAR(15) character set WIN1251,
+AGENUM INTEGER)
+ as 
+BEGIN
+for select ab.catname, ab.fio, ab.totall, ab.gloss,  ab.sex, ab.loc, &apos;Teenagers&apos; as agename, 1 as agenum  from absolutebyage(:idc) ab
+where ageclass in (13, 16, 18) and sex = 0
+order by 5,8,4 desc  rows 24
+into :cat, :fio, :totall, :gloss, :sex, :loc, :agename, :agenum
+do suspend;
+
+for select ab.catname, ab.fio, ab.totall, ab.gloss, ab.sex , ab.loc, &apos;Junior   &apos;, 2 from absolutebyage(:idc) ab
+where ageclass = (20)  and sex = 0
+order by 5,8,4 desc rows 24
+into :cat, :fio, :totall, :gloss, :sex, :loc, :agename, :agenum
+do suspend;
+
+for select ab.catname, ab.fio, ab.totall, ab.gloss, ab.sex , ab.loc, &apos;Open     &apos;, 3 from absolutebyage(:idc) ab
+where ageclass = (-2) and sex = 0
+order by 5,8,4 desc rows 24
+into :cat, :fio, :totall, :gloss, :sex, :loc, :agename, :agenum
+do suspend;
+
+for select ab.catname, ab.fio, ab.totall, ab.gloss, ab.sex , ab.loc, &apos;Masters  &apos;, 4 from absolutebyage(:idc) ab
+where ageclass &gt; 39 and sex = 0
+order by 5,8,4 desc  rows 24
+into :cat, :fio, :totall, :gloss, :sex, :loc, :agename, :agenum
+do suspend;
+
+
+
+for select ab.catname, ab.fio, ab.totall, ab.gloss,  ab.sex, ab.loc, &apos;Teenagers&apos; as agename, 1 as agenum  from absolutebyage(:idc) ab
+where ageclass in (13, 16, 18) and sex = 1
+order by 5,8,4 desc  rows 24
+into :cat, :fio, :totall, :gloss, :sex, :loc, :agename, :agenum
+do suspend;
+
+for select ab.catname, ab.fio, ab.totall, ab.gloss, ab.sex , ab.loc, &apos;Junior   &apos;, 2 from absolutebyage(:idc) ab
+where ageclass = 20  and sex = 1
+order by 5,8,4 desc rows 24
+into :cat, :fio, :totall, :gloss, :sex, :loc, :agename, :agenum
+do suspend;
+
+for select ab.catname, ab.fio, ab.totall, ab.gloss, ab.sex , ab.loc, &apos;Open     &apos;, 3 from absolutebyage(:idc) ab
+where ageclass = (-2) and sex = 1
+order by 5,8,4 desc rows 24
+into :cat, :fio, :totall, :gloss, :sex, :loc, :agename, :agenum
+do suspend;
+
+for select ab.catname, ab.fio, ab.totall, ab.gloss, ab.sex , ab.loc, &apos;Masters  &apos;, 4 from absolutebyage(:idc) ab
+where ageclass &gt; 39 and sex = 1
+order by 5,8,4 desc  rows 24
+into :cat, :fio, :totall, :gloss, :sex, :loc, :agename, :agenum
+do suspend;
+end
+^ SET TERM ; ^</script>
+ 
+<!-- ABSOLUTEBYAGE -->
+<script>SET TERM ^ ;
+CREATE OR ALTER procedure ABSOLUTEBYAGE
+(IDC NUMERIC(12, 0))
+returns (LOC NUMERIC(12, 0),
+IDCAT NUMERIC(12, 0),
+FIO VARCHAR(150) character set WIN1251,
+TOTALL double precision,
+GLOSS double precision,
+AGECLASS NUMERIC(12, 0),
+SEX INTEGER,
+CATNAME VARCHAR(15) character set WIN1251)
+ as begin
+  for
+    select wc.id_category, wc.name
+    from weigth_category wc, competit c, federations2range f2r
+    where c.id_compet = :idc
+        and c.id_range =  f2r.id_range
+        and wc.id_federation = f2r.id_federation
+    into :idcat, :catname
+  do
+   for select
+          distinct trim(l.name),
+          coalesce(le.summaall, 0),
+          case
+            when ac.from_age &gt; 39 then
+            coalesce( (
+            select agecoef from agecorrection where coef_kind = r.coef_kind and age = (
+            select (cast(&apos;now&apos; as date) - dat_bith)/365 from lifter where id_lifter = loc.id_lifter)
+            ), 1) * le.SummaAll * w.Coef
+            else le.SummaAll * w.Coef
+          end as Gloss,
+         loc.id_agecl,
+         l.sex,
+         loc.id_lifter_compet
+         from competit c, range r, lifter_on_competition loc, lifter_exersis le,
+           lifter l, wilks w, age_class ac
+        where c.id_compet = :idc
+          and c.id_range = r.id_range
+          and c.id_compet = loc.id_compet
+          and loc.id_lifter_compet = le.id_lifter_compet
+          and loc.id_lifter = l.id_lifter
+          and loc.id_agecl = ac.id_agecl
+          and (loc.id_wilks = w.id_wilks and w.coef_kind = r.coef_kind)
+          and loc.INZACH = -1
+          and loc.id_category= :idcat
+          and coalesce(le.summaall, 0) &gt; 0
+       into :FIO, :TOTALL, :GLOSS, :AGECLASS, :SEX, :LOC
+       do suspend;
+end
+^ SET TERM ; ^</script>
+<!-- DATA_FILLER -->
+<script>SET TERM ^ ;
+CREATE OR ALTER procedure DATA_FILLER
+(LID NUMERIC(12, 0),
+IDC NUMERIC(12, 0),
+BW FLOAT)
+returns (CLUB VARCHAR(50) character set NONE,
+TRENER VARCHAR(50) character set NONE,
+TS TIMESTAMP,
+LOC NUMERIC(12, 0),
+IDCAT NUMERIC(12, 0),
+IDW NUMERIC(12, 0),
+COEF FLOAT)
+ as begin /*dummy*/ suspend; end
+^ SET TERM ; ^</script>
+ 
+<!-- DATA_FILLER -->
+<script>SET TERM ^ ;
+CREATE OR ALTER procedure DATA_FILLER
+(LID NUMERIC(12, 0),
+IDC NUMERIC(12, 0),
+BW FLOAT)
+returns (CLUB VARCHAR(50) character set NONE,
+TRENER VARCHAR(50) character set NONE,
+TS TIMESTAMP,
+LOC NUMERIC(12, 0),
+IDCAT NUMERIC(12, 0),
+IDW NUMERIC(12, 0),
+COEF FLOAT)
+ as 
+declare variable ASEX smallint;
+declare variable SEX smallint;
+begin
+/* Fill data */
+  select sex, club, trener, case sex when 1 then 3 else 2 end, CURRENT_TIMESTAMP, GEN_ID(LOC, 1)
+  from lifter
+  where id_lifter = :LID
+  into :sex, :club, :trener, :asex, :ts, :loc;
+
+  select wc.id_category--, wc.*
+  from weigth_category wc, competit c, range r
+  where wc.we &gt;= :bw
+    and wc.sex  in (:asex, 1)
+    and c.id_compet = :idc
+    and c.id_range = r.id_range
+    and r.id_federation = wc.id_federation
+  order by wc.we
+  rows 1
+  into :idcat;
+
+  select id_wilks, coef
+  from  wilks w, competit c, range r
+  where self_weight &gt;= :bw
+    and sex = :sex
+    and c.id_compet = :idc
+    and c.id_range = r.id_range
+    and r.coef_kind = w.coef_kind
+  order by self_weight
+  rows 1
+  into :idw, :coef;
+/* modify data */
+  sex = null;
+  asex = null;
+  suspend;
+end
 ^ SET TERM ; ^</script>
 </version>
 
