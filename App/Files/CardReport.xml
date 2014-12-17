@@ -9,6 +9,7 @@ select cast(Transliter(fr.fio) as varchar(50)) as EngFio
   , fr.*
   , r.sname as rname
   , loc.zr
+  , loc.edittime
   , loc.createtime
   , loc.id_stream
   , r.sname as rusDivisionName
