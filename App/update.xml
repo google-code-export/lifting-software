@@ -12524,7 +12524,7 @@ begin /**/  end
 <script optional ="1">ALTER TABLE LIFTER_ON_COMPETITION DROP CONSTRAINT FK_LIFTER_ON_COMPETITION2WILKS</script>
 <script>ALTER TABLE LIFTER_ON_COMPETITION ADD CONSTRAINT FK_LIFTER_ON_COMPETITION2WILKS FOREIGN KEY (ID_WILKS) REFERENCES WILKS (ID_WILKS) ON UPDATE CASCADE</script>
 <script>
-    update wilks set id_wilks = '100'||sex||'0'||cast(trunc(self_weight*1000) as varchar(10)) where id_wilks between 0 and 5000;
+    update wilks set id_wilks = '100'||sex||'0'||cast(trunc(self_weight*1000) as varchar(10)) where id_wilks between 0 and 5000 or id_wilks &lt; -2;
     UPDATE OR INSERT INTO WILKS (ID_WILKS, SELF_WEIGHT, COEF, SEX) VALUES (-2, 0, 0, 0)   MATCHING (ID_WILKS);
 	UPDATE OR INSERT INTO WILKS (ID_WILKS, SELF_WEIGHT, COEF, SEX) VALUES (-1, 0, 0, 1)   MATCHING (ID_WILKS);
 </script>
