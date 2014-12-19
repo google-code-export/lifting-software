@@ -16872,6 +16872,75 @@ end
 ^ SET TERM ; ^</script>
 </version>
 
+<version number="223">
+<!-- DATA_FILLER -->
+<script>SET TERM ^ ;
+CREATE OR ALTER procedure DATA_FILLER
+(LID NUMERIC(12, 0),
+IDC NUMERIC(12, 0),
+BW FLOAT)
+returns (CLUB VARCHAR(50) character set NONE,
+TRENER VARCHAR(50) character set NONE,
+TS TIMESTAMP,
+LOC NUMERIC(12, 0),
+IDCAT NUMERIC(12, 0),
+IDW NUMERIC(12, 0),
+COEF FLOAT)
+ as begin /*dummy*/ suspend; end
+^ SET TERM ; ^</script>
+ 
+<!-- DATA_FILLER -->
+<script>SET TERM ^ ;
+CREATE OR ALTER procedure DATA_FILLER
+(LID NUMERIC(12, 0),
+IDC NUMERIC(12, 0),
+BW FLOAT)
+returns (CLUB VARCHAR(50) character set NONE,
+TRENER VARCHAR(50) character set NONE,
+TS TIMESTAMP,
+LOC NUMERIC(12, 0),
+IDCAT NUMERIC(12, 0),
+IDW NUMERIC(12, 0),
+COEF FLOAT)
+ as 
+declare variable ASEX smallint;
+declare variable SEX smallint;
+begin
+/* Fill data */
+  select sex, club, trener, case sex when 1 then 3 else 2 end, CURRENT_TIMESTAMP, GEN_ID(LOC, 1)
+  from lifter
+  where id_lifter = :LID
+  into :sex, :club, :trener, :asex, :ts, :loc;
+
+  select wc.id_category--, wc.*
+  from weigth_category wc, competit c, range r
+  where wc.we &gt;= :bw
+    and wc.sex  in (:asex, 1)
+    and c.id_compet = :idc
+    and c.id_range = r.id_range
+    and r.id_federation = wc.id_federation
+  order by wc.we
+  rows 1
+  into :idcat;
+
+  select id_wilks, coef
+  from  wilks w, competit c, range r
+  where self_weight &gt;= trunc(:bw, 2)
+    and sex = :sex
+    and c.id_compet = :idc
+    and c.id_range = r.id_range
+    and r.coef_kind = w.coef_kind
+  order by self_weight
+  rows 1
+  into :idw, :coef;
+/* modify data */
+  sex = null;
+  asex = null;
+  suspend;
+end
+^ SET TERM ; ^</script>
+</version>
+
 <!--
 <version number="2.70">
     <script>SET TERM ^ ; 
