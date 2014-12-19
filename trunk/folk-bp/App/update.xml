@@ -7925,6 +7925,137 @@ end
 ^ SET TERM ; ^</script>
 </version>	
 
+
+<version number="0.52">
+<script>SET TERM ^ ;
+CREATE OR ALTER procedure BESTBENCHBYLOC
+(LOC NUMERIC(12, 0))
+returns (BENCH VARCHAR(8) character set WIN1251)
+ as begin /*dummy*/ suspend; end
+^ SET TERM ; ^</script>
+<script>SET TERM ^ ;
+CREATE OR ALTER procedure CURRENTTOTALL
+(LOC NUMERIC(12, 0))
+returns (TOTALL double precision)
+ as begin /*dummy*/ suspend; end
+^ SET TERM ; ^</script>
+<script>SET TERM ^ ;
+CREATE OR ALTER procedure BESTBENCHBYLOC
+(LOC NUMERIC(12, 0))
+returns (BENCH VARCHAR(8) character set WIN1251)
+ as 
+BEGIN
+/* best bench from loc*/
+  select
+    cast(case opt
+      when 0 then trunc(val/2.5, 0)*2.5 /*wpc-awpc round down to 2.5*/
+      when 2 then val                     /*FOLK BP*/
+      when 100 then val                 /*gpc no round*/
+      else val                          /*unknown no round*/
+    end as numeric(6,2))
+  from
+    (select calc_opt.val as opt
+    ,  coalesce((
+          select case calc_opt.val
+            when 2 then case when bench2 &gt; 7 then bench1 * bench2 else 0 end /*Folk BP*/
+            else bench1 end as bench  /*wpc-awpc-gpc*/
+          from  lifter_exersis le
+          where oc4 = 1 and
+            le.id_lifter_compet = :Loc
+          union all
+          select case calc_opt.val
+            when 2 then 0 /*Folk BP*/
+            else bench2 end as bench  /*wpc-awpc-gpc*/
+          from  lifter_exersis le
+          where oc5 = 1 and
+            le.id_lifter_compet = :Loc
+          union all
+          select bench3 as bench
+          from  lifter_exersis le
+          where oc6 =1 and
+            le.id_lifter_compet = :Loc
+          union all
+          select case calc_opt.val 
+            when 100 then bench4     /*gpc get 4th attempt into totall*/
+            when 2 then case when bench2 &gt; 7 then bench1*bench2 else 0 end /*Folk BP*/
+            else null end as bench  /*wpc-awpc no 4th attempt into totall*/
+          from  lifter_exersis le
+          where oc11 = 1 and
+            le.id_lifter_compet = :Loc
+          order by 1 desc
+          rows 1
+      ), 0) as val
+    from RDB$DATABASE,
+      (select min(id_range) as val from range) calc_opt
+    ) source_tbl
+  into :bench;
+  
+  SUSPEND;
+END
+^ SET TERM ; ^</script>
+<script>SET TERM ^ ;
+CREATE OR ALTER procedure CURRENTTOTALL
+(LOC NUMERIC(12, 0))
+returns (TOTALL double precision)
+ as declare variable BESTSQUAT double precision;
+declare variable BESTBENCH double precision;
+declare variable BESTDL double precision;
+declare variable OCSQUAT integer;
+declare variable OCBENCH integer;
+declare variable OCDL integer;
+declare variable RANGE numeric(12,0);
+BEGIN
+
+  select squat from bestsquatbyloc(:LOC)
+  into :BESTSQUAT;
+
+  select bench  from bestbenchbyloc(:LOC)
+  into :BESTBENCH;
+
+  select DL from bestdlbyloc1(:LOC)
+  into :BESTDL;
+
+  select
+    coalesce(oc1, 0)+coalesce(oc2, 0)+coalesce(oc3, 0)+coalesce(oc10, 0) as ocsquat,
+    coalesce(oc4, 0)+coalesce(oc5, 0)+coalesce(oc6, 0)+coalesce(oc11, 0) as ocbench,
+    coalesce(oc7, 0)+coalesce(oc8, 0)+coalesce(oc9, 0)+coalesce(oc12, 0) as ocdl,
+    r.kind
+  from
+    lifter_on_competition loc join
+    competit c on loc.id_compet = c.id_compet join
+    lifter_exersis le on le.id_lifter_compet = loc.id_lifter_compet join
+    range r on r.id_range =c.id_range
+  where
+    loc.id_lifter_compet = :LOC
+  into :ocsquat, :ocbench, :ocdl, :RANGE;
+
+  TOTALL = 0;
+
+  if (range = 1) then
+    if ((ocbench &gt; 0) and (ocsquat &gt; 0) and (ocdl &gt; 0)) then
+      TOTALL =  :BESTSQUAT + :BESTBENCH + :BESTDL;
+
+  if ((range = 2) and (ocbench &gt; 0)) then
+      TOTALL =  :BESTBENCH;                  /* single benchpress */
+
+  if ((range = 3) and (ocdl &gt; 0)) then
+      TOTALL =  :BESTDL;                  /* single dead lift */
+
+  if ((range = 4) and (ocsquat &gt; 0)) then /* single squat */
+      TOTALL =  :BESTSQUAT;
+
+  ocsquat = null;
+  ocbench = null;
+  ocdl = null;
+  BestSquat = null;
+  BestBench = null;
+  BestDl = null;
+  RANGE = null;
+  Suspend;
+END
+^ SET TERM ; ^</script>
+</version>	
+
 <!--
 
 
