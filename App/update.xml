@@ -16941,6 +16941,88 @@ end
 ^ SET TERM ; ^</script>
 </version>
 
+<version number="224">
+<!-- GET_STREAM_DESCR -->
+<script>SET TERM ^ ;
+CREATE OR ALTER procedure GET_STREAM_DESCR
+(IDC NUMERIC(12, 0),
+IDS NUMERIC(12, 0))
+returns (DESCR VARCHAR(512) character set WIN1251)
+ as begin /*dummy*/ suspend; end
+^ SET TERM ; ^</script>
+<!-- GET_STREAM_DESCR -->
+<script>SET TERM ^ ;
+CREATE OR ALTER procedure GET_STREAM_DESCR
+(IDC NUMERIC(12, 0),
+IDS NUMERIC(12, 0))
+returns (DESCR VARCHAR(512) character set WIN1251)
+ as 
+declare variable SEX integer;
+declare variable AGENAME varchar(150);
+declare variable WCNAME varchar(150);
+declare variable ASEX integer;
+declare variable AAGENAME varchar(150);
+begin
+ descr = &apos;&apos;;
+ aSex = -1;
+ aAgeName = &apos;&apos;;
+
+
+ for select tbl.sex, tbl.name as ageName, wc.name as wcName
+    from (
+        select l.sex, ac.name, wc.we
+        from lifter_on_competition loc, lifter l, age_class ac, weigth_category  wc
+        where loc.id_compet = :idc
+          and loc.id_stream = :ids
+          and loc.id_lifter = l.id_lifter
+          and loc.id_agecl = ac.id_agecl
+          and loc.id_category = wc.id_category
+        group by l.sex, ac.name, wc.we
+    ) tbl, weigth_category wc, competit c, range r
+    where c.id_compet = :idc
+      and tbl.we = wc.we
+      and c.id_range = r.id_range
+      and r.id_federation = wc.id_federation
+
+     order by tbl.sex, tbl.name, wc.we
+    into :sex, :agename, :wcname
+  do begin
+    if (sex &lt;&gt; asex) then
+    begin
+      if (asex &gt; -1) then
+        descr = :descr ||&apos; | &apos;;
+      if (sex = 1) then
+        descr = :descr || &apos;Мужчины: &apos;;
+      if (sex = 0) then
+        descr = :descr || &apos;Женщины: &apos;;
+      asex = :sex;
+    end
+
+    if (ageName &lt;&gt; aAgeName) then
+    begin
+      if (substring(:descr from CHAR_LENGTH(:descr)-1) = &apos;,&apos;) then
+        descr = substring(:descr from 1 for CHAR_LENGTH(:descr)-2)||&apos;; &apos;;
+
+      descr = :descr || Trim(:ageName)||&apos;: &apos;;
+      aagename = :agename;
+    end
+
+    descr = :descr ||Trim(:wcname)||&apos;, &apos;;
+  end
+
+  if (substring(:descr from CHAR_LENGTH(:descr)-1) = &apos;,&apos;) then
+    descr = substring(:descr from 1 for CHAR_LENGTH(:descr)-2);
+
+ descr = trim(:descr);
+ suspend;
+ aSex     = null;
+ aAgeName = null;
+ sex      = null;
+ ageName  = null;
+ wcName   = null;
+end
+^ SET TERM ; ^</script>
+</version>
 <!--
 <version number="2.70">
     <script>SET TERM ^ ; 
