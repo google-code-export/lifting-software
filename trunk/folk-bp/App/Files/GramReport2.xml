@@ -4,8 +4,8 @@
   <sql>select fr.place, 
   cast(Transliter(CutFio2(fr.fio)) as varchar(60)) as engfio,
   cast(CutFio2(fr.fio) as varchar(60)) as rusfio,
-  fr.ageclass as RUSacname,
-  fr.ageclass as ENGacname,
+  ac.name as RUSacname,
+  ac.engname as ENGacname,
   case r.kind
     when 1 then (select squat from bestsquatbyloc(fr.loc))
     else 0
@@ -29,17 +29,20 @@
   loc.trener as coach,
   loc.club as club,
   loc.wasrazr as wasrank,
-  loc.newrazr as newrank
-from COMPETITIONWINNERS2(%IDC%) fr
-  inner join Lifter_on_competition loc on fr.loc=loc.id_lifter_compet
-  inner join Age_class ac on ac.id_agecl= loc.id_agecl
-  inner join Wilks W on w.id_wilks = loc.id_wilks
-  inner join competit c on c.id_compet = loc.id_compet
-  inner join range r on r.id_range = c.id_range
-  left join translate_rus_eng eng on eng.id = 'RANGE_SNAME_'||r.id_range
+  loc.newrazr as newrank,
+  le.bench1 as folkweight,
+  le.bench2 as folkrept
+from COMPETITIONWINNERS2(%IDC%) fr inner join
+  Age_class ac on ac.id_agecl= fr.ageclass inner join
+  Lifter_on_competition loc on fr.loc=loc.id_lifter_compet inner join
+  lifter_exersis le on le.id_lifter_compet = loc.id_lifter_compet inner join
+  Wilks W on w.id_wilks = loc.id_wilks inner join
+  competit c on c.id_compet = loc.id_compet inner join
+  range r on r.id_range = c.id_range left join
+  translate_rus_eng eng on eng.id = 'RANGE_SNAME_'||r.id_range
 where fr.totall > 0
 %CONDITION%
-order by fr.sex,
+order by fr.sex, 
   idcateg desc, 
   ac.from_age, 
   place desc
