@@ -6978,7 +6978,7 @@ END
 CREATE OR ALTER procedure BESTBENCHBYLOC (
     LOC numeric(12))
 returns (
-    BENCH varchar(6))
+    BENCH varchar(10))
 as
 BEGIN
 /* best bench from loc*/
@@ -6988,7 +6988,7 @@ BEGIN
       when 2 then val 					/*FOLK BP*/
       when 100 then val                 /*gpc no round*/
       else val                          /*unknown no round*/
-    end as numeric(6,2))
+    end as numeric(7,2))
   from
     (select calc_opt.val as opt
     ,  coalesce((
@@ -8053,6 +8053,343 @@ BEGIN
   RANGE = null;
   Suspend;
 END
+^ SET TERM ; ^</script>
+</version>	
+
+<version number="0.53">
+<!-- COMPETITIONWINNERS2 -->
+<script>SET TERM ^ ;
+CREATE OR ALTER procedure COMPETITIONWINNERS2
+(IDC NUMERIC(12, 0))
+returns (PLACE INTEGER,
+FIO VARCHAR(150) character set WIN1251,
+TOTALL double precision,
+GLOSS double precision,
+AGECLASS VARCHAR(25) character set WIN1251,
+SEX SMALLINT,
+LOC NUMERIC(12, 0),
+IDCATEG NUMERIC(12, 0),
+CATEGNAME VARCHAR(10) character set WIN1251)
+ as begin /*dummy*/ suspend; end
+^ SET TERM ; ^</script>
+ 
+<!-- FINALREPORT2 -->
+<script>SET TERM ^ ;
+CREATE OR ALTER procedure FINALREPORT2
+(IDC double precision)
+returns (LOC NUMERIC(12, 0),
+FIO VARCHAR(60) character set WIN1251,
+AGECLASS VARCHAR(25) character set WIN1251,
+BITHDATE DATE,
+BODYWEIGHT double precision,
+COEF FLOAT,
+TEAM VARCHAR(60) character set WIN1251,
+TOWN VARCHAR(160) character set WIN1251,
+SQUAT1 VARCHAR(9) character set WIN1251,
+OC1 INTEGER,
+SQUAT2 VARCHAR(9) character set WIN1251,
+OC2 INTEGER,
+SQUAT3 VARCHAR(9) character set WIN1251,
+OC3 INTEGER,
+SQUAT4 VARCHAR(9) character set WIN1251,
+OC4 INTEGER,
+BENCH1 VARCHAR(9) character set WIN1251,
+OC5 INTEGER,
+BENCH2 VARCHAR(9) character set WIN1251,
+OC6 INTEGER,
+BENCH3 VARCHAR(9) character set WIN1251,
+OC7 INTEGER,
+BENCH4 VARCHAR(9) character set WIN1251,
+OC8 INTEGER,
+DL1 VARCHAR(9) character set WIN1251,
+OC9 INTEGER,
+DL2 VARCHAR(9) character set WIN1251,
+OC10 INTEGER,
+DL3 VARCHAR(9) character set WIN1251,
+OC11 INTEGER,
+DL4 VARCHAR(9) character set WIN1251,
+OC12 INTEGER,
+TOTALL VARCHAR(12) character set WIN1251,
+PTS double precision,
+COACH VARCHAR(50) character set WIN1251,
+WCATEG VARCHAR(4) character set WIN1251,
+SEX INTEGER,
+AGECLASSENG VARCHAR(25) character set WIN1251,
+ORAZR VARCHAR(6) character set WIN1251,
+NRAZR VARCHAR(6) character set WIN1251,
+TOT NUMERIC(9, 2))
+ as begin /*dummy*/ suspend; end
+^ SET TERM ; ^</script>
+ 
+<!-- COMPETITIONWINNERS2 -->
+<script>SET TERM ^ ;
+CREATE OR ALTER procedure COMPETITIONWINNERS2
+(IDC NUMERIC(12, 0))
+returns (PLACE INTEGER,
+FIO VARCHAR(150) character set WIN1251,
+TOTALL double precision,
+GLOSS double precision,
+AGECLASS VARCHAR(25) character set WIN1251,
+SEX SMALLINT,
+LOC NUMERIC(12, 0),
+IDCATEG NUMERIC(12, 0),
+CATEGNAME VARCHAR(10) character set WIN1251)
+ as 
+declare variable CWC char(25);
+declare variable CIDAC char(25);
+declare variable I integer;
+begin
+  CWC = &apos;&apos;;
+  CIDAC = &apos;&apos;;
+  I = 1;
+
+  for select FIO, TOTALL, PTS, AGECLASS, SEX, LOC, WCATEG
+      from FINALREPORT2(:IDC)
+      where coalesce(TOTALL, 0) &gt; 0
+      into :&quot;FIO&quot;, :&quot;TOTALL&quot;, :&quot;GLOSS&quot;, :&quot;AGECLASS&quot;, :&quot;SEX&quot;, :&quot;LOC&quot;, :CATEGNAME
+  do
+  begin
+    if ((:CWC &lt;&gt; :CATEGNAME) or (:CIDAC &lt;&gt; :AGECLASS)) then
+    begin
+      I = 1;
+      CWC = :CATEGNAME;
+      CIDAC = :AGECLASS;
+    end
+
+    if (:I &lt; 4) then
+    begin
+      PLACE = :I;
+      I = :I + 1;
+      suspend;
+    end
+  end
+
+  CWC = null;
+  CIDAC = null;
+  I = null;
+end
+^ SET TERM ; ^</script>
+ 
+<!-- FINALREPORT2 -->
+<script>SET TERM ^ ;
+CREATE OR ALTER procedure FINALREPORT2
+(IDC double precision)
+returns (LOC NUMERIC(12, 0),
+FIO VARCHAR(60) character set WIN1251,
+AGECLASS VARCHAR(25) character set WIN1251,
+BITHDATE DATE,
+BODYWEIGHT double precision,
+COEF FLOAT,
+TEAM VARCHAR(60) character set WIN1251,
+TOWN VARCHAR(160) character set WIN1251,
+SQUAT1 VARCHAR(9) character set WIN1251,
+OC1 INTEGER,
+SQUAT2 VARCHAR(9) character set WIN1251,
+OC2 INTEGER,
+SQUAT3 VARCHAR(9) character set WIN1251,
+OC3 INTEGER,
+SQUAT4 VARCHAR(9) character set WIN1251,
+OC4 INTEGER,
+BENCH1 VARCHAR(9) character set WIN1251,
+OC5 INTEGER,
+BENCH2 VARCHAR(9) character set WIN1251,
+OC6 INTEGER,
+BENCH3 VARCHAR(9) character set WIN1251,
+OC7 INTEGER,
+BENCH4 VARCHAR(9) character set WIN1251,
+OC8 INTEGER,
+DL1 VARCHAR(9) character set WIN1251,
+OC9 INTEGER,
+DL2 VARCHAR(9) character set WIN1251,
+OC10 INTEGER,
+DL3 VARCHAR(9) character set WIN1251,
+OC11 INTEGER,
+DL4 VARCHAR(9) character set WIN1251,
+OC12 INTEGER,
+TOTALL VARCHAR(12) character set WIN1251,
+PTS double precision,
+COACH VARCHAR(50) character set WIN1251,
+WCATEG VARCHAR(4) character set WIN1251,
+SEX INTEGER,
+AGECLASSENG VARCHAR(25) character set WIN1251,
+ORAZR VARCHAR(6) character set WIN1251,
+NRAZR VARCHAR(6) character set WIN1251,
+TOT NUMERIC(9, 2))
+ as declare variable TMP char(1);
+declare variable ACOEF double precision;
+declare variable ACLASS double precision;
+declare variable TMP1 double precision;
+begin
+  for select
+             case CALC_OPT.VAL
+               when 2 then case
+                             when SUMMAALL &gt; 0 then BENCH2
+                             else 0
+                           end
+               else SUMMAALL
+             end as ORDBY,
+             LOC.ID_LIFTER_COMPET, trim(CUTFIO2(L.NAME)) as FIO, L.DAT_BITH as DATEBITH, trim(AC.ENGNAME) as AGECLASS,
+             trim(AC.ENGNAME) as AGECLASSENG, W.SELF_WEIGHT as BODYWEIGHT, W.COEF as COEF, T.NAME as TEAMNAME,
+             L.TOWN as LIFTERTOWN, LE.SQUAT1, LE.OC1, LE.SQUAT2, LE.OC2, LE.SQUAT3, LE.OC3, LE.SQUAT4, LE.OC10,
+             LE.BENCH1, LE.OC4, LE.BENCH2, LE.OC5, LE.BENCH3, LE.OC6, LE.BENCH4, LE.OC11, LE.DL1, LE.OC7, LE.DL2,
+             LE.OC8, LE.DL3, LE.OC9, LE.DL4, LE.OC12, LE.SUMMAALL as TOTALL, LE.SUMMAALL * W.COEF as PTS, LOC.TRENER,
+             trim(WC.NAME) as CATEG, L.SEX, LOC.WASRAZR, LOC.NEWRAZR,
+             (select AGECOEF
+              from AGECORRECTION
+              where AGE = (select (cast(&apos;now&apos; as date) - DAT_BITH) / 365
+                           from LIFTER
+                           where ID_LIFTER = LOC.ID_LIFTER)) as ACOEF, LOC.ID_AGECL
+      from LIFTER_ON_COMPETITION LOC
+      inner join LIFTER_EXERSIS LE on LE.ID_LIFTER_COMPET = LOC.ID_LIFTER_COMPET
+      inner join TEAM T on T.ID_TEAM = LOC.ID_TEAM
+      inner join LIFTER L on L.ID_LIFTER = LOC.ID_LIFTER
+      inner join AGE_CLASS2 AC on AC.ID_AGECL = LOC.ID_AGECL
+      inner join WILKS W on W.ID_WILKS = LOC.ID_WILKS
+      inner join WEIGTH_CATEGORY WC on WC.ID_CATEGORY = LOC.ID_CATEGORY, (select min(ID_RANGE) as VAL
+                                                                          from RANGE) CALC_OPT
+      where LOC.ID_COMPET = :IDC
+      order by L.SEX, LOC.ID_CATEGORY, AC.FROM_AGE, 1 desc /*le.bench2 desc*/ , W.SELF_WEIGHT asc
+      into :TMP1, :LOC, :FIO, :BITHDATE, :&quot;AGECLASS&quot;, :&quot;AGECLASSENG&quot;, :&quot;BODYWEIGHT&quot;, :&quot;COEF&quot;, :&quot;TEAM&quot;, :&quot;TOWN&quot;,
+           :&quot;SQUAT1&quot;, :&quot;OC1&quot;, :SQUAT2, :OC2, :&quot;SQUAT3&quot;, :&quot;OC3&quot;, :&quot;SQUAT4&quot;, :&quot;OC4&quot;, :&quot;BENCH1&quot;, :&quot;OC5&quot;, :&quot;BENCH2&quot;, :&quot;OC6&quot;,
+           :&quot;BENCH3&quot;, :&quot;OC7&quot;, :&quot;BENCH4&quot;, :&quot;OC8&quot;, :&quot;DL1&quot;, :&quot;OC9&quot;, :&quot;DL2&quot;, :&quot;OC10&quot;, :&quot;DL3&quot;, :&quot;OC11&quot;, :&quot;DL4&quot;, :&quot;OC12&quot;,
+           :TOTALL, :PTS, :&quot;COACH&quot;, :&quot;WCATEG&quot;, :&quot;SEX&quot;, :ORAZR, :NRAZR, :ACOEF, :ACLASS
+
+  do
+  begin
+    TMP = &apos;&apos;;
+
+    if (:ACLASS &lt;&gt; -2) then
+      COEF = :COEF * :ACOEF;
+
+    PTS = cast(:TOTALL as float) * :COEF;
+
+    if ((nullif(:SQUAT1, &apos;0&apos;) &lt;&gt; &apos;0&apos;) and
+        (nullif(:OC1, -1) &gt; 0)) then
+    begin
+      select RESULT
+      from CHECKRECORD(:LOC, 0, :SQUAT1)
+      into :TMP;
+      SQUAT1 = trim(:SQUAT1) || :TMP;
+    end
+
+    if ((nullif(:SQUAT2, &apos;0&apos;) &lt;&gt; &apos;0&apos;) and
+        (nullif(:OC2, -1) &gt; 0)) then
+    begin
+      select RESULT
+      from CHECKRECORD(:LOC, 0, :SQUAT2)
+      into :TMP;
+      SQUAT2 = trim(:SQUAT2) || :TMP;
+    end
+
+    if ((nullif(:SQUAT3, &apos;0&apos;) &lt;&gt; &apos;0&apos;) and
+        (nullif(:OC3, -1) &gt; 0)) then
+    begin
+      select RESULT
+      from CHECKRECORD(:LOC, 0, :SQUAT3)
+      into :TMP;
+      SQUAT3 = trim(:SQUAT3) || :TMP;
+    end
+
+    if ((nullif(:SQUAT4, &apos;0&apos;) &lt;&gt; &apos;0&apos;) and
+        (nullif(:OC4, -1) &gt; 0)) then
+    begin
+      select RESULT
+      from CHECKRECORD(:LOC, 0, :SQUAT4)
+      into :TMP;
+      SQUAT4 = trim(:SQUAT4) || :TMP;
+    end
+
+    if ((nullif(:BENCH1, &apos;0&apos;) &lt;&gt; &apos;0&apos;) and
+        (nullif(:OC5, -1) &gt; 0)) then
+    begin
+      select RESULT
+      from CHECKRECORD(:LOC, 1, :BENCH1)
+      into :TMP;
+      BENCH1 = trim(:BENCH1) || :TMP;
+    end
+
+    if ((nullif(:BENCH2, &apos;0&apos;) &lt;&gt; &apos;0&apos;) and
+        (nullif(:OC6, -1) &gt; 0)) then
+    begin
+      select RESULT
+      from CHECKRECORD(:LOC, 1, :BENCH2)
+      into :TMP;
+      BENCH2 = trim(:BENCH2) || :TMP;
+    end
+
+    if ((nullif(:BENCH3, &apos;0&apos;) &lt;&gt; &apos;0&apos;) and
+        (nullif(:OC7, -1) &gt; 0)) then
+    begin
+      select RESULT
+      from CHECKRECORD(:LOC, 1, :BENCH3)
+      into :TMP;
+      BENCH3 = trim(:BENCH3) || :TMP;
+    end
+
+    if ((nullif(:BENCH4, &apos;0&apos;) &lt;&gt; &apos;0&apos;) and
+        (nullif(:OC8, 0) &gt; 0)) then
+    begin
+      select RESULT
+      from CHECKRECORD(:LOC, 1, :BENCH4)
+      into :TMP;
+      BENCH4 = trim(:BENCH4) || :TMP;
+    end
+
+    if ((nullif(:DL1, &apos;0&apos;) &lt;&gt; &apos;0&apos;) and
+        (nullif(:OC9, 0) &gt; 0)) then
+    begin
+      select RESULT
+      from CHECKRECORD(:LOC, 2, :DL1)
+      into :TMP;
+      DL1 = trim(:DL1) || :TMP;
+    end
+
+    if ((nullif(:DL2, &apos;0&apos;) &lt;&gt; &apos;0&apos;) and
+        (nullif(:OC10, 0) &gt; 0)) then
+    begin
+      select RESULT
+      from CHECKRECORD(:LOC, 2, :DL2)
+      into :TMP;
+      DL2 = trim(:DL2) || :TMP;
+    end
+
+    if ((nullif(:DL3, &apos;0&apos;) &lt;&gt; &apos;0&apos;) and
+        (nullif(:OC11, 0) &gt; 0)) then
+    begin
+      select RESULT
+      from CHECKRECORD(:LOC, 2, :DL3)
+      into :TMP;
+      DL3 = trim(:DL3) || :TMP;
+    end
+
+    if ((nullif(:DL4, &apos;0&apos;) &lt;&gt; &apos;0&apos;) and
+        (nullif(:OC12, 0) &gt; 0)) then
+    begin
+      select RESULT
+      from CHECKRECORD(:LOC, 2, :DL4)
+      into :TMP;
+      DL4 = trim(:DL4) || :TMP;
+    end
+
+    TOT = :TOTALL;
+
+    if (nullif(:TOTALL, &apos;0&apos;) &lt;&gt; &apos;0&apos;) then
+    begin
+      select RESULT
+      from CHECKRECORD(:LOC, -2, :TOTALL)
+      into :TMP;
+      TOTALL = trim(:TOTALL) || :TMP;
+    end
+
+    TMP = null;
+    suspend;
+  end
+
+  TMP = null;
+  TMP1 = null;
+  ACOEF = null;
+  ACLASS = null;
+end
 ^ SET TERM ; ^</script>
 </version>	
 
