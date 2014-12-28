@@ -1,0 +1,25 @@
+<main>
+  <reportfilename ru="xls\blank.xlsx" eng="xls\blank.xlsx"/>
+  <info name="Экспорт спортсменов в эксель"/>
+  <sql>
+select L.NAME, L.SEX, L.DAT_BITH as DATEB, ' ' || L.PHONE as PHONE, L.EMAIL,
+       case
+         when position('/', L.TOWN) > 0 then left(trim(L.TOWN), position('/', L.TOWN) - 1)
+         else trim(L.TOWN)
+       end || ', ' || L.ADRESS as PADDRESS,
+       L.TRENER as COACH,
+       (select coalesce(list(N, ', '), '')
+        from (select R.NAME as N
+              from RANGE R, LIFTER_ON_COMPETITION LOC, COMPETIT C
+              where R.ID_RANGE = C.ID_RANGE and
+                    C.ID_COMPET = LOC.ID_COMPET and
+                    LOC.ID_LIFTER = L.ID_LIFTER
+              group by R.NAME)) as DIVISES,
+       (select count(1)
+        from LIFTER_ON_COMPETITION LOC
+        where LOC.ID_LIFTER = L.ID_LIFTER) as AMOUNTOFENTRIES
+from LIFTER L
+where L.ID_LIFTER > 0
+order by L.SEX, L.NAME
+  </sql>
+</main>
