@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <versions>
 	<version number="1.0">
 		<script>SET TERM ^ ;
@@ -8921,7 +8921,6 @@ end
 	<version number="2.46">
     <script>SET TERM ^ ; 
 CREATE OR ALTER PROCEDURE DO_UP as
-declare variable NUM bigint;
 begin 
  /*
 1. ПЛ без экипировки
@@ -8934,13 +8933,7 @@ begin
 8. Тяга в эк. 
  */
 
-  select count(1) from range where name like '%WPC%' into num;
-  if (num=0) then
-  begin
-    num = null;
-    exit;
-  end
-  
+ 
 /* WPC */    
     UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
     VALUES ('RANGE_ORD_7', '01') MATCHING (ID); --WPC raw powerlifting
@@ -8982,7 +8975,8 @@ begin
     VALUES ('RANGE_ORD_16', '15') MATCHING (ID); -- AWPC raw deadlift
     UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
     VALUES ('RANGE_ORD_15', '16') MATCHING (ID); -- AWPC multy ply deadlift
-  num = null;
+
+	
 end^ 
 SET TERM ; ^</script>
 
@@ -9317,15 +9311,7 @@ SET TERM ; ^</script>
 <version number="2.52">
     <script>SET TERM ^ ; 
 CREATE OR ALTER PROCEDURE DO_UP as
-declare variable NUM bigint;
 begin 
-  
-  select count(1) from range where name like '%WPC%' into num;
-  if (num=0) then
-  begin
-    num = null;
-    exit;
-  end
 
 UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
                                  VALUES ('RANGE_SNAME_0', 'WPC m.ply BP')
@@ -9424,8 +9410,6 @@ UPDATE OR INSERT INTO RANGE (ID_RANGE, NAME, KIND, SNAME)
 UPDATE OR INSERT INTO RANGE (ID_RANGE, NAME, KIND, SNAME)
                      VALUES (16, 'AWPC без экипировочная становая тяга', 3, 'AWPC б\э тяга')
                    MATCHING (ID_RANGE);
-
-  num = null;				   
 end^ 
 SET TERM ; ^</script>
 		<script>EXECUTE PROCEDURE DO_UP;</script>	
@@ -10328,14 +10312,7 @@ UPDATE OR INSERT INTO RANGE (ID_RANGE, NAME, KIND, SNAME)
     VALUES ('RANGE_ORD_17', '17') MATCHING (ID); -- AWPC s.ply deadlift
     UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
     VALUES ('RANGE_ORD_15', '18') MATCHING (ID); -- AWPC multy ply deadlift
-
-UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
-                                 VALUES ('RANGE_14', 'WPC singlw ply deadlift')
-                               MATCHING (ID);
-UPDATE OR INSERT INTO TRANSLATE_RUS_ENG (ID, VAL)
-                                 VALUES ('RANGE_17', 'WPC singlw ply deadlift')
-                               MATCHING (ID);
-	
+				   
 end^ 
 SET TERM ; ^</script>
 		<script>EXECUTE PROCEDURE DO_UP;</script>	
@@ -10985,6 +10962,264 @@ begin
 end
 ^ SET TERM ; ^</script>
 
+</version>
+
+<version number="2.62">
+<!-- SELECT_BENCHOUT -->
+<script>SET TERM ^ ;
+CREATE OR ALTER procedure SELECT_BENCHOUT
+(ID_STREAM NUMERIC(12, 0),
+ID_COMPET NUMERIC(12, 0))
+returns (NAME VARCHAR(60) character set WIN1251,
+WEIGHT double precision,
+EXERSCISE VARCHAR(15) character set WIN1251,
+ZR double precision,
+WEIGHTCAT VARCHAR(10) character set WIN1251)
+ as begin /*dummy*/ suspend; end
+^ SET TERM ; ^</script>
+ 
+<!-- SELECT_DLOUT -->
+<script>SET TERM ^ ;
+CREATE OR ALTER procedure SELECT_DLOUT
+(ID_STREAM NUMERIC(12, 0),
+ID_COMPET NUMERIC(12, 0))
+returns (NAME VARCHAR(60) character set WIN1251,
+WEIGHT double precision,
+EXERSCISE VARCHAR(15) character set WIN1251,
+ZR double precision,
+WEIGHTCAT VARCHAR(10) character set WIN1251)
+ as begin /*dummy*/ suspend; end
+^ SET TERM ; ^</script>
+ 
+<!-- SELECT_SQUATOUT -->
+<script>SET TERM ^ ;
+CREATE OR ALTER procedure SELECT_SQUATOUT
+(ID_STREAM NUMERIC(12, 0),
+ID_COMPET NUMERIC(12, 0))
+returns (NAME VARCHAR(60) character set WIN1251,
+WEIGHT double precision,
+EXERSCISE VARCHAR(15) character set WIN1251,
+ZR double precision,
+WEIGHTCAT VARCHAR(10) character set WIN1251)
+ as begin /*dummy*/ suspend; end
+^ SET TERM ; ^</script>
+ 
+<!-- SELECT_BENCHOUT -->
+<script>SET TERM ^ ;
+CREATE OR ALTER procedure SELECT_BENCHOUT
+(ID_STREAM NUMERIC(12, 0),
+ID_COMPET NUMERIC(12, 0))
+returns (NAME VARCHAR(60) character set WIN1251,
+WEIGHT double precision,
+EXERSCISE VARCHAR(15) character set WIN1251,
+ZR double precision,
+WEIGHTCAT VARCHAR(10) character set WIN1251)
+ as 
+BEGIN
+for select name, weight, exerscise, min(zr), weightCat
+from
+(
+  select
+    l.name as Name,
+    le.bench1 as Weight,&apos;Bench1&apos; as Exerscise,
+    zr as zr,
+    wc.name as weightCat
+  from
+    lifter_on_competition loc inner join
+    Lifter_exersis le on loc.id_lifter_compet = le.id_lifter_compet inner join
+    Lifter l  on loc.id_lifter = l.id_lifter inner join
+    weigth_category wc on loc.id_category = wc.id_category
+  where
+    loc.id_compet = :ID_COMPET and
+    loc.id_stream = :ID_STREAM and
+    le.bench1 &gt; 0 and
+    OC4 is null
+union all
+  select
+    l.name as Fio,
+    le.Bench2 as Weight,
+    &apos;Bench2&apos; as exerscise,
+    zr as zr,
+    wc.name as weightCat
+  from
+    lifter_on_competition loc inner join
+    Lifter_exersis le on loc.id_lifter_compet = le.id_lifter_compet inner join
+    Lifter l  on loc.id_lifter = l.id_lifter inner join
+    weigth_category wc on loc.id_category = wc.id_category
+  where
+    loc.id_compet = :ID_COMPET and
+    loc.id_stream = :ID_STREAM and
+    le.bench2 &gt; 0 and
+    OC5 is null
+union all
+  select
+    l.name as Fio,
+    le.Bench3 as Weight,
+    &apos;Bench3&apos; as exerscise,
+    zr as zr,
+    wc.name as weightCat
+  from
+    lifter_on_competition loc inner join
+    Lifter_exersis le on loc.id_lifter_compet = le.id_lifter_compet inner join
+    Lifter l  on loc.id_lifter = l.id_lifter inner join
+    weigth_category wc on loc.id_category = wc.id_category
+  where
+    loc.id_compet = :ID_COMPET and
+    loc.id_stream = :ID_STREAM  and
+    le.bench3 &gt; 0 and
+    OC6 is null
+) tbl
+group by name, Weight, Exerscise, weightCat
+order by 3, 2, 4 --desc
+into :name, :weight, :exerscise, :zr, :weightcat
+DO SUSPEND;
+end
+^ SET TERM ; ^</script>
+ 
+<!-- SELECT_DLOUT -->
+<script>SET TERM ^ ;
+CREATE OR ALTER procedure SELECT_DLOUT
+(ID_STREAM NUMERIC(12, 0),
+ID_COMPET NUMERIC(12, 0))
+returns (NAME VARCHAR(60) character set WIN1251,
+WEIGHT double precision,
+EXERSCISE VARCHAR(15) character set WIN1251,
+ZR double precision,
+WEIGHTCAT VARCHAR(10) character set WIN1251)
+ as BEGIN
+
+for select name, weight, exerscise, min(zr), weightCat
+from
+(  select
+    l.name as Name,
+    le.dl1 as Weight,
+    &apos;DeadLift1&apos; as Exerscise,
+    zr as zr,
+    wc.name as weightCat
+  from
+    lifter_on_competition loc inner join
+    Lifter_exersis le on loc.id_lifter_compet = le.id_lifter_compet inner join
+    Lifter l  on loc.id_lifter = l.id_lifter inner join
+    weigth_category wc on loc.id_category = wc.id_category
+  where
+    loc.id_compet = :ID_COMPET and
+    loc.id_stream = :ID_STREAM and
+    le.dl1 &gt; 0 and
+    OC7 is null
+union all
+  select
+    l.name as Fio,
+    le.dl2 as Weight,
+    &apos;DeadLift2&apos; as exerscise,
+    zr as zr,
+    wc.name as weightCat
+  from
+    lifter_on_competition loc inner join
+    Lifter_exersis le on loc.id_lifter_compet = le.id_lifter_compet inner join
+    Lifter l  on loc.id_lifter = l.id_lifter inner join
+    weigth_category wc on loc.id_category = wc.id_category
+  where
+    loc.id_compet = :ID_COMPET and
+    loc.id_stream = :ID_STREAM and
+    le.dl2 &gt; 0 and
+    OC8 is null
+union all
+  select
+    l.name as Fio,
+    le.dl3 as Weight,
+    &apos;DeadLift3&apos; as exerscise,
+    zr as zr,
+    wc.name as weightCat
+  from
+    lifter_on_competition loc inner join
+    Lifter_exersis le on loc.id_lifter_compet = le.id_lifter_compet inner join
+    Lifter l  on loc.id_lifter = l.id_lifter inner join
+    weigth_category wc on loc.id_category = wc.id_category
+  where
+    loc.id_compet = :ID_COMPET and
+    loc.id_stream = :ID_STREAM  and
+    le.dl3 &gt; 0 and
+    OC9 is null
+) tbl
+group by name, Weight, Exerscise, weightCat
+order by 3, 2, 4 --desc
+into :name, :weight, :exerscise, :zr, :weightcat
+DO SUSPEND;
+end
+^ SET TERM ; ^</script>
+ 
+<!-- SELECT_SQUATOUT -->
+<script>SET TERM ^ ;
+CREATE OR ALTER procedure SELECT_SQUATOUT
+(ID_STREAM NUMERIC(12, 0),
+ID_COMPET NUMERIC(12, 0))
+returns (NAME VARCHAR(60) character set WIN1251,
+WEIGHT double precision,
+EXERSCISE VARCHAR(15) character set WIN1251,
+ZR double precision,
+WEIGHTCAT VARCHAR(10) character set WIN1251)
+ as BEGIN
+
+for select name, weight, exerscise, min(zr), weightCat
+from
+(  select
+    l.name as Name,
+    le.squat1 as Weight,
+    &apos;Squat1&apos; as Exerscise,
+     zr as zr,
+     wc.name as weightCat
+  from
+    lifter_on_competition loc inner join
+    Lifter_exersis le on loc.id_lifter_compet = le.id_lifter_compet inner join
+    Lifter l  on loc.id_lifter = l.id_lifter inner join
+    weigth_category wc on loc.id_category = wc.id_category
+  where
+    loc.id_compet = :ID_COMPET and
+    loc.id_stream = :ID_STREAM and
+    le.squat1 &gt; 0 and
+    OC1 is null
+union all
+  select
+    l.name as Fio,
+    le.squat2 as Weight,
+    &apos;Squat2&apos; as exerscise,
+    zr as zr,
+    wc.name as weightCat
+  from
+    lifter_on_competition loc inner join
+    Lifter_exersis le on loc.id_lifter_compet = le.id_lifter_compet inner join
+    Lifter l  on loc.id_lifter = l.id_lifter inner join
+    weigth_category wc on loc.id_category = wc.id_category
+  where
+    loc.id_compet = :ID_COMPET and
+    loc.id_stream = :ID_STREAM and
+    le.squat2 &gt; 0 and
+    OC2 is null
+union all
+  select
+    l.name as Fio,
+    le.squat3 as Weight,
+    &apos;Squat3&apos; as exerscise,
+    zr as zr,
+    wc.name as weightCat
+  from
+    lifter_on_competition loc inner join
+    Lifter_exersis le on loc.id_lifter_compet = le.id_lifter_compet inner join
+    Lifter l  on loc.id_lifter = l.id_lifter inner join
+    weigth_category wc on loc.id_category = wc.id_category
+  where
+    loc.id_compet = :ID_COMPET and
+    loc.id_stream = :ID_STREAM  and
+    le.squat3 &gt; 0 and
+    OC3 is null
+) tbl
+group by name, Weight, Exerscise, weightCat
+order by 3, 2, 4 --desc
+into :name, :weight, :exerscise, :zr,:weightcat
+
+DO SUSPEND;
+end
+^ SET TERM ; ^</script>
 </version>
 
 	
