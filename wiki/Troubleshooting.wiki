@@ -1,0 +1,13 @@
+#summary Часто возникающае проблемы при запуске системы.
+
+= Введение =
+
+В данной статье я постараюсь осветить часто возникающие проблемы при запуске системы для работы в локальной сети на соревнованиях.
+
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
