@@ -17023,6 +17023,235 @@ begin
 end
 ^ SET TERM ; ^</script>
 </version>
+
+<version number="224.01">
+<!-- WPA Weight Cat. Fix -->
+<script>
+update weigth_category set sex = 1 where id_federation = 3 and we &lt; 52;
+update weigth_category set sex = 1 where id_federation = 3 and we = 100;
+UPDATE OR INSERT INTO WEIGTH_CATEGORY (ID_CATEGORY, ID_FEDERATION, NAME, WE, SEX)
+                               VALUES (315, 3, '155', 155, 3) MATCHING (ID_CATEGORY);
+</script>
+</version>
+
+<version number="224.02">
+<script optional ="1">DROP INDEX OBJPROPERTIES_PK;</script>
+<script optional ="1">DROP TABLE OBJPROPERTIES;</script>
+
+<script>
+CREATE TABLE OBJPROPERTIES (
+    PROPERTY  VARCHAR(50) CHARACTER SET WIN1251 NOT NULL,
+    "VALUE"   VARCHAR(50) CHARACTER SET WIN1251);
+</script>
+<script>ALTER TABLE OBJPROPERTIES ADD CONSTRAINT PK_OBJPROPERTIES PRIMARY KEY (PROPERTY);</script>
+<script>CREATE INDEX OBJPROPERTIES_PK ON OBJPROPERTIES COMPUTED BY (UPPER(property));</script>
+</version>	
+
+<version number="224.03">
+<script>
+UPDATE OR INSERT INTO OBJPROPERTIES (PROPERTY, "VALUE") VALUES ('PARAM_ALOWFILLING1ATTEMPTS_50', '0') MATCHING (PROPERTY);
+UPDATE OR INSERT INTO OBJPROPERTIES (PROPERTY, "VALUE") VALUES ('PARAM_CHECKNEXTWEIGHT_50', '0') MATCHING (PROPERTY);
+UPDATE OR INSERT INTO OBJPROPERTIES (PROPERTY, "VALUE") VALUES ('PARAM_ALOWFILLING1ATTEMPTS_51', '0') MATCHING (PROPERTY);
+UPDATE OR INSERT INTO OBJPROPERTIES (PROPERTY, "VALUE") VALUES ('PARAM_CHECKNEXTWEIGHT_51', '0') MATCHING (PROPERTY);
+</script>
+</version>	
+
+<version number="224.04">
+<!-- ADD_LOC -->
+<script>SET TERM ^ ;
+CREATE OR ALTER procedure ADD_LOC
+(LID NUMERIC(12, 0),
+IDAC NUMERIC(12, 0),
+IDC NUMERIC(12, 0),
+SELFWEGHT double precision,
+IDT NUMERIC(12, 0),
+ZR INTEGER,
+INZ SMALLINT,
+STATE double precision,
+SQUAT double precision,
+BENCH double precision,
+DL double precision)
+returns (LOC NUMERIC(12, 0),
+COEF double precision,
+TS TIMESTAMP,
+IDCATEGORY NUMERIC(12, 0))
+ as begin /*dummy*/ suspend; end
+^ SET TERM ; ^</script>
+ 
+<!-- EDIT_LOC -->
+<script>SET TERM ^ ;
+CREATE OR ALTER procedure EDIT_LOC
+(LID NUMERIC(12, 0),
+IDAC NUMERIC(12, 0),
+IDC NUMERIC(12, 0),
+SELFWEGHT double precision,
+IDT NUMERIC(12, 0),
+INZ SMALLINT,
+STATE double precision,
+SQUAT double precision,
+BENCH double precision,
+DL double precision,
+LOC NUMERIC(12, 0))
+returns (COEF double precision,
+TS TIMESTAMP,
+IDCATEGORY NUMERIC(12, 0))
+ as begin /*dummy*/ suspend; end
+^ SET TERM ; ^</script>
+ 
+<!-- ADD_LOC -->
+<script>SET TERM ^ ;
+CREATE OR ALTER procedure ADD_LOC
+(LID NUMERIC(12, 0),
+IDAC NUMERIC(12, 0),
+IDC NUMERIC(12, 0),
+SELFWEGHT double precision,
+IDT NUMERIC(12, 0),
+ZR INTEGER,
+INZ SMALLINT,
+STATE double precision,
+SQUAT double precision,
+BENCH double precision,
+DL double precision)
+returns (LOC NUMERIC(12, 0),
+COEF double precision,
+TS TIMESTAMP,
+IDCATEGORY NUMERIC(12, 0))
+ as 
+Declare Variable idwilks Numeric(12,0);
+Declare Variable aclub Varchar(50);
+Declare Variable atrener Varchar(50);
+BEGIN
+/* Fill data */
+  select df.club, df.trener, df.ts, df.loc, df.idcat, df.idw, df.coef
+  from data_filler(:lid, :idc, :selfweght) df
+  into :aclub, :atrener, :ts, :loc, :idcategory, :idwilks, :coef;
+/* modify data */
+  insert into lifter_on_competition
+    (
+      ID_LIFTER_COMPET,  id_category,
+      id_lifter,         id_compet,
+      id_wilks,          id_stream,
+      club,              trener,
+      id_team,           zr,
+      InZach,            id_agecl,
+      EDITTIME,      CREATETIME)
+  values
+    (
+      :loc,             :idcategory,
+      :lid  ,           :idc,
+      :idwilks,         :STATE,
+      :aclub,           :atrener,
+      :IDT,             :ZR,
+      :INZ,             :IDAC,
+      :TS,        :TS
+    );
+
+  select id_range from competit c where c.id_compet = :idc into idwilks;
+
+  if ((idwilks = 50) or (idwilks = 51))  then
+    if (coalesce(:bench, 0) = 0) then
+    begin
+       bench = :selfweght;
+       if (idwilks = 51) then
+         bench = :bench /2;
+       bench = ceiling(:bench/2.5)*2.5;
+       SQUAT = NULL;
+       DL = NULL;
+    end
+  
+  insert into lifter_exersis
+    (
+      ID_LIFTER_COMPET,      squat1,
+      bench1,                dl1,
+      STOY,                  EDITTIME
+    )
+  values 
+    (
+      :LOC,      :SQUAT, 
+      :BENCH,    :DL, 
+      &apos;0&apos;,       :TS
+    );
+
+  select result from check_lifter_excl(:LOC, NULL, NULL) into :idwilks;
+  if (idwilks = 1) then
+    exception cant_participate;
+    
+  idwilks = NULL;
+  ACLUB = NULL;
+  ATRENER = NULL;
+
+  POST_EVENT &apos;LOC_ADD&apos;;
+END
+^ SET TERM ; ^</script>
+ 
+<!-- EDIT_LOC -->
+<script>SET TERM ^ ;
+CREATE OR ALTER procedure EDIT_LOC
+(LID NUMERIC(12, 0),
+IDAC NUMERIC(12, 0),
+IDC NUMERIC(12, 0),
+SELFWEGHT double precision,
+IDT NUMERIC(12, 0),
+INZ SMALLINT,
+STATE double precision,
+SQUAT double precision,
+BENCH double precision,
+DL double precision,
+LOC NUMERIC(12, 0))
+returns (COEF double precision,
+TS TIMESTAMP,
+IDCATEGORY NUMERIC(12, 0))
+ as Declare Variable idwilks Numeric(12,0);
+Declare Variable aclub Varchar(50);
+Declare Variable atrener Varchar(50);
+BEGIN
+  select result from check_lifter_excl(:loc, NULL, NULL) into :idwilks;
+  if (idwilks = 1) then
+    exception cant_participate;
+
+/* Fill data */
+  select df.club, df.trener, df.ts, df.idcat, df.idw, df.coef
+  from data_filler(:lid, :idc, :selfweght) df
+  into :aclub, :atrener, :ts, :idcategory, :idwilks, :coef;
+/* modify data */
+
+  update lifter_on_competition set
+    id_category = :idcategory,    id_compet = :idc,
+    id_wilks = :idwilks,          id_stream = :STATE,
+    club = :aclub,                trener = :atrener,
+    id_team = :idt,               InZach = :inz,
+    id_agecl = :idac,             EDITTIME = :ts
+  where
+    ID_LIFTER_COMPET = :loc;
+
+  select id_range from competit c where c.id_compet = :idc into idwilks;
+
+  if ((idwilks = 50) or (idwilks = 51))  then
+    if (coalesce(:bench, 0) = 0) then
+    begin
+       bench = :selfweght;
+       if (idwilks = 51) then
+         bench = :bench /2;
+       bench = ceiling(:bench/2.5)*2.5;
+       SQUAT = NULL;
+       DL = NULL;
+    end
+
+  update lifter_exersis set
+    squat1 = :SQUAT,    bench1 = :BENCH,
+    dl1 = :DL,    EDITTIME = :ts
+  where
+    ID_LIFTER_COMPET = :loc;
+
+  idwilks = NULL;
+  ACLUB = NULL;
+  ATRENER = NULL;
+
+  POST_EVENT &apos;LOC_EDIT&apos;;
+END
+^ SET TERM ; ^</script>
+</version>	
+
 <!--
 <version number="2.70">
     <script>SET TERM ^ ; 
