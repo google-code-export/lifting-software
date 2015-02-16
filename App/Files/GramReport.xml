@@ -29,10 +29,13 @@
   loc.trener as coach,
   loc.club as club,
   loc.wasrazr as wasrank,
-  loc.newrazr as newrank
+  loc.newrazr as newrank,
+  c.id_range,
+  le.bench1||'x'||le.bench2 as FolkTotall
 from COMPETITIONWINNERS(%IDC%) fr inner join
-  Age_class ac on ac.id_agecl= fr.ageclass inner join
   Lifter_on_competition loc on fr.loc=loc.id_lifter_compet inner join
+  LIFTER_EXERSIS le on le.id_lifter_compet = loc.id_lifter_compet inner join
+  Age_class ac on ac.id_agecl= fr.ageclass inner join
   Wilks W on w.id_wilks = loc.id_wilks inner join
   competit c on c.id_compet = loc.id_compet inner join
   range r on r.id_range = c.id_range left join
