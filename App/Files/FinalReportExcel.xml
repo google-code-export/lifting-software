@@ -6,7 +6,8 @@ select
   cast(Transliter(fr.fio) as varchar(50)) as EngFio,
   cast(Transliter(fr.town) as varchar(103))as engTown,
   cast(Transliter(fr.Coach) as varchar(50))as engCoach,
-  datediff(year from l.dat_bith to cast(loc.edittime as date)) as age,
+--  datediff(year from l.dat_bith to cast(loc.edittime as date)) as age,
+  (cast(loc.edittime as date)- l.dat_bith)/365 as age,
   fr.*,
   c.*
 from finalreport(%IDC%) fr
